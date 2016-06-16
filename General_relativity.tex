@@ -1,0 +1,310 @@
+%\input{ThesisPreamble}
+
+%\begin{document}
+
+\chapter{General Relativity}
+
+Einstein's theory of General Relativity, published in two papers in 1915 and 1916, revolutionised physics. It replaced Newton's theory of gravitation with a theory roughly based on Riemannian manifolds, where the classical idea of a gravitational force acting at a distance was replaced by the concept of curvature of space-time. We say roughly because now the ``metric'' is no longer positive definite (see {\S}\ref{sec:Pseudo} and {\S}\ref{sec:Minkowski}). In general relativity, space-time is viewed as a 4-dimensional manifold, three dimensions corresponding to space and one to time. We will adopt the common practice of denoting local coordinates by $x^\mu$, $\mu=0,1,2,3$, with $\mu=0$ corresponding to the time dimension, and $\mu=1,2,3$ the spatial dimensions. Sometimes it is desirable to consider the spatial dimensions separately to the temporal dimension. In these situations, the spatial dimensions are given Latin indices, $x^i$, to indicate running from 1 to 3. \\
+
+The metric on space time is governed by the \textit{Einstein Equation},
+\begin{equation}
+R_{\mu \nu}-\frac{1}{2}Rg_{\mu \nu} = 8\pi G T_{\mu \nu}, 
+\label{eq:Einstein} 
+\end{equation} 
+where $R_{\mu \nu}$ is the Ricci tensor, $R$ the scalar curvature, $G$ is \textit{Newton's constant of gravitation} ($G=6.67\times10^{-11} m^{3}kg^{-1}s^{-2}$), and $T_{\mu \nu}$ is the \textit{stress-energy tensor}, a symmetric 2-tensor which describes the density, momentum and stress at each point in space-time. The left hand side of this equation represents the geometry of space-time, and is defined as the \textit{Einstein Tensor} $G_{\mu \nu} \equiv R_{\mu \nu}-\frac{1}{2}Rg_{\mu \nu}$, and the right hand side represents the distribution of mass-energy. 
+
+The stress-energy tensor describes the energy density, momentum density and momentum flux of matter $(i,j=1,2,3)$
+\begin{eqnarray*}
+T^{00} =& \mbox{energy density}\\
+T^{0i} =& \mbox{momentum density}\\
+T^{ij} =& \mbox{flux of $i$ momentum in direction $j$}
+\end{eqnarray*}
+In general relativity all fields except gravity are considered as a type of matter. For example, an electromagnetic field has an associated stress-energy tensor that acts as the source of gravity.
+
+The equation (\ref{eq:Einstein}) is actually a set of 10 coupled, non-linear, partial differential equations. There is no systematic way to solve such a system of equations, and as such very few analytic solutions exist. 
+ 
+\section{Pseudo-Riemannian Metrics}\label{sec:Pseudo}
+A \textit{pseudo-Riemannian metric} on a manifold $M$ is a symmetric (0,2)-tensor field $g$ that is \textit{nondegenerate} at every point $p\in M$. Nondegenerate means that if $X\in T_pM$,
+\[ g(X,Y)=0\; \forall\; Y\in T_p M\; \Leftrightarrow\; X=0. \]
+Compare this with the definition of the Riemannian manifold in {\S}\ref{sec:Riemannian}. For a pseudo-Riemannian metric, the positive-definite criterion of the Riemannian metric has been relaxed. Indeed, the Riemannian metrics are a subset of the pseudo-Riemannian metrics. The \textit{index}, $r$, of the metric $g$ is the number of negative eigenvalues of the matrix $g_{\mu \nu}$ representing $g$. If $r=1$, the metric is called \textit{Lorentzian}. In general relativity the metrics are Lorentzian. The negative eigenvalue corresponds to the time dimension, and the three positive eigenvalues correspond to the spatial dimensions.\\
+
+As an alternative notation, physicists define the \textit{line element} 
+\[ ds^2=g_{\mu \nu} dx^\mu dx^\nu, \]
+and this is used interchangably with the metric.This defines an invariant ``distance" between two close events with coordinates $x^\mu$ and $x^\mu + dx^\mu$. The fact that this distance is invariant means that it is absolute in a physical sense, all observers will find the same value for this quantity regardless of their respective motions and the coordinates they are using to measure it. This is known as the \emph{principle of equivalence} or \emph{coordinate invariance}.  Because of the negative eigenvalue in the metric, the distance $ds^2$ is not positive definite. From the metric one can distinguish events related to each other in three different ways:
+\begin{eqnarray*}
+ds^2 & > & 0  \mbox{   Spacelike separation} \\
+ds^2 & < & 0  \mbox{   Timelike separation} \\
+ds^2 & = & 0  \mbox{   Null separation} 
+\end{eqnarray*}
+
+Many of the properties of Riemannian manifolds carry over to pseudo-Riemannian manifolds. In particular, the fundamental lemma of Riemannian geometry (Theorem \ref{FundLemma}) holds for pseudo-Riemannian geometry. Therefore, we still have the Levi-Civita connection and the Riemannian Curvature. \\
+
+%\section{Geodesics}
+% It is usual to parameterise a geodesic in 4D space by the so-called "proper time" $d\tau^2:= - ds^2$, corresponding to the time experienced by the object itself. The geodesic equation has the general form 
+% \[ \frac{d^2x^\alpha}{d\tau^2}+\Gamma^\alpha_{\beta \gamma}\frac{dx^\beta}{d\tau}\frac{dx^\gamma}{d\tau}=0 \]
+ 
+It can be verified (by considering Riemann normal coordinates at an arbitrary point) that the Riemann Tensor has the following property:
+\begin{equation}
+ R_{\alpha \beta \mu \nu ; \lambda} + R_{\alpha \beta \lambda\mu ; \nu} + R_{\alpha \beta \nu \lambda ; \mu} = 0 
+ \label{eq:Bianchi}
+\end{equation}
+ 
+These relations are known as the \emph{Bianchi identities} and are very important. One consequence is that the covariant divergence of the Einstein tensor vanishes 
+\[ G^{\mu \nu}_{; \nu} =0 \]
+Which, using the field equations, implies
+\[ T^{\mu \nu}_{; \nu} =0 \]
+This tells us that the loss of energy and momentum in a region of space is explained by the flux of energy and momentum out of that region. 
+
+\section{Relativity in 1+1 dimensions}
+As a simple example we consider relativity in $1$ spatial and $1$ time dimension, with a spacetime metric $g_{ij}$ with $i,j$ taking the values $0$ or $1$. Without loss of generality we can assume that the metric tensor is diagonal, and thus the inverse metric components are $g^{00}=1/g_{00}$ and $g^{11}=1/g_{11}$. The Christoffel symbols in this case are
+\begin{equation}
+\begin{array}{ll}
+\Gamma^0_{00}= \frac{\pd_0 g_{00}}{2 g_{00}} & \Gamma^1_{11}= \frac{\pd_1 g_{11}}{2 g_{11}} \\
+\Gamma^0_{10}= \frac{\pd_1 g_{00}}{2 g_{00}} & \Gamma^1_{10}= \frac{\pd_0 g_{11}}{2 g_{11}}\\
+\Gamma^0_{11}= -\frac{\pd_0 g_{11}}{2 g_{00}} & \Gamma^1_{00}= -\frac{\pd_1 g_{00}}{2 g_{11}}.
+\end{array}
+\end{equation}
+The Riemann tensor has $2^2(2^2-1)/12 =1$ independent component, which can be written as 
+\begin{equation}\label{eq:Riemann1plus1}
+R^1_{010}=\frac{-2g_{11}(\pd_1^2 g_{00} + \pd_0^2 g_{11}) + \pd_1 g_{00} \pd_1 g_{11} + (\pd_0 g_{11})^2}{4g_{11}^2}+\frac{\pd_0(\pd_0 g_{11}(\pd_0 g_{00} - \pd_1 g_{00})}{4g_{00}g_{11}}.
+\end{equation}
+By the symmetries of the Riemann Tensor, the other non zero components are
+\begin{equation}
+R^1_{001}=-R^1_{010}, \mbox{ } R^0_{101}=g^{00}g_{11}R^1_{010}, \mbox{ } R^0_{110}=-g^{00}g_{11}R^1_{010}.
+\end{equation}
+The Ricci tensor is given by
+\begin{equation}
+R_{00} = R^1_{010}, \mbox{ } R_{11}=-g^{00}g_{11}R^1_{010},\mbox{ } R_{10} = 0 = R_{01}.
+\end{equation}
+We can now calculate the left hand side of \ref{eq:Einstein}.
+\begin{equation}
+\begin{array}{lrcl}
+(i,j)=(0,0), & R^1_{010}-R^1_{010} & = & 0 \\
+(i,j)=(1,1), & -g^{00}g_{11}R^1_{010}+g^{00}g_{11}R^1_{010} & = & 0.
+\end{array}
+\end{equation}
+This tells us that in 1+1 dimensions, the stress energy tensor $T_{ij}$ must be identically zero, and that therefore there is no gravity in 1+1 dimensions. Note that we could have attained this result directly from the symmetries, however the calculation of the the Christoffel symbols and the Riemann and Ricci tensors may come in useful later.
+
+\section{Minkowski Space}\label{sec:Minkowski}
+ The \textit{Minkowski metric} is the model metric for Lorentz spaces, in the same way $\R^n$ with metric $\delta_{ij}$ is the model Riemannian space. In four dimensions, the Minkowski metric corresponds to flat space-time, is denoted by $\eta$, and is given by
+\begin{equation} \eta = -(d x^0)^2 + (d x^1)^2 + (d x^2)^2 + (d x^3)^2 .\label{eq:MinkMetric} \end{equation}
+%Minkowski space is maximally symmetric \cite{Carroll}, thus has the maximal number of independent Killing vector fields. From equation (\ref{eq:maxkill}), this is 10. Notice that the components of the Minkowski metric are independent of the coordinates. This immediately indicates that the translations along each of the coordinate axes provide four linearly independent Killing fields (c.f. {\S}\ref{sec:KEKF}),
+%\begin{equation} X=\frac{\pd}{\pd x^\alpha}. \label{minktrans}\end{equation}
+%The remaining six isometries of Minkowski space are the \textit{Lorentz transformations}, which form the \textit{Lorentz group}, $\mathcal{O}(3,1)$. The Lorentz transformations are rotations in space-time. Three are rotations of the spatial dimensions, and three are rotations between the spatial and temporal dimensions. The Killing fields for the Lorentz transformations are \cite{Hawking}
+%\begin{equation} X=e(\mu)x^\mu\frac{\pd}{\pd x^\nu}-e(\nu)x^\nu\frac{\pd}{\pd x^\mu} \label{lorentzkill}\end{equation}
+%where 
+%\[ e(\mu)=\left\{ \begin{array}{cl} -1 & \mbox{if $\mu=0$}\\
+%                                    1 & \mbox{if $\mu=1,2,3$}. \end{array}\right. \]
+%These Killing fields are exactly the same as in Euclidean space, apart from the changes of sign corresponding to the time dimension.
+
+\section{The Schwarzschild Solution}
+The Schwarzschild metric corresponds to the space-time in a vacuum around a spherically symmetric massive body, such as the Earth, a star, or a black hole. The metric is given in spherical coordinates $\{t,r,\theta,\phi\}$ by
+\begin{equation} d s^2 = -\left(1-\frac{2m}{r}\right)d t^2+\left(1-\frac{2m}{r}\right)^{-1}d r^2 + r^2(d \theta^2 + \sin^2 \theta d \phi^2), \label{Schwarzschild} \end{equation}
+where $m$ is the mass of the body and $r>2m$. 
+%The metric is inherently independent of the time coordinate $t$, thus we immediately see $\frac{\pd}{\pd t}$ is a Killing field for this solution. If we set $r,t$ to be constant, we see that the last term is the metric for $S^2$ in polar coordinates. Thus, we also have that the group $\mathcal{SO}(3)$ is a group of isometries on the space time. In fact, it is this property that defines a spherically symmetric space time. These are all the solutions for this metric \cite{Xanthopoulos}.\\
+
+Outside a spherically symmetric charged body the metric is:
+\begin{equation} d s^2 = -\left(1-\frac{2m}{r} + \frac{e^2}{r^2}\right)d t^2+\left(1-\frac{2m}{r}+\frac{e^2}{r^2}\right)^{-1}d r^2 + r^2(d \theta^2 + \sin^2 \theta d \phi^2). \label{eq:R-N}
+\end{equation}
+This is called the \textit{Reissner-Nordstrom} solution. \textit{Birkhoff's theorem}, 1923, states that these are the only allowable solutions for a spherically symmetric space-time, and in particular there are no time dependent solutions. This is not to say that the source must be static, just that it must be spherically symmetric. Thus, a spherically symmetric supernova explosion would produce no gravitational radiation. 
+
+\begin{itemize}
+\item Kerr metric
+\item apparent and event horizons (EH= boundary where photons can escape to infinity (nonlocal- whatever that means), AH= smooth closed surface of zero null expansion $\nabla^\mu k_\mu =0$ (local)) (if an AH exists, it cannot be outside an EH)
+\end{itemize}
+%The proof shows that such a space automatically requires $\frac{\pd}{\pd x^0}$ to be a Killing field (see \cite{Hawking}).
+
+
+%\emph{It has been observed that that light is deflected by gravitational fields. Since it is thought that no signals can travel faster than light, this means that gravity determines the causal structure of the universe, i.e. it determines which events of space-time can be causally related to each other.}\cite{Hawking}
+
+\section{Linearised Gravity}
+Consider flat Minkowski space plus a small perturbation (corresponding to a weak gravitational field). This is \textit{linearised gravity} and the metric can be written:
+\begin{equation}
+g_{\mu \nu} = \eta_{\mu \nu} + h_{\mu \nu}, \hspace{1cm} | h_{\mu \nu} | <<1
+\end{equation}
+By ``small" we mean that in our analysis we only need to consider terms linear in $h_{\mu \nu}$, and we can raise and lower indices using the background flat metric $\eta_{\al \be}$ and its inverse $\eta^{\al \be}$. This leads to the inverse metric:
+\begin{equation}
+g^{\mu \nu} = \eta^{\mu \nu} - h^{\mu \nu}.
+\end{equation}
+We can calculate the Christoffel symbols
+\begin{equation}
+\Gamma^\alpha_{\beta \gamma} = \frac{1}{2} \eta^{\alpha \nu} \left( \pd_\beta h_{\gamma \nu}+\pd_\gamma h_{\beta \nu}-\pd_\nu h_{\gamma \beta} \right),
+\end{equation}
+and the Riemann Tensor to first order in $h_{\al \be}$
+\begin{equation}\label{LinRie}
+\begin{array}{lcl}
+R^{\al}_{\be \gamma \delta}&=&\frac{1}{2} \eta^{\alpha \nu} (\pd_\gamma \pd_\delta h_{\be \nu} -\pd_\gamma \pd_\nu h_{\be \delta} +\pd_\nu \pd_\beta h_{\gamma \delta} -\pd_\delta \pd_\be h_{\gamma \nu} )\\
+&=& \eta^{\alpha \nu}(\pd_{\delta} \pd_{[\gamma} h_{\beta] \nu} + \pd_{\nu} \pd_{[\beta} h_{\gamma]\delta})
+\end{array}
+\end{equation}
+Contraction yields the Ricci Tensor,
+\begin{equation}
+R_{\alpha \beta}=\pd^\gamma \pd_{( \alpha}h_{\beta ) \gamma}  -\frac{1}{2}\pd_\alpha \pd_\beta h- \frac{1}{2} \Box h_{\alpha \beta}
+\end{equation}
+where $h=h^\alpha_\alpha$ and $\Box = \pd^\gamma \pd_\gamma$ is the flat space D'Alembertian. The Ricci scalar is
+\begin{equation}
+R=\pd^\gamma \pd^\nu h_{\gamma \nu}-\Box h
+\end{equation}
+Therefore the Einstein tensor becomes 
+\begin{equation}
+\begin{array}{lcl}
+G_{\alpha \beta} &=& \pd^\gamma \pd_{( \alpha}h_{\beta ) \gamma} - \frac{1}{2} \Box h_{\alpha \beta} -\frac{1}{2}\pd_\alpha \pd_\beta h -\frac{1}{2}\eta_{\alpha \beta} \left( \pd^\gamma \pd^\nu h_{\gamma \nu}-\Box h \right) \\
+&=& -\frac{1}{2}\Box \bar{h}_{\alpha \beta}+ \pd^\gamma \pd_{( \alpha}\bar{h}_{\beta ) \gamma} -\frac{1}{2}\eta_{\alpha \beta}\pd^\gamma \pd^\nu \bar{h}_{\gamma \nu}
+\end{array}
+\label{eq:LinearisedG}
+\end{equation}
+Where in the final line $\bar{h}_{\alpha \beta}\equiv h_{\alpha \beta} - \frac{1}{2} \eta_{\alpha \beta} h$ is the \emph{trace reversed} metric perturbation, which has trace $\bar{h}=-h$, and we have assumed we are working in $n=4$ dimensions.
+
+\subsection{Gauge Transformations}
+There may be many coordinate systems in which the spacetime can be expressed as a flat background spacetime plus a small perturbation. To see this, let us consider our background spacetime manifold $M_b$ equipped with the Minkowski metric $\eta_{\mu \nu}$ as separate to the the physical spacetime $M_p$ with metric $g_{\mu \nu}$, and consider a diffeomorphism between them $\phi: M_b \rightarrow M_p$. Then we can define the perturbation as $h_{\mu \nu}=(\phi {*} g)_{\mu \nu} - \eta_{\mu \nu}$. If the gravitational fields are weak, then there will exist a $\phi$ such that $\| h_{\mu \nu} \| << 1$. 
+
+Now consider a vector field $\xi^\mu$ on $M_b$. As we saw in {\S}\ref{sec:Isometries}, this generates a one-parameter family of diffeomorphisms $\psi_\epsilon : M_b \rightarrow M_b$. If the parameter $\epsilon$ is small, and $\phi$ is such that $h$ is small, then the resultant perturbation by $(\phi \circ \psi_\epsilon)$ will also be small. This family of diffeomorphisms parameterised by $\epsilon$ defines a family of perturbations:
+\begin{equation}
+\begin{array}{lcl}
+h^{(\epsilon)}_{\mu \nu} &=&\left[ (\phi \circ \psi_\epsilon)^{*}g\right]_{\mu \nu}-\eta_{\mu \nu} \\
+&=& \left[ \psi_\epsilon^{*}(\phi^{*} g ) \right]_{\mu \nu}-\eta_{\mu \nu}\\
+&=& \psi_\epsilon^{*}(h+\eta)_{\mu \nu} - \eta_{\mu \nu} \\
+&=& \psi_\epsilon^{*}(h_{\mu \nu}) + \psi_\epsilon^{*}(\eta_{\mu \nu}) - \eta_{\mu \nu} \\
+&=& \psi_\epsilon^{*}(h_{\mu \nu}) + \epsilon  \frac{\psi_\epsilon^{*}(\eta_{\mu \nu}) - \eta_{\mu \nu}}{\epsilon} \\
+&=& h_{\mu \nu} + \epsilon \Lie_\xi \eta_{\mu \nu}
+\end{array}
+\end{equation}
+We arrive at the final equation above by assuming $\epsilon$ is small and taking the first order approximation for $\psi^{*}_\epsilon$ for the first term, and by recalling the definition of the Lie derivative, equation \ref{eq:Liedef}, for the second term. We then recall equation \ref{eq:LieCon} and that the metric connection becomes partial derivatives in our flat space background, to arrive at:
+\begin{equation}
+h^{(\epsilon)}_{\mu \nu} =  h_{\mu \nu} + 2 \epsilon \pd_{(\mu} \xi_{\nu)}.
+\label{eq:GaugeTF}
+\end{equation}
+Substituting this into equation (\ref{LinRie}) leaves the linearised Riemann Tensor, and hence the curvature of the spacetime, unchanged, demonstrating the coordinate freedom in linearised gravity. Such transformations are called \emph{gauge transformations} where the choice of $\epsilon$ gives the gauge.
+
+The trace reversed metric perturbation transforms as 
+\[ \bar{h}^{(\epsilon)}_{\alpha \beta} = \bar{h}_{\alpha \beta} + 2 \epsilon \pd_{(\al} \xi_{\be)} -\eta_{\al \be}\pd^\mu \xi_\mu \]
+Taking the divergence of this gives 
+\begin{equation}
+\begin{array}{lcl}
+\pd^\be \bar{h}^{(\epsilon)}_{\al \be} &=& \pd^\be \bar{h}_{\alpha \beta} + \epsilon \pd^\be \pd_\al \xi_\be + \epsilon \pd^\be \pd_\be \xi_\al - \epsilon \pd_\al \pd^\mu \xi_\mu\\
+&=& \pd^\be \bar{h}_{\alpha \beta}+ \epsilon\pd^\be \pd_\be \xi_\al
+\end{array}
+\end{equation}
+Thus, solving the equation $\pd^\be \bar{h}_{\alpha \beta}=-\epsilon \pd^\be \pd_\be \xi_\al$ (which is always possible), gives a gauge in which
+\begin{equation}
+\pd^\be \bar{h}^{(\epsilon)}_{\al \be} = 0
+\label{eq:LorenzGauge}
+\end{equation}
+This gauge is called the \emph{Lorenz gauge} or the \textit{harmonic gauge}, and is clearly not unique.
+
+\subsection{Gravitational Plane Wave Solutions }
+Now let us return to the Einstein Equation (\ref{eq:Einstein}). 
+\[ G_{\alpha \beta} = 8 \pi G T_{\alpha \beta} \]
+Let us take the vacuum equations $T_{\alpha \beta} =0$. Substituting (\ref{eq:LorenzGauge}) into the equation for the linearised Einstein tensor (\ref{eq:LinearisedG}) gives an equation very similar to the electromagnetic wave equations:
+\begin{equation}
+\Box \bar{h}_{\alpha \beta} = 0
+\end{equation}
+This suggests we may attempt a monchromatic plane wave solution of the form $\bar{h}_{\alpha \beta}=A_{\alpha \beta} e^{i k_\sigma x^\sigma}$ where $A_{\alpha \beta}$ is a constant, symmetric $(0,2)$-tensor and $k^\sigma$ is a $4$-vector. To check if this gives a solution we plug in:
+\begin{equation}
+\begin{array}{lcl}
+\Box A_{\alpha \beta} \exp^{i k_\sigma x^\sigma} &=& \eta^{\mu \nu}\pd_{\mu} \pd_{\nu}(A_{\alpha \beta} e^{i k_\sigma x^\sigma})\\
+&=& \eta^{\mu \nu}\pd_{\mu}(i k_\nu A_{\alpha \beta} e^{i k_\sigma x^\sigma})\\
+&=& -\eta^{\mu \nu}(k_\mu k_\nu A_{\alpha \beta} e^{i k_\sigma x^\sigma})\\
+&=& -(k^\nu k_\nu A_{\alpha \beta} e^{i k_\sigma x^\sigma})
+\end{array}
+\end{equation}
+which will be $0$ if $k^\nu k_\nu =0$, that is, the wave vector is null. This implies that these \textit{gravitational waves} propagate at the speed of light. The timelike component of $k$ is the frequency of the wave and usually denoted $\omega$, so that the four vector $k^\nu=(\omega, \textbf{k})$.
+
+Using the Lorenz gauge condition (\ref{eq:LorenzGauge}) we obtain
+\[ 0=\pd_\beta (A^{\alpha \beta} e^{i k_\sigma x^\sigma})=i k_\beta A^{\alpha \beta} e^{i k_\sigma x^\sigma} \]
+which is true only if 
+\begin{equation}
+k_\beta A^{\alpha \beta}=0
+\label{Transverse}
+\end{equation}
+We say $k_\beta$ is \textit{orthogonal} or \textit{transverse} to $A^{\alpha \beta}$. We can use our remaining gauge freedom (see \cite{Wald}) to choose a gauge in which the trace
+\begin{equation}
+A^\alpha_\alpha=0
+\label{Traceless}
+\end{equation}
+and for any constant timelike unit vector $U^\beta$ we have 
+\begin{equation}
+A_{\alpha \beta} U^\beta = 0
+\label{TT3}
+\end{equation}
+These conditions together determine the \textit{transverse traceless (TT)} gauge.
+
+Now let us set the vector $U^\beta=\delta^\beta_0$ as the time basis vector, which is always possible under a Lorentz transformation, and orient the coordinate axes so that the wave propagates along the $x^3$ direction $k^\beta \rightarrow (\omega, 0, 0, \omega)$. Then the TT conditions require that  the tensor $A_{\alpha \beta}$ is of the following form
+\begin{equation}
+A^{TT}_{\alpha \beta} = \left( \begin{array}{cccc}
+0 & 0 & 0 & 0 \\
+0 & A_{xx} & A_{xy} & 0 \\
+0 & A_{xy} & -A_{xx} & 0 \\
+0 & 0 & 0 & 0
+\end{array} \right)
+\end{equation}
+Therefore the wave is characterised by two components $A_{xx}$ and $A_{xy}$ which we call $h_+$ and $h_\times$ respectively.
+
+To understand the action of these waves, consider a collection of slowly moving test particles. Let these particles have four velocities described by a vector field $U^\mu(x)$ and separation vectors $S^\mu (x)$. We invoke the geodesic deviation equation (\ref{GeoDevEq}):
+\[U^\al \grad_\al U^\be \grad_\be S^\mu  =  A^\mu= R^\mu_{\al \be \nu} U^\al U^\be S^\nu \]
+For our slowly moving test particles we have $\tau = x^0 = t$, so the left hand side of this equation becomes $\frac{\pd^2}{\pd t^2}S^\mu$. As we are only interested in results up to first order, we may write $U^\mu=(1,0,0,0)$ which means for the right hand side we only need to calculate $R^\mu_{00\nu}$. From the linearised Riemann tensor (\ref{LinRie}) and the transverse traceless conditions above we see that $R^\mu_{00\nu} = \frac{1}{2}\frac{\pd^2}{\pd t^2} h^{TT\mu}_{ \nu}$. The geodesic deviation equation becomes 
+\begin{equation}\label{GDEwaveTT}
+\frac{\pd^2}{\pd t^2}S^\mu = \frac{1}{2}S^\nu \frac{\pd^2}{\pd t^2} h^{TT\mu}_{ \nu}
+\end{equation} 
+so from the structure of $h^{TT}$ it is clear that only $S^1$ and $S^2$ are affected- that is that the test particles are only disturbed in directions perpendicular to the wave that is travelling in the $x^3$ direction. 
+
+Solving (\ref{GDEwaveTT}) for the case $h_{\times}=0$ yields
+\begin{equation}\label{PlusPol}
+\begin{array}{lcl}
+S^1 &=& (1+\frac{1}{2}h_+\exp(ik_\sigma x^\sigma))S^1_{init} \\
+S^2 &=& (1-\frac{1}{2}h_+\exp(ik_\sigma x^\sigma))S^2_{init}
+\end{array}
+\end{equation}
+That is, particles separated in the $x^1$ direction will oscillate in the $x^1$ direction, and particles $x^2$ direction will oscillate in the $x^2$ direction. If we had a ring of particles, the ring would oscillate in the shape of an $+$ and so this is called the $+$ polarisation mode. Similarly, if we consider $h_+=0$ we find
+\begin{equation}\label{CrossPol}
+\begin{array}{lcl}
+S^1 &=& S^1_{init}+\frac{1}{2}h_{\times}\exp(ik_\sigma x^\sigma) S^2_{init} \\
+S^2 &=& S^2_{init}+\frac{1}{2}h_{\times}\exp(ik_\sigma x^\sigma) S^1_{init}
+\end{array}
+\end{equation}
+A ring of particles woulds oscillate in a $\times$. This is called the $\times$-polarisation mode. We can define polarisation tensors $e^+_{\al \be}$ and $e^\times_{\al \be}$, so that a general gravitational wave in the TT gauge can be written
+\begin{equation}
+h^{TT}_{\al \be} = h_+ e^+_{\al \be}+h_\times e^+_{\al \be}.
+\end{equation}
+
+\subsubsection{Generation of Gravitational Waves}
+To discuss the generation of gravitational waves we require the full Einstein Field Equations
+\begin{equation}
+G_{\mu \nu} = 8 \pi G T_{\mu \nu}.
+\end{equation}
+As we are no longer looking at vacuum solutions, $T_{\mu \nu}$ does not vanish and we cannot assume the transverse traceless gauge. However, we can still use the trace reversed metric perturbation 
+\begin{equation}
+\bar{h}_{\mu \nu} = h_{\mu \nu} - \frac{1}{2} h \eta_{\mu \nu},
+\end{equation}
+and the Lorenz gauge condition $\pd_{\mu}\bar{h}^{\mu \nu} = 0$ so we still obtain the Einstein tensor in the form 
+\begin{equation}
+G_{\mu\nu} = \frac{1}{2} \Box \bar{h}_{\mu \nu},
+\end{equation}
+and the Einstein equations become a wave equation for each component 
+\begin{equation}
+\Box \bar{h}_{\mu \nu}=16 \pi G T_{\mu \nu}.
+\end{equation}
+This can be solved by means of a Green's function satisfying
+\begin{equation}\label{eq:Greens}
+\Box G(x^{\alpha}) = \delta^{(4)} (x^{\alpha}),
+\end{equation}
+so that 
+\begin{equation}
+\bar{h}_{\mu \nu}(x^{\alpha})= 16\pi \int G(x^{\alpha}-y^{\alpha})T_{\mu \nu} (y^{\alpha}) d^4 \bfy.
+\end{equation}
+As can be found in any text on partial differential equations, the Green's function required is of the form 
+\begin{equation}
+G(x^{\sigma})= \frac{-1}{4\pi r}\delta(t-r)\Theta(t)
+\end{equation}
+where $\Theta$ is the Heaviside function
+\begin{equation}
+\Theta(t)=\lbrace\begin{array}{lc}
+1 & \mbox{if} t>0 \\
+0 & \mbox{otherwise.}
+\end{array}
+\end{equation}
+The argument of the delta function is sometimes denoted $t_r = t-r$ for ``retarded time'' to indicate that the gravitational wave at a source is the sum of contributions from sources on its past light cone.
+
+Let us consider the gravitational radiation 
+%\end{document}
+

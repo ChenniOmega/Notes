@@ -1,0 +1,320 @@
+%\documentclass[12pt]{report}
+%\newtheorem{defn}{Definition}[section]
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+%\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
+%\newenvironment{proof}
+%       {\begin{flushleft} \begin{description}
+%              \item \textit{\textbf{Proof:}}}
+%        {\hfill\rule{2.1mm}{2.1mm}
+%              \end{description}\end{flushleft}}
+%%\newenvironment{myexample}{\begin{flushleft}
+%%i would like to make defn in a slightly different font to distinguish it from normal text
+%\usepackage{amsmath, amssymb, mathrsfs, graphicx}
+%\addtolength{\textwidth}{100pt}
+%\addtolength{\oddsidemargin}{-50pt}
+%\addtolength{\evensidemargin}{-50pt}
+%\linespread{1.2}
+%\def\R{{\mathbb R}}
+%\def\pd{{\partial}}
+%\def\Lie{{\mathcal{L}}}
+%\def\d{{\mbox{d}}}
+%\def\grad {{\nabla}}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+
+%\input{ThesisPreamble}
+%\begin{document}
+
+ 
+\chapter{Reduced Basis Methods for Parameterised Partial Differential Equations}
+Numerical methods are used to solve PDEs, however for complicated problems the number of parameters required may be quite large, resulting in prohibitive computational cost. The reduced basis method is a means of reducing the number of degrees of freedom in order to reduce costs and make solving the problem feasible. Sometimes we are interested in the field that is the solution to the PDE, perhaps a termperature function. Other times we are intersted in a function of this field, perhaps the maximum temperature. This method evaluates the relationship between the input parameters and the output function, hopefully bypassing many of the expensive computations. This is useful in many real-time and multiple query contexts.
+
+\section{Problem Formulation}
+Consider a PDE with $P \geq 1$ parameters and let $\mathcal{D} \subset \mathbb{R}^P$ denote the parameter domain such that $\overrightarrow{\mu}\in \mathcal{D}$ is a particular parameter $P$-tuple. These parameters describe properties of the system. In the case of binary coalescence systems there are eight parameters: the mass of each of the compact objects, the spin magnitude, and the spin orientation (2 parameters for each object). 
+
+The solutions to the PDE system reside on a manifold defined as 
+\begin{equation}
+\mathcal{M}= \left\lbrace u(\mu) : \mu \in \mathcal{D} \right\rbrace
+\end{equation}
+The PDE can be written 
+\begin{equation}
+F_\mu (u(\mu))=0
+\end{equation}
+where $F_{\mu}$ is a parameter dependent differential operator and $u(\mu)$ is the solution to the system for parameter $\mu$. 
+
+Recall (from DG chapter) the dual space $V^*$ of a vector space $V$ is the space of (bounded?) linear functionals (aka linear forms) $g:V \rightarrow \mathbb{R}$ over $V$. The norm over $V^*$ is 
+\[ || g ||_{V*} \equiv \sup_{v \in V} \frac{g(v)}{||v||_V} \]
+
+The Reisz Representation Theorem tells us that for $g \in V^* \mbox{ } \exists! \mbox{ } w_g \mbox{ s.t. } (w_g, v)_V = g(v)\mbox{ } \forall v \in V$.  We can then invoke the Cauchy Schwarz inequality to show that $||g||_{V^*} = ||w_g||_V $.
+
+For a bilinear form $b:V \times V \rightarrow \mathbb{R}$ we define the symmetric part $b_s (w,v)=\frac{1}{2}(b(w,v)+b(v,w))$, and the skew symmetric part $b_{ss}=\frac{1}{2}(b(w,v)-b(v,w))$. It is \textit{coercive} if 
+\begin{equation}
+\alpha = \inf_{w \in V} \frac{b(w,w)}{||w||^2_V}>0
+\end{equation}
+Where $\alpha$ is the \textit{coercivity constant}. It is continuous if 
+\begin{equation}
+\gamma = \sup_{w \in V}\sup_{v \in V} \frac{b(w,v)}{||w||_V ||v||_V}< \infty
+\end{equation}
+where $\gamma$ is the \textit{continuity constant}.
+
+$g:V\times \mathcal{D}\rightarrow \mathbb{R}$ is a \textit{parametric linear form} if $\forall \mu \in \mathcal{D}$, $g(\cdot ; \mu):V \rightarrow \mathbb{R}$ is linear and continuous if $\forall \mu \in \mathcal{D}$, $g(\cdot ; \mu) \in V^*$. A parametric bilinear form is defined similarly, and is coercive if 
+\begin{equation}
+\alpha(\mu) = \inf_{w \in V} \frac{b(w,w;\mu)}{||w||^2_V}>0 \quad \forall \mu \in \mathcal{D}
+\end{equation}
+Then we define $\alpha_0 \equiv \min_{\mu \in \mathcal{D}} \alpha(\mu)$. A parametric bilinear form is continuous if 
+\begin{equation}
+\gamma(\mu) = \sup_{w \in V}\sup_{v \in V} \frac{b(w,v;\mu)}{||w||_V ||v||_V}< \infty \quad \forall \mu \in \mathcal{D}
+\end{equation}
+and we define $\gamma_0 \equiv \max_{\mu \in \mathcal{D}} \gamma(\mu)$.
+
+A parametric bilinear form has \textit{affine parameter dependence} if it can be written in the form 
+\begin{equation}
+b(w,v; \mu) = \sum^{Q_b}_{q=1} \Theta^q_b(\mu) b^q(w,v)
+\end{equation}
+for some finite $Q_b$, and where $\Theta^q_b:\mathcal{D}\rightarrow \mathbb{R}$ are smooth and $b^q: V_1 \times V_2 \rightarrow \mathbb{R}$ are parameter independent continuous bilinear forms. A coercive affine parametric bilinear form is \textit{parametrically coercive} if $b_s$ can be written 
+\[ b_s(w,v; \mu) = \sum^{Q_{b_s}}_{q=1} \Theta^q_{b_s}(\mu) b_s^q(w,v) \]
+with $\Theta^q_{b_s}(\mu)>0 \quad \forall \mu \in \mathcal{D}$ and $b^q_s(,v) \geq 0 \quad \forall v \in V$.
+
+The \textit{inf-sup stability ``constant"} of a parametric bilinear form is defined as 
+\begin{equation}
+\beta(\mu)=\inf_{w \in V_1} \sup_{v \in V_2} \frac{(w,v;\mu)}{||w||_{V_1} ||v||_{V_2}}\geq 0.
+\end{equation}
+If $\exists \beta_0 > 0 \mbox{ s.t. } \beta(\mu)\geq \beta_0$ $\forall \mu \in \mathcal{D}$, then we say $b$ is \textit{inf-sup stable} over $V_1 \times V_2$.
+
+The \textit{supremising operator} $T_\mu : V_1 \rightarrow V_2$ associated with $b$ is defined as 
+\begin{equation}
+T_\mu w = \mbox{arg} \sup_{v\in V_2} \frac{b(w,v;\mu)}{||v||_{V_2}}
+\end{equation}
+Note that $(T_\mu w,v)_{V_2}=b(w,v;\mu) \quad \forall v \in V_2$. If $b$ admits an affine representation, then
+\begin{equation}
+T_\mu w = \sum_{q=1}^{Q_b} \Theta^q_b (\mu) \mathbb{T}^q w
+\end{equation}
+where $\mathbb{T}^q : V_1 \rightarrow V_2$ is given by $( \mathbb{T}^q w,v)_{V_2}=b^q (v,w) \quad \forall v \in V_2$.
+
+\section{Parameter Domains and Grids}
+Consider our parameter domain $\mathcal{D}\subset \mathbb{R}^P$, and a parameter value $\mu \in \mathcal{D}$.  We define $\mathcal{D}_{box} \subset \mathbb{R}^P$ to be the smallest $P$ dimensional parallelipiped such that $\mathcal{D} \subset \mathcal{D}_{box}$, $\mathcal{D}\equiv [\mu_1^{min},\mu_1^{max}]\times \dots [\mu_P^{min},\mu_P^{max}]$. If $\mu^{min}=\min_{p \in 1 \dots P} \mu_p^{min} > 0$ we can perform a logarithmic transformation $\hat{\mu_p}=\ln \mu_p$, and $\hat{\mathcal{D}}, \hat{\mathcal{D}}_{box}$ are the images of $\mathcal{D}, \mathcal{D}_{box}$ under this transformation. 
+
+Three ways to draw points over $\mathcal{D}$ are as follows:
+
+\textit{Monte Carlo} sampling to create a uniform distribution of $m$ points over $\mathcal{D}$. To create a linear grid $G^{lin}_{[MC;m]}$ parameter values are generated by setting
+\begin{equation}
+\mu_p = \mu_p^{min} + \mbox{rand}(\mu_p^{max}-\mu_p^{min})
+\end{equation}
+where $\mbox{rand}$ is a random variable uniformly distributed over $[0,1]$. Any $\mu=[\mu_1 \dots \mu_P] \notin \mathcal{D}$ is rejected. To create a uniform distribution over the logarithmic space $\hat{\mathcal{D}}$, we sample the points as 
+\begin{equation}
+\mu_p = \mu_p^{min} \exp\left\lbrace\mbox{rand}\times\ln\left(\frac{\mu_p^{max}}{\mu_p^{min}}\right)\right\rbrace.
+\end{equation}
+
+\textit{1D deterministic grids}: 
+$G^{lin}_{[z_1,z_2;m]},G^{ln}_{[z_1,z_2;m]}: z_1 \in \mathbb{R}> z_2 \in \mathbb{R}, m \in \mathbb{N}$:
+\begin{equation}\begin{array}{lcl}
+G^{lin}_{[z_1,z_2;m]}&=&\lbrace z_1 + \frac{i-1}{m-1}(z_2-z_1), 1\leq i \leq m \rbrace \\
+G^{ln}_{[z_1,z_2;m]}&=&\lbrace z_1 \exp \left( \frac{i-1}{m-1} \ln(z_2/z_1) \right) , 1\leq i \leq m, z_1, z_2 >0 \rbrace
+\end{array}
+\end{equation}
+
+\textit{Chebyshev Gauss-Lobatto points}
+
+\begin{equation}\begin{array}{lcl}
+G^{lin, Cheb}_{[z_1,z_2;m]}&=&\lbrace z_1 + \frac{1}{2}\left(1-\cos \pi \left(\frac{i-1}{m-1}\right) \right)(z_2-z_1), 1\leq i \leq m \rbrace \\
+G^{ln, Cheb}_{[z_1,z_2;m]}&=&\lbrace z_1 exp \left(\frac{1}{2}\left(1-\cos \pi \left(\frac{i-1}{m-1}\right)\ln(z_2/z_1) \right) \right), 1\leq i \leq m, z_1, z_2 >0 \rbrace
+\end{array}
+\end{equation}
+
+1D grids can be combined to create multi-dimensional grids.
+
+
+\section{Parametric Scalar and vector fields}
+Consider a parametric scalar or vector field $w:\Omega \times \mathcal{D}\rightarrow \mathbb{R}^d$ where $d=1$ for a scalar field, or the dimension of $\Omega$ for a vector field. The \textit{parametric derivative}, also known as the \textit{sensitivity derivative},  measures changes in $w$ as the parameter changes. 
+\begin{equation}
+(D_{\mathbf{\sigma}}w)(\mathbf{x};\mathbf{\mu})=\frac{\pd^{\mathbf{\sigma}} w}{\pd \mu_1^{\sigma_1}\cdots \pd \mu_P^{\sigma_P} }
+\end{equation}
+where $\mathbf{\sigma}=(\sigma_1,\cdots,\sigma_P)$ is an index vector of non negative integers and we denote by $|\sigma|=\sum_{i=1}^P \sigma_i$ the order of the derivative. $I^{P,n}= \lbrace \sigma \in \mathbb{N}^P_0 | |\sigma| \leq n \rbrace$.
+
+A parametric scalar field, or one component of a parametric vector field is \textit{separable} over $\Omega$ if for some finite $M$ 
+\begin{equation}
+w(\bfx ; \bfmu) = \sum^M_{j=1}h^j(\bfx)g^j(\bfmu), \hspace{1cm} \forall \bfx \in \Omega, \bfmu \in \Dcal
+\end{equation}
+for $h^j:\Omega \rightarrow \Rbb$, $g^j:\Dcal \rightarrow \Rbb$, $1 \leq j \leq M$. $w$ is $\bfx$-affine separable over $\Omega$ if each $h^j(\bfx)$ is affine in $\bfx$.
+
+\section{Problem statement}
+\subsection{Exact}
+We consider a parametric PDE over a physical domain $\Omega \in \Rbb^d$ with boundary $\pd \Omega$, where the field variables $w \in X^e$, where $X^e$ is our exact solution space, may be scalar $w:\Omega \rightarrow \Rbb$ or vector-valued $w:\Omega \rightarrow \Rbb^d$. We denote by $\Gamma^D_i$ boundary measurable segments of $\pd \Omega$ on which we impose Dirichlet boundary conditions.
+
+We construct the exact solution space $X^e$ as the Cartesian product of scalar spaces $Y^e_i\equiv {v \in H^1}(\Omega) | v|_{\Gamma^D_i}=0$ where $1\leq i \leq d$ if the field variable is vector-valued, or simply $i=1$ if the field variable is scalar, in which case the subscript can be omitted. An element $w\in X^e$ is denoted $w=(w_1,...,w_d)$. We have a number of options for the inner product and norm with which to equip $X^e$.
+
+\textbf{Energy norm} (for coercive and continuous $a$): 
+\begin{equation}
+(((w,v))) = a(w,v), \hspace{1cm} \forall w,v \in X^e
+\end{equation}
+\begin{equation}
+|||w||| = \sqrt{a(w,w)}, hspace{1cm} \forall w \in X^e
+\end{equation}
+
+We can then define the parametric field variable as $u:\Omega \times \Dcal \rightarrow \Rbb$ where for a given $\bfmu \in \Dcal$, $u(\cdot; \bfmu)\in X^e$.
+
+\subsubsection{Parametric weak form}
+Suppose we are given parametric linear forms $f$ and $l$ that are bounded over $X^e$, and an affine parametric bilinear form $a$ that is inf-sum stable and continuous over $X^e$, and which we assume is parametrically coercive. Then the problem is given $\bfmu \in \Dcal$ we find $u^e(\cdot; \bfmu) \in X^e$ such that 
+\begin{equation}
+a(u^e(\bfmu), v; \bfmu) = f(v; \bfmu), \hspace{1cm} \forall v \in X^e
+\end{equation}
+
+and evaluate our output of interest 
+\begin{equation}
+s^e(\bfmu)=l(u^e(\bfmu); \bfmu).
+\end{equation}
+
+A problem is \textit{compliant} if 
+\begin{enumerate}
+\item $l(\cdot;\bfmu) = f(\cdot;\bfmu), \forall \bfmu \in \Dcal$ that is the output functional and "load/source are identical, and
+\item $a$ is symmetric.
+\end{enumerate}
+
+\subsection{``Truth" Approximation}
+We introduce a family of \textit{conforming} approximation spaces $X^{\Ncal} \subset X^e$ of dimension $\Ncal$. As in the exact case we form $X^{\Ncal}$ as a Cartesian product of scalar approximations $Y^{\Ncal_i}_i \subset Y^e_i$ of dimension $\Ncal_i$ such that $X^{\Ncal}=Y^{\Ncal_1}_i\times\cdots\times Y^{\Ncal_d}_i$, $\Ncal = \sum_i \Ncal_i$. We choose a set of basis functions $\psi^{\Ncal}_k \in X^{\Ncal}$, $1\leq k \leq \Ncal$. The inner products and norms are inherited from the exact case. We require that the family of truth  subspaces $X^{\Ncal}$ satisfies the approximation condition that for any $\epsilon > 0$, $\exists \Ncal$ such that the error in the best fit to $u(\bfmu)$ in $X^{\Ncal}$ is less than or equal to $\epsilon$ for all $\bfmu$ in $\Dcal$:
+\begin{equation}\label{eq:ApprCond}
+\max_{\bfmu \in \Dcal} \inf_{w \in X^{\Ncal}} || u(\bfmu)-w ||_{X^e}\rightarrow 0 \mbox{ as } \Ncal \rightarrow \infty 
+\end{equation}
+
+The family of approximations to the exact problems is given by finding $u^{\Ncal}(\bfmu) \in X^{\Ncal}$ such that
+\begin{equation}
+a(u^{\Ncal}(\bfmu),v;\bfmu)=f(v;\mu) \hspace{1cm} \forall v \in X^{\Ncal}
+\end{equation}
+and evaluating 
+\begin{equation}
+s^{\Ncal}(\bfmu)=f(u^{\Ncal}(\bfmu); \bfmu)
+\end{equation}
+for a given $\bfmu \in \Dcal$. This is a standard Galerkin projection. We implicitly assume that we can represent the exact geometry of the domain, and that quadratures are exact. From \ref{eq:ApprCond} we have that as $\Ncal \rightarrow \infty$, $u^{\Ncal}(\cdot;\bfmu)\rightarrow u^e(\cdot;\bfmu)$. We define the error
+\begin{equation}
+\epsilon^{\Ncal}=\max_{\bfmu \in \Dcal} || u(\cdot;\bfmu)-u^{\Ncal}(\cdot;\bfmu) ||_{X^e}
+\end{equation}
+then $\epsilon^{\Ncal}\rightarrow 0$ as $\Ncal \rightarrow \infty$.
+
+If we expand the solution $u^{\Ncal}(\bfmu)$ in our basis $\psi^{\Ncal}_k$ as
+\begin{equation}\label{eq:FEbas}
+u^{\Ncal}(\bfx;\bfmu)=\sum^{\Ncal}_{j=1}u^{\Ncal}_j(\bfmu)\psi^{\Ncal}_j(\bfx),
+\end{equation}
+then
+\begin{equation}
+\underline{u}^{\Ncal}(\bfmu)\equiv[u_1^{\Ncal}\cdots u_{\Ncal}^{\Ncal}]^T \in \Rbb^{\Ncal}
+\end{equation}
+and the problem can be written
+\begin{equation}
+\underline{A}^{\Ncal}(\bfmu)\underline{u}^{\Ncal}(\bfmu)=\underline{F}^{\Ncal}(\bfmu)
+\end{equation}
+where the stiffness matrix $\underline{A}^{\Ncal}(\bfmu)\in \Rbb^{\Ncal\times \Ncal}$ has elements given by
+\begin{equation}
+A_{ij}^{\Ncal}(\bfmu)=a(\psi_j^{\Ncal},\psi_i^{\Ncal}; \bfmu)
+\end{equation}
+and the components of the load/source vector (and in the compliant case, output vector), are given by
+\begin{equation}
+F^{\Ncal}_i(\bfmu)=f(\psi_i^{\Ncal}; \bfmu).
+\end{equation}
+Invoking the affine properties of $f$ and $a$, we can write these as follows:
+\begin{equation}\begin{array}{c}
+\underline{A}^{\Ncal}(\bfmu)=\sum_{q=1}^{Q_a} \Theta^q_a(\bfmu)\Abb^{\Ncal_q}, \\ 
+\Abb^{\Ncal_q}_{ij}=a^q(\psi^{\Ncal}_j,\psi^{\Ncal}_i)\\
+1\leq i,j \leq \Ncal, \mbox{  } 1\leq q \leq Q_a
+\end{array}
+\end{equation}
+and 
+\begin{equation}
+\begin{array}{c}
+\underline{F}^{\Ncal}(\bfmu)=\sum_{q=1}^{Q_f} \Theta^q_f(\bfmu)\Fbb^{\Ncal_q}, \\ 
+\Fbb^{\Ncal_q}_{i}=f^q(\psi^{\Ncal}_i), \\
+1\leq i \leq \Ncal, \mbox{  } 1\leq q \leq Q_f
+\end{array}
+\end{equation}
+Note that $\Fbb^{\Ncal_q}$ and  $\Abb^{\Ncal_q}$ are parameter independent. We also introduce another parameter independent matrix $\Xbb^{\Ncal}$ :
+\begin{equation}\label{eq:XbbMat}
+\Xbb^{\Ncal}_{ij}=(\psi^{\Ncal}_j,\psi^{\Ncal}_i)_{X^{\Ncal}}, \mbox{  } 1\leq i,j \leq \Ncal
+\end{equation}
+so that for any two members $w,v \in X^{\Ncal}$ written in terms of the $\psi^{\Ncal}$ basis, the $X^{\Ncal}$- inner product can be written
+\begin{equation}
+(w,v)_{X^{\Ncal}}=\underline{w}^T\Xbb^{\Ncal}\underline{v}
+\end{equation}
+For a family of approximation spaces, we define the ``truth approximation space" $X^{\Ncal}$ to correspond to $\Ncal=\Ncal_t$, which is typically quite large, such that $\epsilon^{\Ncal_t}$ is smaller (in the worst case scenario) than some error threshold. We can then consider the parametrically induced manifold $\Mcal \equiv \{ u^{\Ncal_t}(\bfmu) | \bfmu \in \Dcal \}$, which is typically of comparably low dimension. We seek to represent the solution $u^{\Ncal}(\cdot; \bfmu)$ in terms of elements of the space $\mbox{span}\{\Mcal^{\Ncal_t}\}$.
+
+\section{Reduced Basis Approximation}
+\subsection{Lagrangian approach}
+For $\bfmu\in \Dcal $, approximate $u^{\Ncal_t}=u^{\Ncal_t}(\bfx;\bfmu)$ by a linear combination of $N$ precomputed ``snapshots" on $\Mcal^{\Ncal_t}$: $u^1, \cdots, u^N$. We specify the maximum dimension of the reduced basis space $N_{\mbox{max}}$. We introduce a set of parameter points $\bfmu^n \in \Dcal$ and define our RB samples sets
+\begin{equation}
+S_N = \{\bfmu_1, \cdots \bfmu_N\}
+\end{equation} 
+Note that these sets are nested $S_1 \subset S_2 \subset \cdots \subset S_{N_{max}}\subset \Dcal$. The ``snapshots'' are then 
+\begin{equation}
+u^n \equiv u(\cdot;\bfmu^n)
+\end{equation}
+in terms of which we define our Lagrange RB spaces:
+\begin{equation}
+W_N = \mbox{span}\{u^n, 1 \leq n \leq N \} \mbox{  } 1 \leq N \leq N_{\mbox{max}}
+\end{equation}
+These spaces are hierarchical. It is also possible to define the RB spaces in other ways, for example the Taylor RB spaces are generated by both the field $u^n$ and the field sensitivity derivatives- the derivative of $u(\cdot;\bfmu^n)$ with respect to $\bfmu$- at a particular point in $\Dcal$, while the Hermite RB spaces combine both of these and consider the field and sensitivity derivatives at several points in $\Dcal$. 
+
+The snapshots can be written in terms of the finite element basis function $\psi^{\Ncal_t}_i$ as per equation \ref{eq:FEbas}. We can then construct an orthogonal basis for the Lagrange RB space using Gram Schmidt orthogonalisation with $\Xbb$ the inner product matrix defined in \ref{eq:XbbMat}.:
+%\begin{algorithm}
+%\caption{Gram-Schmidt Orthogonalisation}\label{alg:GSO}
+%\begin{algorithmic}
+%\State $\underline{\hat{u}}^1 = \underline{u}^1/\sqrt{(\underline{u}^{1})^T \Xbb \underline{u}^{1}} $
+%\For{$n=2 : N_{\mbox{max}}}$
+%\State $\underline{v}^n=\underline{u}^n-\sum_{m=1}^{n-1}((\underline{u}^{n})^T \Xbb \underline{\hat{u}}^{m})\underline{\hat{u}}^m$
+%\State $\underline{\hat{u}}^n = \underline{v}^n / \sqrt{(\underline{v}^{n})^T \Xbb \underline{v}^{n}} $
+%\EndFor
+%\end{algorithmic}
+%\end{algorithm}
+
+We can now define ``basis" matrices $\Zbb^{\Ncal_t}_N \in \Rbb ^{\Ncal_t \times N}$ as 
+\begin{equation}
+\Zbb^{\Ncal_t}_{N j n}=\hat{u}^n_j
+\end{equation}
+That is the $n$th column of $\Zbb^{\Ncal_t}_{N_{\mbox{max}}}$ contains the vector of truth approximation finite element basis coefficients associated with the $n$th RB basis function. Note that $\Zbb^{\Ncal_t}_n$ is a principal submatrix of $\Zbb_{n+1}$. We can express the orthogonality condition as 
+\begin{equation}
+\Zbb^T_{N_{\mbox{max}}} \Xbb \Zbb_{N_{\mbox{max}}}=\Ibb_{N_{\mbox{max}}}
+\end{equation}
+
+We can now express our problem in the RB approximation space. We look for $u_{X_N} \in X_N$ such that 
+\begin{equation}
+a(u_{X_N},v;\bfmu)=f(v;\bfmu), \mbox{  } \forall v \in X_N
+\end{equation}
+and evaluate 
+\begin{equation}
+s_{X_N}(\bfmu)=f(u_{X_N}(\bfmu);\bfmu)
+\end{equation}
+
+
+
+\section{Reduced basis for binary coalescences}
+Binary coalescence systems are described by eight parameters: the mass of each of the compact objects, the spin magnitude, and the spin orientation (2 parameters for each object).
+
+Search via matched filtering- comparing possible waveform templates to actual data from detector. For low mass systems the inspiral part of the coalescence is at detectable frequencies. At higher masses, the merger part is (this requires NR techniques). These are expensive, therefore we search for the most relevant points in the parameter space. Searching is also expensive AND time critical so that events can be matched with EM astronomy.
+
+GW is dependent on time (or frequency) and $P$ parameters $\overrightarrow{\mu}={\mu_1, ...,\mu_P}$. Denote a GW by $h_{\overrightarrow{\mu}}$. $\mathcal{H}$ is the space of all normalised GWs for a source. This space is non-linear, but can be represented by a linear space to arbitrarily high accuracy.
+
+Approximate $\mathcal{H}$ with best linear combinations of members $\Psi_i \equiv h_{\overrightarrow{\mu_i}}$ of a catalogue $C_N=\{\Psi_i\}^N_{i=1}$. The reduced basis space is $W_N=span(C_N)$. 
+
+Optimal method: Choose waveforms to make this catalog so that the error in representing $\mathcal{H}$ with $W_N$ is minimised over the choice of $N$ catalogue members. Optimal error given by Kolmogorov $N$ width:
+\[ d_N(\mathcal{H})= \min_{C_N} \max_{\overrightarrow{\mu}} \min_{u \in W_N } \| u-h_{\overrightarrow{\mu}} \| \]
+
+
+Where the norm is calculated from the complex inner product such that for two waveforms $F$ and $G$ in Fourier space
+\[ \left\langle F,G \right\rangle \equiv \int^{f_U}_{f_L}\frac{F^*(f)G(f)}{S_n(f)}df \]
+where $S_n(f)$ is the power spectral density of the detector.
+
+In reality, this approach is too computationally expensive. Use greedy method.
+
+\section{Greedy Algorithm}
+A greedy algorithm solves a problem by making the locally optimal choice at each stage in the hope that this will lead to a global optimum.
+
+Choose a waveform with arbitrary parameter value. Basis vector $e_1 =h_{\overrightarrow{\mu_1}}$ is identified with this waveform, and the first catalogue $C_1={\Psi_1=h_{\overrightarrow{\mu_1}}}$. Subsequent catalogues are built by adding another waveform by finding
+\begin{equation}
+\overrightarrow{\mu_j}=\argmin_{\mu} \| h_{\mu}-P_{j-1}(h_{\mu})\|
+\end{equation}
+where $P_N(h_{\mu})= \sum_{i=1}^N e_i \langle e_i, h_{\mu} \rangle$ is the representation of $h_{\mu}$ using the catalogue $C_N$ obtained by finding orthogonal projection of $h_{\mu}$ onto $W_N$. Note that this creates a hierarchical sequence of catalogues $C_1 \subset C_2 ...$.
+
+The \textit{greedy error} $\epsilon_N$ is the maximum error for a catalog $C_N$, given by
+\begin{equation}
+\epsilon_N \equiv \max_\mu \| h_{\overrightarrow{\mu}} - P_N(h_{\mu} \|
+\end{equation}
+It can be shown that if the decay of the $N$-width can be bounded by an exponential, $d_N(\mathcal{H}) \leq A \exp^{-c N^\alpha}$ for some real $c$ and $\alpha$, then $\epsilon_N  \leq \tilde{A} \exp^{-d N^\beta}$ where $d$ and $\beta$ depend on $c$ and $\alpha$. 
+
+%\end{document}

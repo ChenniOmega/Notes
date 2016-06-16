@@ -1,0 +1,53 @@
+\input{ThesisPreamble}
+\begin{document}
+
+\chapter{Reduced basis methods for parameterised PDEs}
+
+%\chapter{Parameterised Models}
+%We consider a model that can be described in four distinct steps. First, a parameter value is chosen from the $m$ dimensional parameter space. The initial condition is then found by solving a parameterised elliptic partial differential equation for the chosen parameter $p$. The time evolution is performed by solving a hyperbolic equation with the previously calculated initial condition, and the data is extracted from these solutions. 
+%\begin{equation}
+%\mathbf{p}\in \mathbb{R}^N \rightarrow u_0 \in H[0,1] \rightarrow u \in L_2 (\mathbb{R}, H) \rightarrow y \in L_2(\mathbb{R})
+%\end{equation}
+%We are interested in reconstructing the parameters $\bfp$ from (possibly noisy) output data $\bfy_d$. This involves finding the solution to an inverse problem. We pose this as a statistical inverse problem, and apply reduced basis methods for efficiency.
+
+\section{Forward model}
+Let $\bfp \in \mathcal{P} \subset \mathbb{R}^N$ be a parameter vector, and $\Omega \in \mathbb{R}^d$ be our function domain. The forward model $\mathcal{M}: \mathcal{P}\times \Omega \rightarrow $
+
+\section{Statistical Inverse Problems}
+In a deterministic setting, regularisation and optimisation techniques are used to find a single point estimate of the parameter $\bfp$. A statistical formaulation returns a probability density function over parameter space describing the relative likelihood of observation-consistent parameters, called the `posterior distribution', $\pi(\bfp| \bfy_d)$.
+
+Here we infer properties of the probability distribution of model parameters $\bfp\in\R^N$ 
+from observations $\bfy_d\in\R^m$. 
+We adopt a Bayesian approach where a prior probability density $\pi(\bfp)$ of $\bfp$ is given. 
+We also assume that our model of the observations provides us with
+a likelihood function $\pi(\bfy_d\mid \bfp)$ of the data $\bfy_d$. 
+The data $\bfy_d$ is treated as a random vector $\bfy$ with probability distribution $\pi(\bfy\mid \bfp)$ and we denote the expectation as
+\begin{equation*}
+\bfy(\bfp) := E(\bfy\mid \bfp).
+\end{equation*}
+
+Bayes' law leads to a formula for the posterior probability density of $\bfp$ as
+\begin{equation}\label{eqn:bayes}
+\pi(\bfp\mid \bfy_d) \propto \pi(\bfp)\,\pi(\bfy_d\mid \bfp).
+\end{equation}
+This probability density could then be further explored for example, in order to find marginals or
+moments of the posterior or even the MAP (maximum a posteriori) estimate which is of the form
+\begin{equation}\label{eqn:PMAPfull}
+\bfp_{\MAP} = \argmax_{\bfp\in\R^N} \pi(\bfp\mid \bfy_d).
+\end{equation}
+In any case, the exploration of the posterior $\pi(\bfp\mid \bfy_d)$ requires its numerical evaluation typically many times. 
+In our case each evaluation of the likelihood (and thus the posterior) 
+requires an expensive numerical simulation.
+
+\subsection{Reduced basis method}
+
+In order to decrease the computational load required we reduce the parameter space from $\R^N$ to $\R^{N_r}$ as any exploration or computation in a lower dimensional space is cheaper. 
+For this we generate a sequence of parameter vectors $\bfp_1, \bfp_2,\ldots$ in $\R^N$ which are defined using a greedy algorithm %as in \citep{Lieberman:2010:PSM:1958688.1958693}
+\begin{equation}\label{eq:greedyOpt}
+\bfp_{k+1} = \argmax_{\bfp\in\R^N} \left(\frac{1}{2}\|\bfy(\bfp)-\bfy(Q_k \bfp)\|^2 + \beta \log \pi(\bfp)\right),
+\end{equation}
+where the $Q_k:\R^N\rightarrow \R^N$ are orthogonal projections with 
+$\range(Q_k)=\span\{\bfp_1,\ldots,\bfp_k\}$ for $k\geq 1$ and $Q_0:=0$. 
+This choice introduces the new $\bfp_{k+1}$ to make sure that a large number of observations $\bfy_d$ can be approximated in the range of $Q_{k+1}$ while exploring parameter vectors which are sufficiently likely according to the prior.
+
+\end{document}

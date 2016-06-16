@@ -1,0 +1,136 @@
+\chapter{Functions, Spaces and Norms}
+
+A mixed partial derivative of a function can be written in \textit{multi-index notation}. Let $d \in \Nbb$, and $\alpha = (\al_1,\ldots,\al_d)$ be a $d$-tuple of non-negative integers. The length of $\al$ is given by $| \al | \equiv \sum_{i=1}^{d} \al_i$. Then for a function $f \in C^{|\al|}(\Omega)$, where $\Omega$ is an open subset of $\Rbb^d$, the mixed partial deriviative of $f$ is given by 
+\[ D^{\al} f = (\frac{\pd}{\pd x_1})^{\al_1}\ldots (\frac{\pd}{\pd x_d})^{\al_d} f. \]
+
+Here $C^k (\Omega)$, $k\in \Zbb_+$ is the set of all continuous real valued functions $f$ on $\Omega$ such that $D^{\al} f \in C(\Omega)$  $\forall \alpha$ s.t. $|\al|\leq k$. 
+
+If $\Omega$ is a bounded open set, $C^k(\overline{\Omega})$ denotes the set of all $u\in C^k(\Omega)$ such that $D^{\al}u$ can be extended to a continuous function on $\overline{\Omega}$, the closure of $\Omega$, for all $\al$ such that $|\al|\leq k$. 
+
+\begin{defn}
+A normed space $W$ is \textbf{complete} if every Cauchy sequence in $W$ converges to an element in $W$.
+\end{defn}
+
+\begin{defn}
+A complete normed space is called a \textbf{Banach space}.
+\end{defn}
+
+\begin{defn}
+A compelete inner product space is called a \textbf{Hilbert space}.
+\end{defn}
+
+\begin{lemma}
+\textbf{(Cauchy-Schwarz inequality)}
+Let $W$ be a Hilbert space equipped with the inner product $\langle\cdot,\cdot\rangle_W$ and $u,v\in W$. Then
+\[ | \langle u,v \rangle_W \leq \| u \|_W \|v \|. \]
+\end{lemma}
+
+\begin{lemma}
+\textbf{(Triangle Inequality)}
+Let $W$ be a Hilbert space equipped with the inner product $\langle\cdot,\cdot\rangle_W$ and $u,v\in W$. Then
+\[ \| u+v \|_W \leq \| u \|_W + \| v \|_W \]
+\end{lemma}
+
+
+
+\section{H\"older Continuity} 
+Let $\Omega \subset \Rbb^d$ be open, and $0<\gamma \leq 1$. A function $u:\Omega \rightarrow \Rbb$ is said to be \textit{H\"older continuous with exponent $\gamma$} if 
+\begin{equation}
+| u(x) - u(y) | \leq C |x-y |^{\gamma}
+\end{equation}
+for some constant $C$. 
+
+\begin{defn}
+\begin{enumerate}
+\item If $u:U \rightarrow \Rbb$ is bounded and continuous we write 
+\[ \| u \|_{C(\overline{\Omega})} \equiv \sup_{x\in U} |U(x) | \]
+\item 
+\end{enumerate}
+\end{defn}
+
+\section{Lipschitz Continuity}
+
+\section{Lebesgue Spaces}
+Let $\Omega \subset \Rbb^d$ be a Lipschitz domain and $u$ be a real valued function defined on $\Omega$. For $1\leq p < \infty$, the \textbf{Lebesgue space} $L^p(\Omega)$ is 
+\begin{equation}
+\label{def:LpSpace}
+L^p{\Omega} := \left \lbrace u : \int_{\Omega} |u(x) | ^p dx < \infty \right\rbrace.
+\end{equation} 
+This space has a natural norm defined by $\| u \|_{L^p(\Omega)}=(\int_{\Omega} |u(x) | ^p dx)^{\frac{1}{p}}$. To define the Lebesgue space for $p=\infty$ we need the following definitions.
+
+\begin{defn}
+A subset $A$ of $\Rbb^d$ is said to have \textbf{measure zero} if for every $\epsilon > 0$ there exists a set of open cubes $ \{ U_k \}^{\infty}_{k=1}$ such that $A \subset \bigcup^{\infty}_{k=1} U_k$ and $\sum^{\infty}_{k=1} vol(U_k) < \epsilon$.
+\end{defn}
+
+For example, $A$ could be a set of distinct points. It is always possible to make smaller boxes around this set of points, so $A$ is a set of measure zero.
+
+\begin{defn}
+The \textbf{essential supremum} of a measurable function $u: \Omega \rightarrow \Rbb$ is the smallest $a \in \Rbb$ such that the set $\{\xbf \in \Omega : u(\xbf) > a \}$ has measure zero. If no such $a$ exists, $ \mbox{ess} sup_{\xbf \in \Omega} u(\xbf) = \infty $.
+\end{defn}
+
+\begin{equation}
+\label{def:LinfSpace}
+L^{\infty}(\Omega) := \left \lbrace u : \mbox{ess} \sup_{\xbf \in \Omega} | u(\xbf) | < \infty \right\rbrace
+\end{equation}
+with norm $\|u \|_{L^{\infty}(\Omega)} := \mbox{ess} \sup \{ | u(\xbf) |, \xbf \in \Omega \}$.
+
+\begin{lemma}
+\textbf{H\"o lder inequality}
+Let $u\in L^p(\Omega)$ and $v\in L^{p'}(\Omega)$ with $1/p + 1/p' =1$. Then
+\[ \| \int_{\Omega} u(\xbf)v(\xbf)dx | \leq \| u \|_{L^p(\Omega)} \| v \|_{L^{p'}(\Omega)} \]
+\end{lemma}
+
+\section{Sobolev Spaces}
+The set of functions $u \in C^{\infty} (\Omega)$ with compact support is denoted $\Dcal(\Omega)$. The set of \textbf{locally integrable functions} is defined as 
+\[ L^1_{loc}(\Omega) := \{u : u\in L^1(K), \mbox{ for compact } K \subset \Omega \}. \]
+
+\begin{defn}
+A function $f \in L^1_{loc}(\Omega)$ has a \textbf{weak derivative} $D^{\alpha}_w $ if there exists a function $g \in L^1_{loc}(\Omega)$ such that
+\[ \int_{\Omega} g(\xbf) \phi (\xbf) dx = (-1)^{|\alpha |} \int_{\Omega} f(\xbf)D^{\alpha}_q \phi (\xbf) dx,\mbox{ } \phi\in \Dcal(\Omega). \]
+If such a $g$ exists, we define $D^{\alpha}_w f := g$. 
+\end{defn}
+
+We can now define the \textbf{Sobolev Spaces} $W^{k,p}(\Omega)$ as
+\[  W^{k,p}(\Omega) := \{ u\in L^1_{loc}(\Omega) : \|u \|_{W^{k,p}(\Omega)} < \infty \} \]
+where the norm $\|u \|_{W^{k,p}(\Omega)}$ is defined by
+\[\|u \|_{W^{k,p}(\Omega)} = \left\{ \begin{array}{ll}
+ \left( \sum_{|\alpha| \leq k} \|D^{\alpha}_w u \|^p_{L^p(\Omega)} \right)^{1/p} &\mbox{ for } 1 \leq p < \infty \\
+  \max_{|\alpha|\leq k} \|D^{\alpha}_w u \|_{L^p(\Omega)} &\mbox{ for } p=\infty. \\
+       \end{array} \right. \]
+
+For the special case $p=2$ the Sobolev space $W^{k,2}(\Omega)$ is denoted $H^k(\Omega)$, and an inner product is induced on this space by the norm. 
+
+\begin{thm}
+The Sobolev space $W^{k,p}(\Omega)$ is a Banach space.
+\end{thm}
+
+\begin{thm}
+The space $H^{k}(\Omega)$ is a Hilbert space.
+\end{thm}
+
+\begin{defn}
+A \textbf{functional} is a function from a vector of function space into its underlying scalar field, or a set of functions to the real numbers. A functional on a real vector space $V$ is \textbf{linear} if $f(v+w) = f(v) + f(w)$ and $f(cv)=cf(v)$ $\forall$ $v,w \in V$ and $c\in \Rbb$.
+\end{defn}
+
+\begin{defn}
+Let $V$ be a vector space. The \textbf{dual space} of $V$ is the space consisting of all continuous linear functionals on $V$, and is denoted $V'$.
+\end{defn}
+
+\begin{thm}
+\textbf{(Riesz representation theorem)}
+Any continuous functional $L$ on a Hilbert space $H$ with the inner product $\langle \cdot, \cdot \rangle$ can be represented uniquely as 
+\[ L(v) = \langle u, v \rangle_H \mbox{ for some } u\in H \]
+Moreover, we have 
+\[ \|L\|_{H'} = \| u \|_H . \]
+\end{thm}
+
+\begin{lemma}
+\textbf{(Lax-Milgram)}
+Suppose that $V$ is a real Hilbert space equipped with norm $\| \cdot \|_V$. Let $l(\cdot)$ be a continuous linear functional on $V$, and $a(\cdot,\cdot)$ a continuous, coercive bilinear functional on $V \times V$. Then there exists a unique $u \in V$ such that 
+\[ a(u.v) = l(v) \mbox{  } \forall v \in V. \]
+The solution is stable with respect to the right hand side such that 
+\[ \|u\|_V \leq C \|l \|_{V'}. \]
+\end{lemma}
+
+
+

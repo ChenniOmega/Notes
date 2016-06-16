@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,graphics, setspace}
+\def\pd{{\partial}}
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\tmdfn}[1]{\textbf{#1}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\title{Spherical Symmetry}\author{Chaitanya Shettigara}\maketitle
+
+\section{Introduction}
+Here I describe the methods of numerical relativity using the ADM equations with the example of a Schwarzschild spacetime (the spherically symmetric vacuum spacetime outside a spherically symmetric massive body) which we can write in isotropic coordinates as
+\begin{equation}
+ ds^2 = - \left( \frac{1 - M / \left( 2 r \right)}{1 + M /
+   \left( 2 r \right)} \right)^2 dt^2 +\left(1+\frac{M}{2r}\right)^4(dr^2+r^2d\theta^2+r^2\sin^2\theta d\phi^2 ) .
+   \end{equation}\label{Iso4Metric}
+The inverse of this metric is 
+\begin{equation}
+g^{\alpha \beta}=\left( \begin{array}{cccc}
+-\left(\frac{M+2r}{M-2r}\right)^2 & 0 & 0 & 0 \\
+0 & \frac{4r^2}{(M+2r)^2} & 0 & 0 \\
+0 & 0 & \frac{4}{(M+2r)^2} & 0 \\
+0 & 0 & 0 & \frac{4}{\sin^2 \theta (M+2r)^2}
+\end{array} \right)
+\end{equation}
+The non-zero Christoffel Symbols are
+\begin{equation} \begin{array}{ccl}
+\Gamma^0_{10} &=& \frac{2M(-1+Mr+r^2)}{r(M+2r)(-2+Mr)}\\
+\Gamma^1_{00} &=& \frac{8Mr^3(-2+Mr)(-1+Mr+r^2)}{(M+2r)^5}\\
+\Gamma^1_{11} &=& -\frac{M}{Mr+2r^2}\\
+\Gamma^1_{22} &=& -\frac{2r^2}{M+2r}\\
+\Gamma^1_{33} &=& -\frac{2r^2\sin^2 \theta}{M+2r} \\
+\Gamma^2_{21} &=& \frac{2}{M+2r} \\
+\Gamma^2_{33} &=& -\cos \theta \sin \theta \\
+\Gamma^3_{31} &=& \frac{2}{M+2r} \\
+\Gamma^3_{32} &=& \frac{1}{\tan\theta}
+\end{array} 
+\end{equation}
+
+
+\section{Foliations of Spacetime}
+We want to formulate an evolution of a physical system as an initial value or Cauchy problem: given initial and boundary conditions we want to be able to predict the future or past evolution of a system. We need to specify the metric $g_{\alpha \beta}$ and it's time derivative $\pd_t g_{\alpha \beta}$ at an intial time $t$. 
+
+Einstein's field equations are written in a way that space and time are treated in an equal footing. In order to rewrite them as a Cauchy problem, we need to split the space and time in a clear way. This is 3+1 formalism.
+
+Consider a space time with metric $g_{\alpha \beta}$. if such a spacetime can be completely foliated (sliced into 3-D cuts) such that each 3D slice is spacelike, than we say the spacetime is ``globally hyperbolic". A globally hyperbolic spacetime has no closed timelike curves, which means no time travel to the past. We can slice the spacetime into a series of 3D spacelike hypersurfaces $\Sigma$. This foliation is not unique. We can parameterize the foliation with a parameter $t$ that identifies each of the slices, then $t$ can be considered as a ``universal time function" (but $t$ does not necessarily coincide with the proper time of any observer). From $t$ we can define the 1-form
+\[ \Omega_\alpha = \nabla_\alpha t\]
+which has norm given by 
+\[ ||\Omega||^2 = g^{\alpha \beta} \nabla_\alpha t \nabla_\beta t \equiv -\alpha^{-2}, \]
+so we can write the normalised 1-form
+
+\[ \omega_\alpha \equiv \alpha \Omega_\alpha \]
+ and define the unit normal to the slices (this can be thought of as the 4-velocity of a normal observer whose worldline is always normal to the spatial slices $\Sigma$, the ``Eulerian observers")
+\[ n^\alpha \equiv -g^{\alpha \beta} \omega_\beta. \]
+Note that $n^\alpha$ is not dual to the 1-form $\Omega_\alpha$:
+\[ n^\alpha \Omega_\alpha = -\alpha g^{\alpha \beta} \nabla_\alpha t \nabla_\beta t = \alpha^{-1} \]
+however we can construct a dual vector using an arbitrary spatial vector $\beta^\alpha$:
+\[ t^\alpha = \alpha n^\alpha + \beta^\alpha. \]
+If we choose $t^\alpha$ to be the congruence along which we propagate the spatial grid (i.e. $t^\alpha$ connects points with the same spatial coordinates on neighbouring time slices), then we can identify $\alpha$ as the amount proper time elapses between spatial slices along the normal vector, and $\beta^\alpha$ as the amount by which the spatial coordinates shift with respect to the normal vector. Thus $\alpha$ is called the ``lapse", and $\beta^\alpha$ is called the ``shift". 
+
+We can now construct the spatial metric $\gamma_{ab}$ that is induced by  the spacetime metric $g$ on the 3 dimensional hypersurfaces $\Sigma$
+\[ \gamma_{ab} = g_{ab} + n_a n_b \]
+Intuitively,  $\gamma_{ab}$ calculates the spacetime distance with $g_{ab}$ and then kills off the timelike contribution with $n_a n_b$.
+
+It makes sense to choose co-ordinates that reflects the 3+1 system we have constructed. To do so we construct a basis of three spatial vectors $e^\alpha_{(i)}$ that span a particular time slice $\Sigma$ i.e.
+\[ \Omega_\alpha e^\alpha_{(i)}=0. \]
+These are extended to other slices by Lie dragging along $t^\alpha$:
+\[ \mathcal{L}_{\mathbf{t}} e^\alpha_{(i)}=0 \]
+Then for the timelike basis vector we simply choose $e^\alpha_{(0)}=t^\alpha$. As $t^\alpha$ is dual to $\Omega_\alpha$ this implies it has components 
+\[ e^\alpha_{(0)}=t^\alpha=(1,0,0,0). \]
+We also have
+\[ \Omega_\alpha e^\alpha_{(i)}= -\frac{1}{\alpha}n_\alpha e^\alpha_{(i)}=0 \]
+which, since the $e^\alpha_{(i)}$ span $\Sigma$, tell us the covariant spatial components of the normal vector vanish $n_i=0$. Therefore $n_a \beta^a = n_0 \beta^0 =0$ so $\beta^\alpha = (0, \beta^i)$. We can now solve for $n^\alpha$:
+\[ n^\alpha =(\alpha^{-1},-\alpha^{-1}\beta^i) \]
+and from the normalisation condition:
+\[ n_\alpha=(-\alpha, 0,0,0).\]
+Therefore our spatial metric $\gamma_{ij}=g_{ij}$ i.e. the metric on the spatial hypersurface is just the spatial part of the 4-metric. In fact, it can be shown that the components of the 4-metric are:
+ \begin{equation}
+ g_{\alpha \beta}=\left( \begin{array}{cc}
+ -\alpha^2 + \beta_l \beta^l & \beta_i \\
+ \beta_j & \gamma_{ij} \\ \end{array} \right)
+ \end{equation}
+
+
+For our Schwarzschild example, let us take the spatial slices $\Sigma$ to be hypersurfaces of constant coordinate time $t$. Then the 1-form $\Omega_\alpha = (1,0,0,0)$, the lapse $\alpha = \frac{1-M/(2r)}{1+M/(2r)}$, the normal 
+\[ n^\alpha=\frac{1+M/(2r)}{1-M/(2r)}(1,0,0,0), \]
+and the spatial metric becomes
+\begin{equation}
+ \gamma_{ab}=\left( 1+ \frac{M}{2r} \right)^4 diag(1,r^2, r^2 \sin^2\theta). 
+\end{equation}\label{Iso3Metric}
+By comparison with (\ref{Iso4Metric}) we can also see the shift vector $\beta^i=0$.
+
+The non-zero Christoffel Symbols for this metric are 
+\begin{equation} \begin{array}{ccl}
+\Gamma^1_{11} &=& -\frac{2M}{r(M+2r)}\\
+\Gamma^1_{22} &=& \frac{(M-2r)r}{M+2r}\\
+\Gamma^1_{33} &=& \frac{r(M-2r)\sin^2\theta}{M+2r}\\
+\Gamma^2_{21} &=& -\frac{M-2r}{r(M+2r)}\\
+\Gamma^2_{33} &=& -\cos\theta\sin\theta\\
+\Gamma^3_{31} &=& -\frac{M-2r}{r(M+2r)}\\
+\Gamma^3_{32} &=& -\cot\theta\\
+\end{array}\end{equation}\label{Christoffel3}
+
+Non-zero Riemann tensor components:
+\begin{equation} \begin{array}{ccl}
+ R^1_{221}  &=& \frac{4 M r}{(M+2 r)^2} \\
+ R^1_{331}  &=& \frac{4 M r \text{Sin}[\theta ]^2}{(M+2 r)^2} \\
+ R^2_{121}  &=& -\frac{4 M}{r (M+2 r)^2} \\
+ R^3_{332}  &=& -\frac{8 M r \text{Sin}[\theta ]^2}{(M+2 r)^2} \\
+ R^3_{131}  &=& -\frac{4 M}{r (M+2 r)^2} \\
+ R^3_{232}  &=& \frac{8 M r}{(M+2 r)^2}\\
+\end{array}\end{equation}\label{Riemann3}
+
+And non-zero Ricci tensor components:
+\begin{equation}\begin{array}{ccl}
+ R_{11} &=& -\frac{8 M}{r (M+2 r)^2} \\
+ R_{22} &=& \frac{4 M r}{(M+2 r)^2} \\
+ R_{33} &=& \frac{4 M r \text{Sin}[\theta ]^2}{(M+2 r)^2}\\
+\end{array} \end{equation}\label{Ricci3}
+
+\section{Projections}
+We need to be able to break up 4-dimensional tensors into a spatial part which lies in the hypersurface, and timelike part. To do so, we define two projection operators. The first projects into the hypersurface and is defined as 
+\[ P^\alpha _\beta = \delta ^\alpha _\beta + n^\alpha n_\beta \]
+To project a tensor of arbitrary rank, we simply contract all free indices with the projection operator e.g.
+\[ PT_{\alpha \beta} \equiv P^\mu_\alpha P^\nu_\beta T_{\mu \nu} \]
+The normal operator is defined as 
+\[ N^\alpha_\beta \equiv \delta^\alpha_\beta - P^\alpha_\beta. \]
+
+\section{Curvature}
+The intrinsic curvature of the hypersurfaces is given by the three dimensional Riemann tensor defined in terms of the 3-metric $\gamma_{ab}$. 
+
+The extrinsic curvature is defined in terms of what happens to the normal vector $n^\alpha$ as it is parallel transported from one point in the hypersurface to another. The ``extrinsic curvature tensor" $K_{\alpha \beta}$ is a measure of the change of the normal vector under parallel transport. It can be found by projecting gradients of the normal vector into the slice $\Sigma$ 
+\[ K_{\alpha \beta} = -P\nabla_\alpha n_\beta \] 
+
+For our Schwarzschild metric (\ref{Iso4Metric}) we have:
+\begin{equation} \begin{array}{ccl}
+K_{\alpha \beta} &=& -(\delta _\alpha ^\mu + n_\alpha n^\mu)(\delta ^\nu _\beta + n_\alpha n^\nu)\nabla_\mu n_\nu \\
+
+ &=& -\delta _\alpha ^\mu \delta ^\nu _\beta \nabla_\mu n_\nu -
+ 	\delta_\alpha^\mu n_\beta n^\nu \nabla_\mu n_\nu-
+ 	\delta_\beta^\nu n_\alpha n^\mu \nabla_\mu n_\nu-
+	 n_\alpha n^\mu n_\beta n^\nu \nabla_\mu n_\nu \\
+ &=& -\nabla_\alpha n_\beta +
+ 	n_\beta \left(\frac{1+M/(2r)}{1-M/(2r)}\right)\nabla_\alpha \left(\frac{1-M/(2r)}{1+M/(2r)}\right)- 
+ 	n_\alpha \left(\frac{1+M/(2r)}{1-M/(2r)}\right)\nabla_t n_\beta +\\
+ & &
+ 	n_\alpha \left(\frac{1+M/(2r)}{1-M/(2r)}\right)n_\beta \left(\frac{1+M/(2r)}{1-M/(2r)}\right) \nabla_t \left(\frac{1-M/(2r)}{1+M/(2r)}\right) \\
+ &=& -\nabla_\alpha n_\beta +
+ 	n_\beta \left(\frac{1+M/(2r)}{1-M/(2r)}\right)\nabla_\alpha \left(\frac{1-M/(2r)}{1+M/(2r)}\right)
+ \end{array}
+\end{equation} 
+
+By inspection of $n$, we only need to worry about the $t,r$ components
+
+\begin{equation} \begin{array}{ccl}
+K_{tr} &=& -\nabla_t (0) + 0 \left(\frac{1+M/(2r)}{1-M/(2r)}\right)\nabla_t \left(\frac{1-M/(2r)}{1+M/(2r)}\right) =0 \\
+K_{rt} &=& -\nabla_r \left(-\frac{1-M/(2r)}{1+M/(2r)}\right) +\left(-\frac{1-M/(2r)}{1+M/(2r)}\right) \left(\frac{1+M/(2r)}{1-M/(2r)}\right)\nabla_r \left(\frac{1-M/(2r)}{1+M/(2r)}\right)\\ & & =0 \\
+K_{rr} &=& 0 \\
+K_{tt} &=& 0
+\end{array}\end{equation}
+
+\section{ADM equations}
+I will fill in the blanks later, but for now I will simply write down the 3+1 equations:
+
+The \emph{Hamiltonian Constraint}
+\begin{equation}
+R+K^2-K_{ij}K^{ij}=16\pi \rho
+\end{equation}\label{Hamiltonian}
+Where $R$ is the Ricci scalar associated with the 3 metric, $K\equiv \gamma^{ij}K_{ij}$ is the trace of the extrinsic curvature and $\rho=n_\alpha n_\beta T^{\alpha \beta}$ is the energy density of matter as measured by the Eulerian observers.
+
+The \emph{Momentum Constraint}
+\begin{equation}
+D_j \left[ K^{ij}-\gamma^{ij}K \right]=8\pi j^i
+\end{equation}\label{Momentum}
+Where $D_j$ is our three dimensional covariant derivative, and $j^i=P^i_\beta \left(n_\alpha T^{\alpha \beta}\right)$ is the momentum flux of matter as measured by Eulerian observers.
+
+The \emph{evolution equation for the spatial metric} is
+\begin{equation}\label{SpatialMetricEvo}
+\pd_t \gamma_{ij}=-2\alpha K_{ij} + D_i\beta_j + D_j \beta_i
+\end{equation}
+and the \emph{evolution equation for the extrinsic curvature} is
+\begin{equation}\begin{array}{ccl}
+\partial_t K_{ij} &=& \beta^a \partial_a K_{ij} + K_{ia} \partial_j \beta^a + K_{ja}\partial_i \beta^a \\
+ & & - D_i D_j \alpha + \alpha[R^{(3)}_{ij}-2K_{ia}K^a_j + K_{ij} \mbox{tr} K] \\
+ & & +4\pi\alpha[\gamma_{ij}(\mbox{tr} S-\rho)-2S_{ij}] 
+\end{array} \end{equation}\label{ExtrinsicCurvatureEvo}
+
+For our motivating example, the spatial metric (\ref{Iso3Metric}) is independent of time, and the shift vector $\beta^i$ is zero, so (\ref{SpatialMetricEvo}) tells us the extrinsic curvature $K_{ij}=0$, as we found earlier. 
+
+
+
+
+
+ 
+\end{document}

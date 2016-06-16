@@ -1,0 +1,223 @@
+%\documentclass[12pt]{report}
+%\newtheorem{defn}{Definition}[section]
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+%\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
+%\newenvironment{proof}
+%       {\begin{flushleft} \begin{description}
+%              \item \textit{\textbf{Proof:}}}
+%        {\hfill\rule{2.1mm}{2.1mm}
+%              \end{description}\end{flushleft}}
+%%\newenvironment{myexample}{\begin{flushleft}
+%%i would like to make defn in a slightly different font to distinguish it from normal text
+%\usepackage{amssymb, mathrsfs, graphicx}
+%\addtolength{\textwidth}{100pt}
+%\addtolength{\oddsidemargin}{-50pt}
+%\addtolength{\evensidemargin}{-50pt}
+%\linespread{1.2}
+%\def\R{{\mathbb R}}
+%\def\pd{{\partial}}
+%\def\Lie{{\mathcal{L}}}
+%\def\d{{\mbox{d}}}
+%\def\grad {{\nabla}}
+%\def\ga{{\gamma}}
+%\begin{document}
+
+\chapter{Formalism of Numerical Relativity}      
+     
+\section{Introduction}     
+There are several formalisms used in numerical relativity. These include 
+\begin{itemize}
+\item the ``3+1 formalism"
+\item the ``characteristic formalism"
+\item the ``conformal formalism".
+\end{itemize}
+
+ADM, hyperbolicity, BSSN. There also exists spectral etc
+Initial data problem. Parameters for BBH.
+Matching PN methods.
+Extracting GW signatures.
+
+\begin{itemize}
+\item During inspiral and after the merger during the ringdown, can use perturbative (Post-Newtonian) methods (McWilliams- that's all he said about it) expansion in powers of $v/c$
+\item NR needed in merger phase. Match NR to PN in transition phases. How to know what the matching point is? Equal mass, no spin can match at 10 orbits before merger, but for midrange mass ratios and moderate spins PN is still inaccurate dozens of orbits out \cite{Scheel2013}. Compare longest waveforms.
+\item choices of $\alpha$ and $\beta$ lead to different numerical properties- for 4 decades most research was dedicated to finding stable choices (McWilliams). 
+\end{itemize}
+
+%\section{The 3+1 formalism}
+The Einstein field equations are written in such a way that space and time are treated with equal footing. This is very elegant, but in order to study the evolution of a system we must re-write them as a Cauchy problem. The natural way to do this is to view spacetime as a family of 3D spatial hypersurfaces evolving in time. A spacetime in which this is possible is called ``globally hyperbolic'', and contain no closed timelike curves. Although it is a loss of mathematical generality, we assume that all physically realistic spacetimes have this property.
+
+Consider a time-orientable spacetime $(M, g)$, and define on it a global time function $t:M \rightarrow \R$. Our spacelike hypersurfaces $\Sigma_t$ are the level sets of this function:
+\begin{equation}
+\Sigma_{t_a} = \left\lbrace p \in M | t(p)=t_a \right\rbrace.
+\end{equation}
+
+Given $t$ we can define a 1-form $\Omega_\alpha =\grad_\alpha t$ which is closed by construction:
+\begin{equation}
+\grad_{[\alpha}\Omega_{\beta]} = \grad_{[\alpha}\grad_{\beta]}t=0.
+\end{equation}
+We can calculate the norm of $\Omega_\alpha$ using the 4-metric which for reasons which will become apparent later we will call $-\alpha^{-2}$:
+\[ ||\Omega ||^2=g^{\alpha \beta}\grad_\alpha t \grad_\beta t \equiv -\frac{1}{\alpha^2}. \]
+
+We can now define the unit normal to the slices as 
+\begin{equation}
+n^\alpha = -\alpha g^{\alpha \beta} \Omega_\beta,
+\end{equation}
+where the negative sign is chosen so that $\nbf$ is in the direction of increasing $t$. Observers travelling with 4-velocities $n^{\alpha}$ are called ``Eulerian observers''.
+
+We use the normal to construct the three dimensional spatial metric on the slice $\Sigma$, which is inherited from the 4D spacetime metric $g$, and allows us to calculate distances within a slice:
+\begin{equation}
+\gamma_{\alpha \beta} = g_{\alpha \beta} + n_{\alpha} n_{\beta}.
+\end{equation}
+
+We construct an operator to project 4-dimensional tensors into the spatial hypersurfaces by raising one index of the spatial metric
+\begin{equation}
+\gamma^\alpha_\beta = g^\alpha_\beta + n^\alpha n_\beta = \delta^\alpha_\beta + n^\alpha n_\beta. 
+\end{equation} 
+To project a tensor into the spatial surface, each free index must be contracted with the projection operator. The resultant tensor is purely spatial. This can be seen for an arbitrary vector $v^\alpha$ by contracting the projected vector with the normal $n_\alpha$
+\[ n_\alpha \gamma^\alpha _\beta v^\beta = n_\alpha \delta^\alpha_\beta v^\beta + n_\alpha n^\alpha n_\beta v^\beta = n_\beta v^\beta - n_\beta v^\beta = 0 \]
+
+Conversely, the normal projection operator $-n^\alpha n_\beta$ projects tensors along the normal to the surface. We can now decompose any tensor into its spatial and timelike parts. For example, our arbitrary vector $v^\alpha$ can be decomposed as 
+\[ v^\alpha = \delta^\alpha_\beta v^\beta = (\gamma^\alpha_\beta - n^\alpha n_\beta)v^\beta. \]
+
+We will require a covariant derivative to act on spatial tensors, which we can obtain by projecting the four dimensional covariant derivative into $\Sigma$. For a general tensor
+\begin{equation}
+D_\alpha T^{\mu_1 ... \mu_n}_{\nu_1 ... \nu_m}=\gamma^{\beta}_{\alpha} \gamma^{\mu_1}_{\rho_1}... \gamma^{\mu_n}_{\rho_n}...\gamma^{\sigma_1}_{\nu_1}... \gamma^{\sigma_m}_{\nu_m}\nabla_\beta T^{\rho_1 ... \rho_n}_{\sigma_1 ... \sigma_m}.
+\end{equation}
+It is straightforward to show that this is compatible with the 3-metric $\gamma_{\alpha \beta}$.  
+
+The 3-dimensional Riemann tensor defined in terms of the the 3 metric $\gamma_{ij}$ in the usual way, along with the Ricci tensor and Ricci scalar, and are all purely spatial. However, these only tell us about the curvature intrinsic to the 3-dimensional slice $\Sigma_t$. We have lost information about curvature in the fourth dimension. This information is contained in the extrinsic curvature.
+
+\section{Extrinsic Curvature}
+The extrinsic curvature comes from the way the hypersurfaces are are immersed in four-dimensional spacetime. It is defined in terms of what happens to the normal vector $n^\alpha$ as it is parallel transported from one point in the hypersurface to another. In general, it will not be normal to the hypersurface anymore.
+
+Using the projection operator the extrinsic curvature tensor is defined as 
+\begin{equation}\label{eq:ExtCurve}
+K_{\alpha \beta} = -\gamma_{\alpha}^{\mu} \gamma_{\beta}^{\nu} \grad _{\mu} n_{\nu}. 
+\end{equation}
+Clearly this is purely spatial, and it can be shown that the anti-symmetric part $K_{[\alpha \beta]}=0$. The extrinsic curvature can alternatively be written 
+\begin{equation}
+\label{eq:ExtCurve2}
+K_{\alpha \beta}=-\frac{1}{2} \Lie_{\nbf} \gamma_{\alpha \beta},
+\end{equation}
+which makes clear another interpretation of the extrinsic curvature as the rate at which the hypersurface deforms as it is carried along the unit normal.
+
+Taking the trace of \ref{eq:ExtCurve2} gives us the \textit{mean curvature}
+\begin{equation}
+K= - \Lie_{\nbf} \ln \gamma^{1/2}.
+\end{equation}
+
+
+
+Consider a specific foliation, and take two adjacent hypersurfaces $\Sigma_t$ and $\Sigma_{t+dt}$. The geometry of the region between these two hypersurfaces can be determined from the following:
+\begin{itemize} 
+\item The three dimensional metric $\gamma_{ij}$ $(i,j = 1,2,3)$ that measures proper distances within the hypersurface itself.
+\[ dl^2= \gamma_{ij} dx^i dx^j \]
+\item The lapse of proper time between the hypersurfaces as measured by those observers moving normal to the hypersurfaces
+\[ d\tau = \alpha(t,x^i) dt \]
+where $\alpha$ is the ``lapse function".
+\item The relative velocity $\beta^i$ between the Eulerian observers and the linse that correspond to constant spatial coordinates:
+\[ x^i_{t+dt} = x^i_t - \beta^i(t,x^j)dt \mbox{, for Eulerian observers} \]
+The 3-vector $\beta^i$ is known as the ``shift vector"
+\end{itemize}
+As the spacetime foliation and the way spatial coordinates propagate are not unique, both the lapse function $\alpha$ and the shift vector $\beta^i$ are functions that can be freely specified. They determine the coordinate system and are known as ``gauge functions". In terms of the gauge functions and the 3-metric the spacetime metric takes the following form:
+\[ ds^2=(-\alpha^2 + \beta_i \beta^i)dt^2 + 2 \beta_i dt dx^i + \gamma_{ij} dx^i dx^j \]
+where $\beta_i := \gamma_{ij} \beta^j$.
+
+More explicitly:
+\begin{eqnarray}
+g_{\mu \nu} = & \left( \begin{array}{ccc}
+						-\alpha^2 + \beta_k \beta^k & \beta_i \\
+							\beta_j					& \gamma_{ij}
+						\end{array} \right), \\
+g^{\mu \nu} = & \left( \begin{array}{ccc}
+						-1/\alpha^2 		& 	\beta^i / \alpha^2 \\
+						\beta^j / \alpha^2 	&	\gamma^{ij}-\beta^i\beta^j / \alpha^2 
+						\end{array} \right)
+\end{eqnarray}
+
+The components of the unit normal vector $n^\mu$ to the spatial hypersurfaces are given by:
+\[ n^\mu = (1/ \alpha, -\beta^i / \alpha), \hspace{1cm} n_\mu=(-\alpha,0), \hspace{1cm} n^\mu n_\mu= -1 \]
+
+
+
+
+\section{The Einstein Equations in the 3+1 formalism}
+Using the projection operator we can separate Einstein's equations into three groups.
+\begin{itemize}
+\item Normal projection (1 equation)
+\[ n^\alpha n^\beta(G_{\alpha \beta}-8\pi T_{\alpha \beta})=0\]
+\item Mixed projection (3 equations):
+\[ P[n^\alpha ( G_{\alpha \beta}-8\pi T_{\alpha \beta})]=0\]
+\item Projection onto the hypersurface (6 equations)
+\[ P( G_{\alpha \beta}-8\pi T_{\alpha \beta})=0 \]
+\end{itemize}
+
+From the normal projection we get
+\begin{equation}\label{HamConstraint}
+R^{(3)} + ( \mbox{tr} K)^2-K_{ij}K^{ij}=16\pi\rho
+\end{equation}  
+where $R^{(3)}$ is the Ricci scalar associated with the 3-metric, $\mbox{tr} K \equiv \gamma^{ij}K_{ij}$ is the trace of the extrinsic curvature tensor and $\rho$ is the energy density of matter as measuered by the Eulerian observers:
+\[ \rho := n_\alpha n_\beta T^{\alpha \beta} \].
+Equation \ref{HamConstraint} contains no time derivatives, so is not a dynamical eqyation but a ``constraint" known as the ``energy" or ``hamiltonian" constraint.
+
+From the mixed projection of the field equations we find:
+\begin{equation}\label{MomConstraint}
+D_j [ K^{ij}-\gamma^{ij} \mbox{tr}K]=8\pi j^i
+\end{equation} 
+where now $j^i$ is the momentum flux of matter as measured by the Eulerian observers: 
+\[ j^i := P^i_\beta \left(n_\alpha T^{\alpha \beta} \right) \]
+This again has no time derivatives; it is known as the ``momentum" constraints.
+
+The remaining 6 equations are obtained from the projection onto the hypersurface and contain the true dynamics of the system. These equations take the form:
+\[ \partial_t K_{ij} = \beta^a \partial_a K_{ij} + K_{ik} \partial_j \beta^k + K_{jk}\partial_i \beta^k - D_i D_j \alpha +\alpha[R^{(3)}_{ij}-2K_{ik}K^k_j + K_{ij} \mbox{tr} K] +4\pi\alpha[\gamma_{ij}(\mbox{tr} S-\rho)-2S_{ij}] \]
+where $S_{ij}$ is the stress tensor of matter:
+\[ S_{ij} := P T_{ij}\]
+
+\section{Gauge Conditions}
+Let us now consider our options for the gauge conditions, which can be chosen freely. Recall the lapse function gives the proper time as measured by Eulerian observers (those who are moving normal to the hypersurface). The acceleration of these observers is given by 
+\begin{equation}
+a^\mu = n^\nu \grad_\nu n^\mu
+\end{equation} 
+which implies the proper acceleration is given in terms of the lapse function as 
+\begin{equation}\label{eq:ProperAcc}
+a_i = \pd_i \ln \alpha.
+\end{equation}
+The evolution of the volume elements associated with the Eulerian observers can be found using the definition of the extrinsic curvature:
+\begin{equation}\label{eq:VolElEvol}
+\grad_{\mu}n^{\mu}=-K.
+\end{equation}
+
+\subsection{Geodesic slicing}
+Take the coordinate time $t$ to coincide with the time of Eulerian observers, that is, choose $\alpha=1$. From \ref{eq:ProperAcc}, this implies $a_i=0$ and that the Eulerian observers are in freefall (therefore follow geodesics). In a non-uniform gravitational field, the "observers" will collide and the coordinate system will become singular.
+
+\subsection{Maximal slicing}
+Require the volume elements remain constant- from  \ref{eq:VolElEvol}:
+\begin{equation}
+K = \pd_t K =0
+\end{equation}
+
+
+\section{Initial Data}
+To find the initial data for our system we must solve the constraint equations \ref{HamConstraint} and \ref{MomConstraint}. These form a system of four coupled partial differential equations of elliptic type. 
+
+\subsection{York-Lichnerowicz conformal decomposition}
+Suppose a 3-metric $\bar{\ga}_{ij}$ is known, and consider a transformation of the form
+\[ \ga_{ij}= \phi^4 \bar{\ga}_{ij} \]
+where $\phi$ is some positive scaling factor. Such a transformation is called a ``conformal transformation" as it can be shown to preserve angles. $\bar{\ga}_{ij}$ is called the ``conformal metric''. The extrinsic curvature is separated into it's trace
+\[ K=\ga^{ij} K_{ij} \]
+and trace free parts
+\[ A_{ij}=K_{ij} - \frac{1}{3} \ga_{ij}K \]
+A conformal transformation is performed on $A_{ij}$
+\[ A_{ij}=\phi^{-10}\bar{A_{ij}}\]
+where the tenth power is chosen for later convenience. 
+
+\section{Aside? Post Newtonian methods}
+Post-Newtonian methods are used in low curvature and low velocity regimes, such as the inspiral phase of a binary coalescence. It is less computationally expensive than a full numerical calculation. In post-Newtonian methods, solutions are constructed iteratively starting with the Newtonian solution. At each step a correction term of order $v^2$ is added to to the previous step. Essentially this is a Taylor expansion in the parameter $v^2$ around the the Newtonian solution. 
+
+\section{perturbative methods}
+
+
+
+
+%\end{document}
