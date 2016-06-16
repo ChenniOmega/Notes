@@ -1,0 +1,48 @@
+\documentclass[12pt]{report}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
+\newenvironment{proof}
+       {\begin{flushleft} \begin{description}
+              \item \textit{\textbf{Proof:}}}
+        {\hfill\rule{2.1mm}{2.1mm}
+              \end{description}\end{flushleft}}
+%\newenvironment{myexample}{\begin{flushleft}
+%i would like to make defn in a slightly different font to distinguish it from normal text
+\usepackage{amssymb, mathrsfs, graphicx}
+\addtolength{\textwidth}{100pt}
+\addtolength{\oddsidemargin}{-50pt}
+\addtolength{\evensidemargin}{-50pt}
+\linespread{1.2}
+\def\R{{\mathbb R}}
+\def\pd{{\partial}}
+\def\Lie{{\mathcal{L}}}
+\def\d{{\mbox{d}}}
+\def\grad {{\nabla}}
+\begin{document}
+
+\chapter{Einstein Toolkit Testing}
+
+I have a ETK demonstration account. This includes a LONI account using chaitanya.shettigara@anu.edu.au as my email address. My contact/collaborator is Frank Loeffler. My user name is ettest50, password excitedly derived from Nathaniel Merriweather. My project allocation is \verb+loni_cactus08+.
+
+Log on to Queen Bee with
+\begin{verbatim}
+ ssh -XC ettest50@qb.loni.org
+\end{verbatim}
+
+Following instructions on \verb+https://docs.einsteintoolkit.org/et-docs/Tutorial_for_New_Users+
+
+Got stuck at ``Run a Simulation" phase. Sent following query to ETK users help list:
+"I cannot run a simulation using 
+\verb+./simfactory/bin/sim submit static_tov --parfile=par/static_tov.par --procs=32 --walltime=8:0:0+
+as per the tutorial. I get the following error:
+\begin{verbatim}Parameter file: /home/ettest50/Cactus/par/static_tov.par
+Error: could not access simulation base directory /scratch/ettest50/simulations for reading and writing
+Aborting Simfactory\end{verbatim}
+
+I notice that someone had the same problem back in 2011, and I created the directory by hand which seemed to be a solution that worked for him, but I keep getting the same error. I also gave it completely open access permissions in case that was the problem."
+
+
+
+\end{document}

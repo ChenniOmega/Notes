@@ -1,0 +1,331 @@
+%How to use BibTeX. In outline:
+%Create a BibTeX file of your references. (For references already typed, use this page to convert to BibTeX.) Say your file is called research.bib.
+%When you want to cite an item in research.bib, write \cite{<label>} in your document, where <label> is the label of the item in research.bib. (Alternatively, you may want to use \citealt, or some other command, depending on the way you want the citation to appear.)
+%In the preamble of your document, specify the citation style you want to use. For example, you might say \usepackage{natbib}.
+%Somewhere in your document specify the bibliography style, by putting the command \bibliographystyle{<style>}, where <style> is the style you want to use. If you can't find a style you like, roll your own using Merlin.
+%At the point you want the references to appear in your document, put \bibliography{research} (given that research.bib is the name of your BibTeX file).
+%Run your document through LaTeX, then through BibTeX, then through LaTeX a couple of times.
+
+%lots of examples:
+%http://www2.galcit.caltech.edu/~jeshep/GraphicsBib/NatBib/node3.html
+
+@manual{anugamanual,
+title={ANUGA User Manual},
+author={Roberts, S and Nielsen, O. and Gray, D. and Sexton, J. and Davies, G.},
+organization={Geoscience Australia},
+year={2015}
+}
+
+@BOOK{BaumgarteShapiro,
+   author = {{Baumgarte}, T.~W. and {Shapiro}, S.~L.},
+    title = "{Numerical Relativity: Solving Einstein's Equations on the Computer}",
+     year = 2010,
+publisher = {Cambridge University Press},
+     isbn = {978-0-52-151407-1},
+   adsurl = {http://adsabs.harvard.edu/abs/2010nure.book.....B},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@book{Carroll,
+address = {San Fransico},
+author = {S. Carroll},
+publisher = {Addison Wesley},
+title = {Spacetime and Geometry: An Introduction to General Relativity},
+year = {2004},
+}
+
+@book{Cartan,
+address = {Italy},
+author = {Eric Cartan},
+publisher = {Bibliopolis},
+title = {On Manifolds with an Affine Connection and the Theory of General Relativity},
+year = {1986},
+}
+
+@book{Cohen,
+address = {Cambridge},
+author = {Graeme Cohen},
+publisher = {Cambridge Univerity Press},
+title = {A Course in Modern Analysis and Its Applications},
+year = {2003},
+}
+
+@InProceedings{CMCS-CONF-2009-003,
+   abstract    = {We provide an introduction on reduced basis (RB) method
+                 for the solution of parameterized partial differential
+                 equations (PDEs). We introduce all the main ingredients
+                 to describe the methodology and the algorithms used to
+                 build the approximation spaces and the error bounds. We
+                 consider a model problem describing a steady potential
+                 flow around parametrized bodies and we provide some
+                 illustrative results.},
+   address     = {Singapore},
+   affiliation = {EPFL},
+   author      = {Rozza, Gianluigi},
+   booktitle   = {Applied and {I}ndustrial {M}athematics in {I}taly},
+   details     = {http://infoscience.epfl.ch/record/138787},
+   documenturl = {http://infoscience.epfl.ch/record/138787/files/Rozza_AIMI_III.pdf},
+   editor      = {De Bernardis, Enrico and Spiegler, Renato and Valente, Vanda},
+   extra-id    = {000275974500045},
+   keywords    = {Reduced basis method; parametrized PDEs; Galerkin
+                 method; error bounds; potential flows},
+   location    = {Rome, Italy},
+   note        = {EPFL-IACS report 01.09, peer reviewed},
+   oai-id      = {oai:infoscience.epfl.ch:138787},
+   oai-set     = {conf},
+   pages       = {508--519},
+   publisher   = {WorldScientific},
+   review      = {REVIEWED},
+   series      = {Advances in Mathematics for Applied Sciences},
+   status      = {PUBLISHED},
+   title       = {An introduction to reduced basis method for parametrized {PDE}s},
+   unit        = {CMCS},
+   url         = { },
+   volume      = {III},
+   year        = 2009
+}
+
+@inproceedings{Eastwood,
+address = {Srni, Czech Republic},
+author = {Michael Eastwood},
+booktitle = {Proceedings of the 24th Winter School Geometry and Physics},
+month = {January},
+title = {Prolongations of Linear Overdetermined Systems on Affine and Riemannian Manifolds},
+year = {2004},
+}
+
+@article{field2012towards,
+  title={Towards beating the curse of dimensionality for gravitational waves using reduced basis},
+  author={Field, Scott E and Galley, Chad R and Ochsner, Evan},
+  journal={Physical Review D},
+  volume={86},
+  number={8},
+  pages={084046},
+  year={2012},
+  publisher={APS}
+}
+
+@incollection{Goodale2003,
+year={2003},
+isbn={978-3-540-00852-1},
+booktitle={High Performance Computing for Computational Science — VECPAR 2002},
+volume={2565},
+series={Lecture Notes in Computer Science},
+editor={Palma, JoséM.L.M. and Sousa, A.Augusto and Dongarra, Jack and Hernández, Vicente},
+doi={10.1007/3-540-36569-9_13},
+title={The Cactus Framework and Toolkit: Design and Applications},
+url={http://dx.doi.org/10.1007/3-540-36569-9_13},
+publisher={Springer Berlin Heidelberg},
+author={Goodale, Tom and Allen, Gabrielle and Lanfermann, Gerd and Massó, Joan and Radke, Thomas and Seidel, Edward and Shalf, John},
+pages={197-227},
+language={English}
+}
+
+
+@book{Hawking,
+address = {Cambridge},
+author = {Stephen Hawking and George Ellis},
+publisher = {Cambridge University Press},
+title = {The Large Scale Structure of Space-Time},
+year = {1976},
+}
+
+@book{HC-V,
+author = {David Hilbert and Stephan Cohn-Vossen},
+publisher = {AMS Chelsea Publishing Co.},
+title = {Geometry and the Imagination},
+year = {1952},
+}
+
+@article{Hossen,
+year={2015},
+issn={0033-4553},
+journal={Pure and Applied Geophysics},
+volume={172},
+number={3-4},
+doi={10.1007/s00024-014-1014-5},
+title={Time Reversal Imaging of the Tsunami Source},
+url={http://dx.doi.org/10.1007/s00024-014-1014-5},
+publisher={Springer Basel},
+author={Hossen, M.Jakir and Cummins, PhilR. and Roberts, StephenG. and Allgeyer, Sebastien},
+pages={969-984},
+language={English}
+}
+
+
+@book{Jost,
+address = {Berlin Heidelberg},
+author = {J{\"u}rgen Jost},
+publisher = {Springer-Verlag},
+title = {Riemannian Geometry and Geometric Analysis},
+year = {1995},
+}
+
+@book{Lawden,
+address = {London and Colchester},
+author = {Derek Lawden},
+publisher = {Spottiswoode Ballantyne},
+title = {An Introduction to Tensor Calculus and Relativity},
+year = {1967},
+}
+
+@book{Lee,
+address = {New York},
+author = {John Lee},
+publisher = {Springer-Verlag},
+title = {Riemannian Manifolds: an introduction to curvature},
+year = {1997},
+}
+
+@article{Lieberman:2010:PSM:1958688.1958693,
+ author = {Lieberman, Chad and Willcox, Karen and Ghattas, Omar},
+ title = {Parameter and State Model Reduction for Large-Scale Statistical Inverse Problems},
+ journal = {SIAM J. Sci. Comput.},
+ issue_date = {August 2010},
+ volume = {32},
+ number = {5},
+ month = aug,
+ year = {2010},
+ issn = {1064-8275},
+ pages = {2523--2542},
+ numpages = {20},
+ url = {http://dx.doi.org/10.1137/090775622},
+ doi = {10.1137/090775622},
+ acmid = {1958693},
+ publisher = {Society for Industrial and Applied Mathematics},
+ address = {Philadelphia, PA, USA},
+ keywords = {Markov chain Monte Carlo, model reduction, optimization, statistical inverse problems},
+}
+
+@mastersthesis{lieberman2009parameter,
+  title={Parameter and state model reduction for Bayesian statistical inverse problems},
+  author={Lieberman, Chad Eric},
+  year={2009},
+  school={Massachusetts Institute of Technology}
+}
+
+@book{MTW,
+address = {USA},
+author = {Charles Misner and Kip Thorne and John Wheeler},
+publisher = {W.H. Freeman and Co},
+title = {Gravitation},
+year = {1973},
+}
+
+@incollection{Mackey,
+address = {USA},
+author = {George Mackey},
+publisher = {W. A. Benjamin and Editore Boringhieri},
+title = {Induced Representations of Groups and Quantum Mechanics},
+year = {1968},
+}
+
+@book{Poor,
+author = {Walter Poor},
+publisher = {McGraw-Hill},
+title = {Differential Geometric Structures},
+year = {1981},
+}
+
+@article{RozzaHuynhPatera,
+year={2007},
+issn={1134-3060},
+journal={Archives of Computational Methods in Engineering},
+volume={15},
+number={3},
+doi={10.1007/BF03024948},
+title={Reduced basis approximation and a posteriori error estimation for affinely parametrized elliptic coercive partial differential equations},
+url={http://dx.doi.org/10.1007/BF03024948},
+publisher={Springer Netherlands},
+keywords={Partial differential; equations; parameter; variation; affine geometry description; Galerkin approximation; a posteriori error estimation,reduced basis; reduced order model,sampling strategies; POD; greedy techniques; offline-online procedures; marginal cost; coercivity lower bound; successive constraint method; real-time computation; many-query},
+author={Rozza, G. and Huynh, D.B.P. and Patera, A.T.},
+pages={1-47},
+language={English}
+}
+
+@article {Saito,
+author = {Saito, Tatsuhiko and Ito, Yoshihiro and Inazu, Daisuke and Hino, Ryota},
+title = {Tsunami source of the 2011 Tohoku-Oki earthquake, Japan: Inversion analysis based on dispersive tsunami simulations},
+journal = {Geophysical Research Letters},
+volume = {38},
+number = {7},
+issn = {1944-8007},
+url = {http://dx.doi.org/10.1029/2011GL049089},
+doi = {10.1029/2011GL049089},
+pages = {n/a--n/a},
+keywords = {Tsunamis and storm surges, Earthquake dynamics, Earthquake source observations, Subduction zones, Tohoku-Oki earthquake, tsunami, waveform inversion},
+year = {2011},
+note = {L00G19},
+}
+
+@inproceedings{Scheel2013,
+title = {Numerical relativity: Triumphs and challenges of binary black hole simulations},
+author = {Mark Scheel},
+booktitle = {Workshop on Reduced Order Modeling in General Relativity},
+year = {2013},
+month = {June},
+organisation = {California Institute of Technology},
+address = {Pasadena, California}
+}
+
+@book{Schutz,
+author = {Bernard Schutz},
+publisher = {Cambridge University Press},
+title = {Geometrical methods of mathematical physics},
+year = {1980},
+}
+
+@book{Stephani,
+author = {Hans Stephani and Dietrich Kramer amd Malcolm MacCallum and Cornelius Hoenselaers and Eduard Herlt},
+publisher = {Cambridge University Press},
+title = {Exact Solutions of Einstein's Field Equations},
+year = {2003},
+}
+
+@book{Sternberg,
+address = {New York},
+author = {Shlomo Sternberg},
+publisher = {Chelsea Publishing Company},
+title = {Lectures on Differential Geometry},
+year = {1983},
+}
+
+@book{Stillwell,
+address = {New York},
+author = {John Stillwell},
+publisher = {Springer-Verlag},
+title = {Geometry of Surfaces},
+year = {1992},
+}
+
+@book{Trofimov,
+author = {V. Trofimov},
+publisher = {Kluwer Academic Publishers},
+title = {Introduction to Geometry of Manifolds with Symmetry},
+year = {1994},
+}
+
+@book{Wald,
+author= {Robert Wald},
+publisher= {The University of Chicago Press},
+address= {Chicago and London},
+title = {General Relativity},
+year = {1984},
+}
+
+@book{Weyl,
+address = {New York},
+author = {Hermann Weyl},
+publisher = {Dover Publications},
+title = {Space-Time-Matter},
+year = {1952},
+}
+
+@inproceedings{Xanthopoulos,
+address = {Scheveningen, The Netherlands},
+author = {B. Xanthopoulos},
+booktitle = {Proceedings of the Sixth Scheveningen Conference},
+month = {August},
+title = {Symmetries and Solutions of the Einstein Equations},
+year = {1984},
+}

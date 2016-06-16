@@ -1,0 +1,1039 @@
+\documentclass[12pt,ignorenonframes]{beamer}
+\usepackage[english]{babel}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsmath,amsthm,amssymb,amscd}
+\usepackage{pgf}
+\usepackage{makeidx}
+\usepackage{hyperref}
+%\usepackage{showidx}
+%\usepackage{showlabels}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\numberwithin{equation}{section}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{mthm}{Main Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conds}[thm]{Conditions}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{assumptions}{Assumptions}
+\theoremstyle{remark}
+\newtheorem{eg}{Example}[section]
+\newtheorem*{soln}{Solution}
+\newtheorem*{ans}{Answer}
+\newtheorem*{rem}{Remark}
+%Shorthand symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathSymbol{\Xi}{\mathop}{letters}{"04}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Co}{\ensuremath{\mathbb{C}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\T}{\ensuremath{\mathbb{S}}}
+\newcommand{\tr}{\ensuremath{\mathrm{Tr}}}
+\newcommand{\Div}{\ensuremath{\mathrm{div}}}
+\newcommand{\ext}{\ensuremath{\mathrm{d}}}
+\newcommand{\grad}{\ensuremath{\mathrm{grad}}}
+\newcommand{\Hess}{\ensuremath{\mathrm{Hess}}}
+\newcommand{\diam}{\ensuremath{\mathrm{diam}}}
+\newcommand{\noi}{\noindent}
+\newcommand{\ric}{\textbf{Ric}}
+\newcommand{\Npi}{\stackrel{\perp}{\pi}}
+\newcommand{\Ng}{\stackrel{\perp}{g}}
+\newcommand{\Ncd}{\stackrel{\perp}{\cd}}
+\newcommand{\Fcd}{^F\nabla}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\Gea}{\ensuremath{G_{\epsilon,\sigma}}}
+\newcommand{\cd}{\nabla}
+\newcommand{\ncd}{\stackrel{\perp}{\nabla}}
+\newcommand{\Tcd}{\stackrel{T}{\nabla}}
+\newcommand{\pd}{\partial}
+\newcommand{\lie}{\ensuremath{\mathcal{L}}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\Ges}{G_{\epsilon,\sigma}}
+%Shorthand commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\ba #1\ea {\begin{align} #1\end{align}}
+\def\bann #1\eann {\begin{align*} #1\end{align*}}
+\def\ben #1\een {\begin{enumerate} #1\end{enumerate}}
+\def\bi #1\ei {\begin{itemize} #1\end{itemize}}
+\def\bf #1\ef {\begin{frame}<presentation> #1\end{frame}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usetheme{Warsaw}%Warsaw,...
+\setbeamercovered{transparent}
+%\usecolortheme{albatross}
+\title{Moving non-convex hypersurfaces by curvature.}
+\author[Mathew Langford]{Mathew Langford.}
+\institute{Mathematical Sciences Institute,\\ Australian National University}
+\date{56th Annual Meeting of the Australian Mathematical Society\\ {\small University of Ballarat, \today}\\ \tiny{*This work was supported by AMSI.}}
+
+% Causes the table of contents to pop up at the beginning of each subsection:
+%\AtBeginSection[]{
+%\begin{frame}<beamer>{Outline}
+%\tableofcontents[currentsection,currentsubsection]
+%\end{frame}}
+
+%To uncover everything in a step-wise fashion, uncomment the following command: 
+%\beamerdefaultoverlayspecification{<+->}
+
+\mode<presentation>
+
+\begin{document}
+
+\titlepage
+
+\section{Curvature Flows}
+
+\subsection{Curvature Flows}
+\bf{Curvature flows}
+We consider smooth, compact hypersurfaces $X_0:M^n\to \R^{n+1}$ moving in their normal direction by functions of their curvature; That is,
+\bi
+\item solutions $X:M^n\times[0,T)\to \R^{n+1}$ of a flow\vspace{-1mm}
+\bann\label{flow}\tag{CF}
+\begin{split}
+\frac{\pd X}{\pd t}(x,t)={}&-F(x,t)\nu(x,t)\,,\\
+X(x,0)={}& X_0(x)
+\end{split}
+\eann \vspace{-5mm}
+\item where $F(x,t)=f(\lambda_1(x,t),\dots,\lambda_n(x,t))$ is some function of the principal curvatures $\lambda_1\leq\dots\leq \lambda_n$ (with respect to the outer normal $\nu$).
+\ei
+\ef
+
+\bf{Curvature Flows}
+We make the following assumptions on the speed functions $f$  
+\begin{assumptions}
+\bi
+\item[(1)] (Geometric assumption) $f:\Gamma\to\R$ is smooth and symmetric, where $\Gamma\subset \R^n$ is some open, symmetric, convex cone; 
+\item[(2)] (Analytic assumption) $\dot f^i> 0$ for each $i$.  
+\ei
+\end{assumptions}
+\bi
+\item (1) implies that $F$ is a smooth function of the components of the Weingarten map $\W$. 
+\item (2) implies that \eqref{flow} is parabolic.
+\ei
+\ef
+
+\subsection{Homogeneous Speeds}
+\bf{Homogeneous Speeds}
+A well behaved class of speeds are the homogeneous ones. That is, $f(kx)=k^\alpha f(x)$ for all $k>0$, for some $\alpha\in\R$. 
+\bi
+\item We will consider only speeds that are homogeneous of degree one:
+\ei
+\begin{assumptions}
+\bi
+\item[(3)] $f$ is homogeneous of degree one. 
+\ei
+\end{assumptions}
+\bi
+\item In this case, spheres shrink to a point in finite time, killing any hypersurface they enclose. 
+\item The cause of death is curvature explosion: $\sup_{M}|\W|\to\infty$. 
+\ei
+\ef
+
+\subsection{Examples}
+\bf{Examples}
+Examples include:
+\ben
+\item Mean curvature $f(\lambda)=H:=\lambda_1+\dots+\lambda_n$; 
+\item Power norms $f(\lambda)=\sqrt[k]{\lambda_1^k+\dots+\lambda_n^k}$; 
+\item Elementary symmetric quotients $f=S_{k+1}/S_k$, where
+\bann 
+S_k(x)={}&\sum_{1\leq i_1<\dots <i_n\leq n}\lambda_{i_{1}}\dots\lambda_{i_{n}}
+\eann 
+\item Homogeneous combinations: $f(\lambda)= f_0(f_1(\lambda),\dots,f_n(\lambda))$
+\een
+\ef
+
+\section{Convex Hypersurfaces}
+
+\subsection{Mean Curvature Flow}
+\bf{Convex Hypersurfaces (Mean Curvature Flow)}
+Many homogeneous degree one flows have similar behaviour to the mean curvature flow.
+\bi
+\item Huisken \cite{Hu84} showed that under the mean curvature flow ($f=H$), uniformly convex initial hypersurfaces remain uniformly convex and collapse to `round' points in finite time. 
+\item Chow showed that this behaviour is true also in the case of the $K^{\frac{1}{n}}$ flow \cite{Ch1} and the $\sqrt{\mathcal{R}}$ flow \cite{Ch2}.
+\ei
+\ef
+
+\subsection{Non-Linear Flows}
+\bf{Convex Hypersurfaces (Non-Linear Flows)}
+These results were generalised by Andrews \cite{An94,An07} to homogeneous degree one speeds which satisfy one of the following additional conditions: 
+\ben
+\item $n=2$; 
+\item $f$ is convex; 
+\item $f$ is concave on $\Gamma_+$ and zero on its boundary; 
+\item $f$ is concave and \textit{inverse concave}; 
+\bi
+\item that is, the function \vspace{-3mm}
+$$
+f_\ast(x_1,\dots, x_n):=(f(x_1^{-1},\dots,x_n^{-1}))^{-1}\vspace{-3mm}
+$$
+is also concave.
+\ei
+\een
+Moreover, if $n>2$, there are concave speeds that do not preserve convexity \cite{AnMcZh}.
+\ef
+
+\subsection{Roundness of the Final Point}
+\bf{Roundness of the Final Point}
+Huisken considered the function\vspace{-1mm}
+$$
+G:=\frac{|\W|^2-\frac{1}{n}H^2}{H^2}=\frac{\sum_{i>j}(\lambda_i-\lambda_j)^2}{H^2}\vspace{-5mm}
+$$
+\bi
+\item $G\geq 0$ punishes asphericity of the solution, vanishing identically if and only if the solution is a sphere.
+\item He was able to prove that \vspace{-2mm}
+$$
+G\leq C H^{-\delta}\vspace{-3mm}
+$$
+for some small $\delta>0$
+\item Thus, wherever $H\to\infty$, $G\to 0$, and hence $\W\to\W_{\T^n}$. 
+\ei
+\ef
+
+\bf{Roundness of the Final Point}
+To prove the estimate, define for any $\sigma>0$\vspace{-3mm}
+\bann
+G_\sigma:={}& GH^{\sigma}
+\eann\vspace{-9mm}
+\bi
+\item We need an upper bound $G_\sigma\leq C$ for some $\sigma>0$.
+\item We'd like to apply the maximum principle. We calculate \vspace{-3mm}
+\bann
+(\pd_t-\Delta)G_\sigma={}& \frac{2(1-\sigma)}{H}\left<\cd H,\cd G_\sigma\right>\\
+&-\frac{1}{H^{4-\sigma}}|H\cd\W-\cd H\otimes\W|^2\\
+{}&+\left(\sigma|\W|^2-\sigma(1-\sigma)\frac{|\cd H|^2}{H^2}\right)G_\sigma\,,
+\eann
+\item Unfortunately, the coefficient of $G_\sigma$ can be positive.
+\item Huisken's trick was to exploit the diffusion term.
+\ei
+\ef
+
+\bf{Obtaining the Pinching Estimate}
+He showed that there are constants $m,M>0$ such that for all $p>M$ we get an $L^p$-estimate\vspace{-3mm}
+$$
+||G_\sigma||_{L^p}\leq K\,,\vspace{-3mm}
+$$
+so long as  $\sigma\leq mp^{-\frac{1}{2}}$
+\bi
+\item An application of Stampacchia's Lemma then gives the desired result:
+$$
+G_\sigma \leq C
+$$
+so long as $\sigma<\tilde m\tilde M^{-\frac{1}{2}}$, for some positive constants $\tilde m<m$, and $\tilde M>M$.
+\ei
+\ef
+
+%\section{Singularities}
+
+%\bf{Singularities}
+%\bi
+%\item For homogeneous degree one speeds it is useful to distinguish between  
+%\bi
+%\item\textit{slow} singularities: those that satisfy $\max_M |\W(\cdot,t)|^2\leq \frac{C}{2(T-t)}$\; and; 
+%\item\textit{fast} singularities: those that don't.
+%\ei 
+%\item In each case we are able to define a \textit{blow-up sequence}.
+%\ei
+%\ef
+
+%\bf{Blow-Up Limits}
+%\bi
+%\item Let $x_k\in M, t_k\nearrow T$ be such that $|\W(x_k,t_k)|\to\infty$. 
+%\item Now set $ L_k:=|\W(x_k,t_k)|^2$ and define %for $\tau\in[\alpha_k,\sigma_k]$
+%\vspace{-2mm}
+%\bann
+%X_k(x,\tau)={}&\sqrt{L_k}\left(X\left(x,\frac{\tau}{L_k}+t_k\right)-X(x_k,t_k)\right)\,.
+%\eann \vspace{-5mm}
+%\item Then $X_k$ solves the flow equation for each $k$. 
+%\item In fact, $X_k$ converges along a subsequence to a limit flow $X_\infty:M_\infty\times(-\infty,\Sigma)\to\R^{n+1}$, which we call a \textit{blow-up} limit.   ($\Sigma=\infty$ for fast singularities) 
+%\item Blow-up limits encode the shape of the solution near a singularity. 
+%\item E.g. blow-up limits of convex solutions are shrinking spheres.
+%\ei
+%\ef
+
+%\bf{Translating solitons}
+%Translating solitons are non-compact solutions of the flow (up to a diffeomorphism of $M$) that move by translation 
+%\bi
+%\item That is, solutions of
+%\bann
+%\frac{\pd X}{\pd t} ={}& T\,=\;\mbox{constant vector}\,,\\
+%\mbox{such that}\quad \left<T,\nu\right>={}&-F\,.
+%\eann 
+%\item Translating solitons solve the flow for all time.
+%\ei
+%\ef
+
+\section{Non-Convex Hypersurfaces}
+
+%\subsection{Non-convex hypersurfaces (mean curvature flow)}
+%\bf{Non-convex hypersurfaces (MCF)}
+%Non-convex hypersurfaces can develop more complicated singularities than shrinking spheres. 
+%\bi
+%\item For example, clever application of the avoidance principle implies the existence of the `neck-pinch', and the `degenerate-neckpinch'
+%\bi
+%\item For mean convex ($H\geq 0$) hypersurfaces flowing by mean curvature, there is a partial classification of them. 
+%\begin{thm}
+%Any fast blow-up limit of a mean convex solution of MCF is $\R^{n-k}\times \Sigma^k$,\,  ($0<k\leq n$), where $\Sigma^k$ is a strictly convex translating soliton.
+%\end{thm} 
+%\item There is a seperate classification of slow singularities: For embedded solutions, the only possibilities are cylinders, $\R^{n-k}\times \T^k$,\, ($0<k\leq n$).
+%\ei
+%\ef
+
+%\bf{Non-convex hypersurfaces (MCF)}	
+%The main ingredients of the proof are: 
+%\bi
+%\item Huisken's monotonicity formula \cite{Hu90}; 
+%\item Huisken-Sinestrari's convexity estimate \cite{HuSi99b};   and
+%\item Hamilton's differential Harnack inequality \cite{Ha95}.
+%\ei
+%%\item Such a classification is important for topological applications of the flow, including the smooth continuation of the flow through singularities via surgery.
+%\ef
+
+%\subsection{The monotonicity formula}
+%\bf{The monotonicity formula}
+%The monotonicity formula relates the time derivative of the integral of the backward heat kernel to the normal component $\langle X,\nu\rangle$ of the immersion. 
+%\bi
+%\item It is used to show that blow-up limits of fast singularities are self-similar,   that is, they satisfy the elliptic equation
+%\bann
+%H={}&\langle X,\nu\rangle\,.
+%\eann 
+%\item These can be shown to be spheres or cylinders if the hypersurface is embedded,  
+%\item or $\gamma\times \R^{n-1}$ in the non-embedded case, where $\gamma$ is an Abresch-Langer curve.
+%\ei
+%\ef
+
+\subsection{Convexity Estimate (MCF)}
+
+\bf{Convexity estimate (MCF)}
+Non-convex hypersurfaces admit more complicated singularities. 
+\bi
+\item E.g. a clever application of the avoidance principle demonstrates the existence of a `neck-pinch' singularity. 
+\item A key to understanding non-convex singularities is the convexity estimate of Huisken-Sinestrari:
+\begin{thm}[Huisken-Sinestrari (1999)]
+Suppose $\min_{t=0}H>0$. For all $\epsilon>0$, there exists $C_\epsilon$ such that \vspace{-4mm}
+$$
+\lambda_1\geq -\epsilon H-C_\epsilon\,.
+$$
+\end{thm}
+\item Thus $\W\geq 0$ at a singularity.
+\ei
+\ef
+
+\bf{Proving the Convexity Estimate (MCF)}
+The approach is similar to the proof of the roundness estimate:
+\bi
+\item Choose the right pinching function $G$. It should be non-negative and vanish iff $\lambda_1\geq 0$ ($\W\geq 0$).
+\item Define
+$$
+\Ges:={} \left(G-\epsilon\right)H^\sigma\,.
+$$
+\item Compute the evolution of $\Ges$.
+\item Obtain the $L^p$-estimate.
+\item Apply Stampacchia's Lemma.
+\ei
+\ef
+
+\bf{Proving the Convexity Estimate (MCF)}
+In the case $n=2$, Huisken-Sinestrari considered
+$$
+G:=\frac{S_2}{H^2}=\frac{|\W|^2-H^2}{H^2}=\frac{-2\lambda_1\lambda_2}{(\lambda_1+\lambda_2)^2}\,,
+$$
+where $S_2$ is the scalar curvature.
+\bi
+\item For $n>2$, they considered
+$$
+G:=\frac{S_k}{H^2}\,,
+$$
+where $S_k$ is the $k$-th elementary symmetric function of the principal curvatures.
+\item They obtained
+$$
+S_k\geq -\epsilon H^k+C_{\epsilon,k}
+$$
+for each $k$.
+\item The estimate on $\lambda_1$ follows.
+\ei
+\ef
+
+%\subsection{The differential Harnack estimate}
+%\bf{The differential Harnack estimate}
+%Hamilton's differential Harnack estimate states that for all tangent vectors $V$,
+%\bann
+%\frac{\pd H}{\pd t}+2\cd_VH+h(V,V)&\geq &\frac{H}{2t}
+%\eann 
+%\bi
+%\item It implies that strictly convex, eternal solutions of the mean curvature flow (whose maximum curvature is attained at some space-time point) are translating solitons. 
+%\item This (+ Frobenius) implies fast blow-ups are, up to flat directions, strictly convex translating solitons.
+%\ei
+%\ef
+
+%\subsection{Translating solitons of the mean curvature flow}
+%\bf{Translating solitons of the MCF}
+%However, translating solitons of the mean curvature flow are still not well understood. 
+%\bi
+%\item It has long been conjectured that strictly convex translating solitons should be axially symmetric. 
+%\item This is true for $n=1$ (the Grim Reaper is the only one). 
+%\item Recently \cite{Wa}, Xu-Jia Wang has proved that it holds also for $n=2$. 
+%\item He was also able to construct counter examples in higher dimensions. 
+%\item However, the conjecture could still be true for blow-up limits.
+%\ei
+%\ef
+%\bf{Application of the Harnack Estimate}
+%Harnack estimates for parabolic flows are closely related to translating solitons
+%\bi
+%\item An elegant consequence of Hamilton's Harnack estimate is that strictly convex, eternal solutions of the mean curvature flow necessarily move under the flow by translation. 
+%\item The singularity classification follows.
+%\ei
+%\ef
+
+%\section{Non-convex hypersurfaces (homogeneous flows)}
+
+%\subsection{Non-convex hypersurfaces (homogeneous flows)}
+
+%\bf{Non-convex initial data (FNL)}
+%A similar (partial) classification seems likely for degree one homogeneous flows (with some concavity assumption on $f$). 
+%\bi
+%\item For example, the differential Harnack estimate still holds: 
+%\begin{thm}[\cite{AnHarnack}]
+%If $X$ is a (possibly non-compact) convex solution of \eqref{flow} with homogeneous degree one, inverse concave speed $f$ then 
+%\bann
+%\frac{\pd f}{\pd t}&\geq & h^{-1}(\cd f,\cd f)-\frac{1}{2t}f
+%\eann
+%\end{thm} 
+%\item This still implies strictly convex, eternal solutions of the corresponding flow are translating solitons.
+%\ei
+%\ef
+
+%\bf{Non-convex hypersurfaces (homogeneous flows)}
+%A Harnack estimate is available \cite{AnHarnack} for homogeneous degree one flows that satisfy \emph{inverse concavity}
+%\bi
+%\item We can still conclude that strictly convex, eternal solutions move by translation.
+%\item We remark that convexity of $f$ implies inverse concavity on the positive cone. Therefore the conclusion holds also for convex speeds.
+%\ei
+%\ef
+
+\subsection{Convexity Estimate (Non-Linear)}
+\bf{Convexity Estimate (Non-Linear Flows)}
+The convexity estimate goes through in the non-linear case for $n=2$. For $n>2$, we require the speed function $f$ be convex.
+\begin{thm}[Andrews, L., McCoy.]
+Let $X$ be a solution of \eqref{flow} with speed $F$ satisfying (1)-(3) such that $F>0$ at $t=0$. Suppose that either $n=2$ or $F$ is convex. Then for all $\epsilon>0$ there exists $C_\epsilon$ such that \vspace{-4mm}
+\bann
+\lambda_1\geq {}&-\epsilon F-C_\epsilon\,.
+\eann
+\end{thm}
+Thus $\W\geq 0$ wherever $F\to\infty$.
+\ef
+
+\bf{Proving the Convexity Estimate (Non-Linear)}
+The proof again utilises Huisken's method of `Stampacchia iteration'. 
+\bi
+\item It is made more direct by choosing the right pinching function.
+\item Let $G$ be given by a smooth, symmetric function $g(\lambda_1,\dots,\lambda_n)$ of the principal curvatures.
+\item Then $G$ evolves under the flow according to
+\bann
+(\pd_t-\mathcal L)G={}&(\dot G^{kl}\ddot F^{pq,rs}-\dot F^{kl}\ddot G^{pq,rs})\cd_k\W_{pq}\cd_l\W_{rs}\\
+{}&+\dot G^{pq}\W_{pq}\dot F^{rs}\W^2_{rs}\,,
+\eann
+\vspace{-4mm}\mbox{}
+where $\mathcal L:=\dot F^{kl}\cd_k\cd_l$, and dots indicate derivatives wrt $\W$.
+\ei
+\ef
+
+\bf{Proving the Convexity Estimate (Non-Linear)}
+\bi
+\item If $G$ is homogeneous of degree $\alpha$ wrt $\W$, then $\dot G^{pq}\W_{pq}=\alpha G$, and the final term becomes $\alpha G\dot F^{rs}\W^2_{rs}$. This is positive if
+\item Since $F$ is monotone increasing, the second term in the brackets is good when $\ddot G\geq 0$.
+\item If $\ddot F \geq 0$, the first term is good when $\dot G\leq 0$.
+\ei
+\ef
+
+\bf{Proving the Convexity Estimate (Non-Linear)}
+We suppose $G$ has the following properties:
+\ben
+\item $G$ is a smooth, symmetric function of the principal curvatures, $g(\lambda_1,\dots,\lambda_n)$;
+\item $g$ is homogeneous of degree one;
+\item $g$ vanishes iff $\lambda\in \bar \Gamma_+$;
+\item $\dot g^i\leq 0$, with `=' iff $\lambda\in \bar\Gamma_+$;
+\item $\ddot g(\xi,\xi)\geq 0$, with `=' iff either $\lambda\in \bar\Gamma_+$ or $\xi\propto \lambda$.
+\een
+%\ef
+%\bf{Proving the Convexity Estimate (Non-Linear)}
+It follows that
+\ben
+\item $G$ vanishes iff $\W\geq 0$;
+\item $G$ is homogeneous of degree one wrt $\W$;
+\item $\dot G\leq 0$, with `=' iff $\W\geq 0$;
+\item $\ddot G(B,B)\geq 0$, with `=' iff either $\W\geq 0$ or $B\propto \W$.
+\een
+\ef
+
+\bf{Proving the Convexity Estimate (Non-Linear)}
+Now consider\vspace{-3mm}
+$$
+\Ges:= \left(\frac{G}{F}-\epsilon\right)F^\sigma\,.\vspace{-3mm}
+$$
+\bi
+\item Then $\Ges$ is homogeneous of degree $\sigma$, and hence
+\bann
+(\pd_t-\mathcal L)\Ges={}& (\dot \Ges^{kl}\ddot F^{pq,rs}-\dot F^{kl}\ddot \Ges^{pq,rs})\cd_k\W_{pq}\cd_l\W_{rs}\\
+{}&+\sigma\Ges\dot F^{rs}\W^2_{rs}\\
+={}&...
+\eann
+\ei
+\ef
+
+\bf{Proving the Convexity Estimate (Non-Linear)}
+\bi
+\item It follows that, for all $\epsilon>0$, there exists $C_\epsilon>0$ such that
+\bann
+G\leq \epsilon F+ C_\epsilon\,.
+\eann
+\item Thus, $G\to 0$ (and hence $\W\geq 0$) wherever $F\to\infty$.
+\ei
+\ef
+
+\bf{Constructing $G$}
+Of course, we still need to show that such a $G$ exists.
+\bi
+\item We construct $G$ by smoothing out the function $\max\{-\lambda_1,0\}$.
+\item Let $\phi:\R\to \R$ be a smooth, convex function such that $\phi(r)\geq 0$, with = iff $r\geq 0$.
+\item Then consider 
+$$
+g_1(\lambda):=f(\lambda)\sum_{i=1}^n\phi\left(\frac{\lambda_1}{f(\lambda)}\right)\,.
+$$
+\item Then $g_1$ is
+\ben
+\item smooth and symmetric,
+\item non-negative, vanishing iff $\lambda\in\bar\Gamma_+$,
+\item homogeneous of degree one,
+\item monotone decreasing, strictly unless $\lambda\in\bar\Gamma_+$, and
+\item convex.
+\een
+\ei
+\ef
+
+\bf{Constructing $G$}
+Unfortunately, $g_1$ fails the strict convexity requirement. 
+\bi 
+\item Note that the norm function $n(\lambda):=|\lambda|=|\W|$ is strictly convex in non-radial directions.
+\item Let $M>>1$ be sufficiently large that $MH-|\W|>0$ along the flow.
+\item Define $g_2(\lambda):=M\sum_{i=1}^n\lambda_i-|\lambda|=MH-|\W|$. 
+\item Then the function
+$$
+g(\lambda):=\frac{g_1(\lambda)^2}{g_2(\lambda)}
+$$
+is strictly convex in non-radial directions.
+\item It is easy to check that the other properties are preserved.
+\ei
+\ef
+
+%\subsection{Asymptotic convexity (FNL, $n=2$)}
+%\bf{Asymptotic Convexity, $n=2$}
+%If $n=2$, the convexity assumption on $f$ may be dropped: 
+%\begin{thm}[A. L. M.]
+%Suppose $n=2$ and let $\lambda_1$ be the smallest principal curvature of an admissible solution of \eqref{flow} with homogeneous degree one speed $f$. Then for all $\epsilon>0$, there is a $C_\epsilon$ such that
+%\bann
+%\lambda_1&\geq &-\epsilon f-C_\epsilon\,.
+%\eann
+%\end{thm} 
+%\bi
+%\item Some concavity assumption is probably necessary in higher dimensions due to the existence of concave speeds which do not preserve convexity. 
+%\item However, inverse concavity doesn't make sense beyond the positive cone.
+%\ei
+%\ef
+
+%\section{Cylindrical estimates}
+
+
+
+
+
+\end{document}
+
+
+
+
+
+\subsection{Cylindrical estimates (mean curvature flow)}
+
+\bf{Cylindrical estimates (MCF)}
+\bi
+\item The convexity estimate says that, near a singularity, non-positive principal curvatures are close to zero. 
+\item A cylindrical estimate says that the remaining (positive) ones are close to each other.   More precisely,
+\begin{thm}[Huisken-Sinestrari \cite{HuSi09}]
+Suppose $\lambda_1+\lambda_2>\alpha H$ for a solution of the mean curvature flow. Then for all $\epsilon>0$, there exists $C_\epsilon$ such that \vspace{-2mm}
+\bann
+|\lambda_1|\;\leq \; \epsilon H \quad \Rightarrow {}&\quad |\lambda_i-\lambda_j|^2\;\leq \; c\epsilon H^2+C_\epsilon\,.
+\eann
+\end{thm}
+\ei
+\ef
+
+\bf{Cylindrical estimates (MCF)}
+\bi
+\item The only singularities in this case (for embedded solutions) are  $\T^n$, $\T^{n-1}\times \R$ and $\Sigma^n$. 
+\item Huisken and Sinestrari were able to develop an intricate surgery procedure for their removal. 
+\item Roughly speaking, surgery is the inverse procedure of connected sum. 
+\begin{cor}[A topological application]
+Any embedded, uniformly 2-convex hypsersurface of $\R^{n+1}$ ($n\geq 3$) is either $\T^n$, or the connected sum of tori $\T^{n-1}\times \T^1$.
+\end{cor}
+\ei
+\ef
+
+\subsection{Cylindrical estimates (homogeneous flows)}
+
+\bf{Cylindrical estimates (FNL)}
+Cylindrical estimates hold for convex speeds: 
+\begin{thm}[Andrews, L., McCoy]
+Suppose that $F$ is homogeneous of degree one and convex, and $X$ is an $(m+1)$-convex solution of the corresponding flow. Then for all $\epsilon>0$, there exists $C_\epsilon$ such that
+\bann
+G_m(\cdot,t) \leq {}&\epsilon F(\cdot,t)+C_\epsilon\quad\quad \mbox{ for }\, t\in (t_0,T)\,,
+\eann
+  where $G_m$ is given by a smooth, degree one homogeneous function of the principal curvatures that vanishes if and only if $X$ is either strictly $m$-convex, or the cylinder $\R^{m}\times \T^{n-m}$.
+\end{thm}
+\ef
+
+\bf{Cylindrical estimates (homogeneous flows)}
+\bi
+\item The only possible singularities in this case are $\T^{n-k}\times\R^k$, $0\leq k\leq m$ and $\Sigma^{n-k}\times \R^k$, $0\leq k< m$. 
+\item If $m+1=3$, the menagerie is:
+\bann
+{}&\T^n\,   ,\; \T^{n-1}\times \R\,   ,\; \Sigma^n\,   ,\; \T^{n-2}\times\R^2\,   ,\; \mbox{and}\,\; \Sigma^{n-1}\times\R.
+\eann\vspace{-8mm} 
+%\item The proof uses asymptotic convexity. 
+\item The result applies to the mean curvature flow, generalising the Huisken-Sinestrari result. 
+\item It will take a very skilled surgeon to remove the `bubble-sheet', $\T^{n-2}\times\R^2$, and the `line of solitons', $\Sigma^{n-1}\times \R$!
+\ei
+\ef
+
+%\section{Final remarks}
+\bf{Final remarks}
+We conclude with the following remarks 
+\bi
+\item As far as we know, there is currently no replacement for the monotonicity formula for more general homogeneous degree one flows, 
+%\item although there is a non-collapsing theorem which may partially replace it. 
+\item Note that, in the positive cone, convexity implies inverse concavity.   It would be interesting to find an extension of the inverse concavity condition beyond the positive cone which allows us to generalise these theorems about convex speeds.
+\ei
+\ef
+
+\bf{Final remarks}
+\bi
+\item As in the case of MCF, asymptotic convexity and the cylindrical estimates should work even in a Riemannian background with estimates on the injectivity radius, the sectional curvature and the norm of the gradient of the curvature. 
+\item A related problem would be to see if the theorems work for flow speeds of higher degrees of homogeneity.
+\ei
+\ef
+
+\begin{thebibliography}{}
+\bibitem[AbLa86]{AbLa} U. Abresch and J. Langer \emph{The normalized curve shortening flow and homothetic solutions.} J. Differential Geom. \textbf{23} (2), 175-196 (1986).
+\bibitem[And94a]{An94} B. Andrews, \emph{Contraction of convex hypersurfaces in Euclidean space.} Calc. Var.  Partial Differential Equations \textbf{2} (2), 151-171 (1994).
+\bibitem[And94b]{AnHarnack} B. Andrews, \emph{Harnack inequalities for evolving hypersurfaces.} Math. Z. \textbf{217}, 179-197 (1994).
+%\bibitem{An04} B. Andrews, \emph{Fully nonlinear parabolic equations in two space variables.} Preprint, available at arXiv: math.DG/0402235
+\bibitem[And07]{An07} B. Andrews, \emph{Pinching estimates and motion of hypersurfaces by curvature functions.} J. Reine Angew. Math, \textbf{608}, 17���33 (2007).
+\bibitem[And10a]{An10} B. Andrews, \emph{Moving surfaces by non-concave curvature functions.} Calc. Var. Partial Differential Equations \textbf{39} (3-4), 650-657 (2010).
+\bibitem[And10b]{An10b} B. Andrews, \emph{Fully nonlinear parabolic equations in two space variables.}, available at arXiv:math.DG/0402235v1[math.AP] (2010).
+\bibitem[AMZ11]{AnMcZh} B. Andrews, J. McCoy and Y. Zheng \emph{Contracting convex hypersurfaces by curvature.}, available at arXiv:1104.0756v1 [math.DG] (2011)
+\bibitem[Bak]{Baker} C. Baker \emph{The mean curvature flow of submanifolds of high codimension.} (Thesis), available at arXiv:1104.4409v1 [math.DG] (2011)
+\bibitem[Cho85]{Ch1} B. Chow, \emph{Deforming convex hypersurfaces by the $n$-th root of the Gaussian curvature.} J. Differential Geometry \textbf{22} (1), 117-138. (1985)
+\bibitem[Cho87]{Ch2} B. Chow, \emph{Deforming convex hypersurfaces by square root of the scalar curvature.} Invent. Math. \textbf{87} (1), 63-82 (1987).
+%\bibitem{Gerhardt} C. Gerhardt, \emph{Curvature Problems}. Series in Geometry and Topology, \textbf{39}. International Press, Somerville, MA, 2006. ISBN: 978-1-57146-162-9; 1-57146-162-053-02 (53C44 58E12).
+%\bibitem{Gl} G. Glaeser, \emph{Fonctions compos\'ees diff\'erentiables.} Ann. Math. \textbf{77} (2), 193-209 (1963) (French).
+%\bibitem{Ha82} R. Hamilton, \emph{Three manifolds with positive Ricci curvature.} J. Differential Geometry \textbf{17}, 255-306 (1982).
+\bibitem[Ham95]{Ha95} R. Hamilton, \emph{Harnack estimate for the mean curvature flow.} J. Differential Geometry \textbf{41}, 215-226 (1995).
+\bibitem[Hui84]{Hu84} G. Huisken, \emph{Flow by mean curvature of convex surfaces into spheres.} J. Differential Geometry \textbf{20}, 237-266 (1984).
+\bibitem[Hui90]{Hu90} G. Huisken, \emph{Asymptotic behaviour for singularities of the mean curvature flow.} J. Differential Geometry \textbf{31}, 285-299 (1990).
+\bibitem[HuSi99a]{HuSi99a} G. Huisken and C. Sinestrari, \emph{Mean curvature flow singularities for mean convex surfaces.} Calc. Var. Partial Differential Equations, \textbf{8} (1), 1-14 (1999).
+\bibitem[HuSi99b]{HuSi99b} G. Huisken and C. Sinestrari, \emph{Convexity estimates for mean curvature flow and singularities of mean convex surfaces.} Act. Math, \textbf{183} (1), 45-70 (1999).
+\bibitem[HuSi09]{HuSi09} G. Huisken and C. Sinestrari, \emph{Mean curvature flow with surgery of two-convex hypersurfaces.} Invent. Math., \textbf{175}, 137-221 (2009).
+\bibitem[Wan11]{Wa} X.-J. Wang, \emph{Convex solutions to the mean curvature flow.} Ann. Math., \textbf{173}, 1185-1239 (2011).
+\end{thebibliography}
+\end{document}
+
+
+
+\bf{Elements of the Proof}
+The idea of the proof of asymptotic convexity and the cylindrical estimates is the same as that of the sphere theorems for convex initial data.
+\bi
+\item Find the correct pinching function which
+\bi
+\item is positive outside the pinching cone $\Gamma$,
+\item vanishes on its closure. That is, $\Gamma=\{G=0\}$ and
+\item is homogeneous of degree one.
+\ei
+\item For example
+\bi
+\item $G(\W):=\frac{n|h|^2-H^2}{H}=\frac{\sum_{i<j}(\lambda_j-\lambda_i)^2}{(\sum_{i}\lambda_i)^2}=:g(\lambda)$ will detect umbillic points.
+\item 
+\ei
+\ei
+\ef
+
+\bf{Elements of the Proof}
+Since we want to show that $G\searrow 0$, we need to preserve the initial pinching: $G/F\leq c_0$. 
+\bi
+\item This follows from applying the maximum principle to
+\bann
+\left(\frac{\pd}{\pd t}-\dot F^{kl}\cd_k\cd_l\right)\frac{G}{F} ={}&\frac{1}{F}\left(\dot G^{kl}\ddot F^{pq,rs}-\dot F^{kl}\ddot G^{pq,rs}\right)\cd_kh_{pq}\cd_kh_{rs}-\frac{2}{F}\dot F^{kl}\cd_kF\cd_l\left(\frac{G}{F}\right)
+\eann
+\item So we require $\left(\dot G^{kl}\ddot F^{pq,rs}-\dot F^{kl}\ddot G^{pq,rs}\right)\cd_kh_{pq}\cd_kh_{rs}\leq 0$.
+\ei
+The difficult part of the proof really consists of bootstrapping this inequality using the parabolicity of the problem.
+\ef
+\end{document}
+
+\bf{`Round' Points.}
+Huisken `84 (following Hamilton `82) considers, for convex hypsesurfaces, the function
+\bann
+g ={}&\frac{n|h|^2-H^2}{H^2}\; = \; \frac{1}{H^2}\sum_{i<j}(\lambda_i-\lambda_j)^2
+\eann
+\bi
+\item $g$ measures the `roundness' of $M_t$.
+\item \textbf{Theorem}: \textit{There are constants $0<\sigma<1$ and $C_\sigma>0$ such that $g\leq C_\sigma H^{-\sigma}$ for all times.}
+\item Thus, since $H\to\infty$ as $t\to T_{\max}$, $M_t$ is `asymptotically spherical' in the limit $t\to T_{\max}$.
+\ei
+\ef
+
+\bf{Proof}
+Consider 
+\bann
+g_\sigma&:=&gH^{\sigma}\; =\; \frac{n|h|^2-H^2}{H^{2-\sigma}}
+\eann
+\bi
+\item $g_\sigma$ satisfies the evolution equation
+\bann
+(\pd_t-\Delta)g_\sigma  ={}&\frac{(1-\sigma)}{H}\langle\cd H,\cd g_\sigma\rangle-2H^\sigma Q(\cd h,h)\\
+&&-\sigma(1-\sigma)H^{2+\sigma}|\cd H|^2 g+\sigma g_\sigma|h|^2
+\eann
+\item Thus the maximum principle almost yields the desired estimate, $g_\sigma<C_\sigma$.
+\item However, a few tricks allow Huisken to bound high $\mathcal{L}^p$ norms of $g_\sigma$ for sufficiently small sigma. A lemma of Stampacchia then implies the bound.
+\ei
+\ef
+
+\bf
+Similar ideas lead to the following nice statement (due to Huisken-Sinestrari \cite{HuSi99A,HuSi99B}) about non-convex initial data:
+\bi
+\item \textbf{Theorem}:\textit{If $H_0>0$ then $M_t$ is \emph{asymptotically convex} in the sense that, for any $\sigma>0$ there exists a constant $C_\sigma>0$ such that $\lambda_1\geq-\sigma H-C_\sigma$.}
+\item Since $\epsilon$ may be made small and $C$ is not dependent on the curvatures, the ratio $\lambda_1/H$ becomes negligible at any singularity $H\to\infty$. 
+\item Defining an appropriate sequence of rescaled flows (a ``Hamilton blow-up sequence'') it is possible to derive a (weakly) convex limit flow.
+\item Singularities may then be classified.
+\ei
+\ef
+
+\bf{Example}
+\begin{figure}
+\includegraphics[scale=0.57]{neckpinch.png} 
+\caption{The `neck-pinch' example.}
+\end{figure}
+\ef
+
+\bf{Curvature Space Interpretation.}
+\bi
+\item Hamilton: `principle curvature vector' $\lambda=(\lambda_1,\dots,\lambda_n)$ remains in any convex cone in curvature space $\R^n$ in which it lies initially.
+\item Asymptotic convexity: At a blow-up point, $\lambda$ is eventually contained in the smallest cone, which contains the `cylinder points' $\{(0,\dots,0,\lambda_{l+1},\dots,\lambda_n)\}_{l=1}^n$, i.e. $\Gamma_+$.
+\item Since $k-$convexity is preserved, $\lambda$ eventually contained in smallest cone, which contains the cylinders $\{(0,\dots,0,\lambda_{l+1},\dots,\lambda_n)\}_{l=(n-k)}^n$ for $k$-convex initial hypersurface. (Convex ($k=1$) case is Huisken's theorem).
+\item Implies that the possible singular profiles of a $k-$convex surface are $\T^{n-l}\times\R^{l}$ for $l\leq k$.
+\ei
+\ef
+\bf{Curvature Space Interpretation.}
+\begin{figure}
+\includegraphics[scale=0.39]{CS.png} 
+\caption{\footnotesize{$\Gamma_+$ in the Curvature space of a 3-manifold evolving by curvature.}}
+\end{figure}
+\ef
+\bf{Curvature Space Interpretation.}
+\begin{figure}
+\includegraphics[scale=0.41]{H=1.png} 
+\caption{Another view of $\{H=1\}\cap\Gamma_+$.}
+\end{figure}
+\ef
+\bf{Curvature Space Interpretation.}
+\begin{figure}
+\includegraphics[scale=0.41]{H=1kconvexity.png} 
+\caption{1-, 2- and 3-convexity cases. Curvatures are normalised.}
+\end{figure}
+\ef
+%It follows from the estimate in the theorem that, for any $\epsilon>0$, there exists $C(\epsilon,M_0)$ such that:
+%\bann
+%S_l\geq-\epsilon H^l-C\label{eq:symmetricfunctions}
+%\eann
+%on $[0,T)\times M$ for every $l=2,\ldots n$, where $S_l$ is the $l$th symmetric function of the principle curvatures:
+%\bann
+%S_l(\lambda_1,\ldots,\lambda_n) ={}&\sum^n_{j_1\leq j_2\leq\ldots\leq j_l\leq n}\lambda_{j_1}\lambda_{j_2}\ldots \lambda_{j_l}
+%\eann
+%(then, for example: $S_1= H$ and $S_n$ is the Gauss curvature). In fact, together, this class of estimates is equivalent to the one stated in the theorem, so that, by proving each of the estimates \eqref{eq:symmetricfunctions} (inductively on $l$) Huisken and Sinestrari \cite{HuSi99A,HuSi99B} were able to prove the asymptotic convexity estimate. 
+
+%In accordance with the strength of this estimate, its proof is aptly difficult. We take a variation of the approach of \cite{HuSi99A,HuSi99B} (see also \cite[Section 5]{Hu84}), namely, 
+
+\bf{Non-convex Surfaces ($n$=2)}
+In two dimensions there is a natural candidate `$g$', namely, consider
+\bann
+g ={}&\frac{|h|^2-H^2}{2H^2}\; =\;\frac{-\lambda_1\lambda_2}{(\lambda_1+\lambda_2)^2}
+\eann
+as a function outside of the positive quadrant, $\Gamma_+$.
+\bi
+\item Then $g$ measures the nearness of $\lambda=(\lambda_1,\lambda_2)$ to $\pd\Gamma_+$.
+\item In this sense it measures the (pointwise) `convexness' of $M^2_t$.
+\item Since $|h|^2-H^2=-R$, in higher dimensions $g$ really only measures the positivity of the scalar curvature of $M_t$ (on the order of $H$).
+\ei
+\ef
+
+\bf
+By considering (in all dimensions $n\geq 2$) the function,
+\bann
+g_{\sigma,\epsilon} ={}&(g-\epsilon)H^{\sigma}
+\eann
+Husiken-Sinsetrari \cite{HuSiA} are able to deduce, using similar tricks to Huisken `84, the following scalar convexity statement:
+\bi
+\item \textbf{Theorem}: \textit{If $H_0>0$, then, for any $\epsilon>0$ there is a constant $C_\epsilon>0$ such that
+\bann
+R&\geq &-\epsilon H^2-C_\epsilon
+\eann}
+\item This implies positive scalar curvature at a singular point in the blow-up
+\item and implies (weak) convexity there if $n=2$.
+\ei
+\ef
+
+\bf{Higher Dimensions}
+To prove the result for higher dimensions, Huisken-Sinestrari \cite{HuSiB} undertake an epic induction procedure on the degree $k$ of the elementary symmetric functions, $S_k$ of the principal curvatures:
+\bann
+S_k&:=&\sum_{1\leq i_1<\dots<i_k\leq n}\lambda_{i_1}\lambda_{i_2}\dots\lambda_{i_k}
+\eann 
+to prove that
+\bi
+\item \textbf{Theorem}: \textit{If $H_0>0$, then, for any $\epsilon>0$ there is a constant $C_{\epsilon,k}>0$ such that
+\bann
+S_k&\geq &-\epsilon H^2-C_{\epsilon,k}
+\eann}
+\item This implies algebraically that the smallest principal curvature satisfies the same statement.
+\ei
+\ef
+
+\bf{An Alternative Approach.}
+\bi
+\item Consider a smooth function $g:\Gamma\to\R$, where $\Gamma\subset\R^n$ is a convex subcone of the `positive mean curvature half-plane' ($\sum_i\lambda_i>0$). %($G$ will be a function of the principle curvatures, the cone $\Gamma$ representing some convexity condition on the evolving surface). 
+\item Suppose that $g$ has the following properties:
+\ei
+\begin{cond}\label{conditions}
+\begin{enumerate}
+	\item $g$ is homogeneous of degree 1: $g(k\lambda)=kg(\lambda)$ $\forall\;k>0$;
+	\item $g$ is uniformly convex in $\Gamma_+^c:=\Gamma\backslash \Gamma_+$, 		\item $g>0$ in $\Gamma_+^c$;
+	\item $g=0$ in $\bar{\Gamma}_+$ and;
+	\item $Dg=0$ in $\pd\Gamma_+^c$.
+\end{enumerate}
+\end{cond}
+\ef
+
+\bf{The Proof}
+\bi
+\item Since $g$ is symmetric, it can be written as an $GL(n)$ invariant function, $G$, on the cone of symmetric maps $\R^n\to\R^n$ (that is, on the Weingarten map, $h$), that is, $g(\lambda(h))=G(h)$.
+\item Analogous conditions then hold for $G$.
+\item By a short geometric argument we have the useful condition on $G$
+\begin{equation}
+\frac{1}{c_1}\frac{|\cd h|^2}{H} \leq \frac{\pd^2 G}{\pd{h_i}^j\pd{h_l}^m}\cd_k{h_i}^j\cd^k{h_l}^m\leq c_1\frac{|\cd h|^2}{H}\,.
+\end{equation}
+whenever we can bound $|h|^2/H^2\leq c_0$.
+\item $|h|^2/H^2\leq c_0$ is the circular cone of radius $\sqrt{c_0}H$.
+\ei
+\ef
+
+\bf{The Proof}
+\ben
+\item These properties are needed to obtain a bound on $G$ (and hence $g$) of the form
+\bann
+G&\leq& \alpha H+C_\alpha\quad\forall\alpha\in (0,1)
+\eann
+using a Stampacchia iteration argument as in Huisken `84 \cite{Hu84} (and Hiusken Sinestrari '99 \cite{HuSi99A,HuSi99B}).
+\item By then constructing a `$g$' satisfying the above conditions, which is not less than $-\lambda_1$, the theorem will be proved.
+\een
+\ef
+
+%\begin{lem}\label{lem:convexitybound}
+%For any value of $h$ there are constants $0<\theta \leq G(h)\leq \Theta<\infty$ and $c_1=c_1(\theta, \Theta)>0$ such that
+%\begin{equation}
+%\frac{1}{c_1}\frac{|\cd h|^2}{H} \leq Q(h,\cd h) := \frac{\pd^2 G}{\pd{h_i}^j\pd{h_l}^m}\cd_k{h_i}^j\cd^k{h_l}^m\leq c_1\frac{|\cd h|^2}{H}
+%\end{equation}
+%for any $\lambda\in\Lambda=\{\lambda\in\R^n: \theta \sum_{i=1}^n\lambda_i\leq G\leq \Theta\sum_{i=1}^n\lambda_i\}\cap{\bar{\Gamma}_+}^c$.
+%\end{lem}
+
+
+%\begin{lem}\label{lem:convexitybound}
+%On $\Gamma_+^c$ we may estimate
+%\begin{equation}
+%\frac{1}{c_1}\frac{|\cd h|^2}{H} \leq Q(h,\cd h) := \frac{\pd^2 G}{\pd{h_i}^j\pd{h_l}^m}\cd_k{h_i}^j\cd^k{h_l}^m\leq c_1\frac{|\cd h|^2}{H}
+%\end{equation}
+%\end{lem}
+%\begin{proof}
+%(Need to restrict $\Gamma_+^c$ to a compact set (perhaps $|h|/H^2<$Const.) here in order to get the upper bound. This will be ok later since Hamilton's maximum principle implies $\lambda(M_t)$ stays inside any convex cone in which it lies initially. Strict initial mean convexity insures this is a strict subcone of $\Gamma_1$, so that intersecting with any constant mean curvature plane leaves a compact set. Homogeneity then does the rest.)
+
+%By the homogeneity of $G$ it is enough to prove the estimate for $(h,\cd h)\in\{(h,\cd h):\tr h=1,|\cd h|=1\}$ (since the case for $|\cd h|=0$ is trivial). So suppose at some point $Q(h,\cd h)=0$. By the convexity and homogeneity of $G$ we have:
+%\bann
+%\frac{\pd G}{\pd\lambda^i\pd\lambda^j}v^iv^j&> &0
+%\eann
+%unless $v^i=\mu\lambda^i$ for some $\mu\in\R$. In that case, 
+%\bann
+%Q(h,\cd h)=0\Rightarrow \cd_i{h_l}^m ={}&\mu_i{h_l}^m
+%\eann
+%for some $\mu\in\R^n\backslash \{0\}$. In diagonal coordinates this becomes:
+%\bann
+%\cd_i{h_l}^m ={}&\mu_i\lambda_l{\delta_l}^m
+%\eann
+%Setting $m=1$, the Codazzi identity then implies:
+%\bann
+%(\mu_i-\mu_l)\lambda_1 ={}&0
+%\eann
+%so that either $\lambda_1=0$ or $\mu_i=\mu_l$ for each $i,l$. In the latter case the Codazzi identity implies $\lambda_i=\lambda_j$ for each $i,j$. In either case $\lambda\in\bar\Gamma_+$ so that $Q(h,\cd h)$ cannot be zero outside of $\bar\Gamma_+$. We then choose $c_1$ large enough to satisfy both inequalities.
+%\end{proof}
+
+\bf{Step 1: Bounding $G$}
+\bi
+\item To obtain the estimate for $G$ we analyse the function:
+\be
+G_{\epsilon,\sigma}  ={}&\frac{G-\epsilon H}{H^{1-\sigma}}
+\ee
+\item An upper bound $G_{\epsilon,\sigma}\leq C_{\epsilon,\sigma}$ for all small $\epsilon,\sigma$ will then provide the required estimate on $G$.
+\item Attempting to apply the maximum principle we compute the evolution equation (on $\Gamma\backslash\Gamma_+$).
+\begin{align*}
+\pd_t\Gea-\Delta\Gea&-2(1-\sigma)\frac{\left<\cd H,\cd\Gea\right>}{H}\\
+=&\left(\sigma|h|^2-\sigma(1-\sigma)\frac{|\cd H|^2}{H^2}\right)\Gea\\
+&-H^{\sigma-1}\frac{\pd^2 G}{\pd {h_i}^j\pd{h_l}^m}\cd_k{h_i}^j\cd^k{h_l}^m\,\label{eq:Geaevolution}
+\end{align*}
+\ei
+\ef 
+
+\bf{Step 1: Bounding $G$}
+\bi
+\item Unfortunately, the positive $\sigma|h|^2$ term is an obstruction to applying the maximum principle and we have to work harder.
+\item On the other hand, setting $\epsilon=\sigma=0$ does give a nice evolution equation for $G/H$, which provides the useful identities
+\bann
+G&\leq & c_2H\\
+\Rightarrow\quad\Gea&\leq & c_2H^\sigma\label{c_2}\,,
+\eann
+via the maximum principle.
+\item Setting $G=|h|^2/H$ yields $|h|^2/H^2\leq c_0$.
+\item So we work on the the circular cone $\Gamma=\{\lambda\in\R^n:|h|/H^2\leq c_0\;\mbox{and}\;H>0\}$.
+\ei
+\ef
+
+\bf{Step 1: Bounding $G$}
+\bi
+\item Couldn't apply the MP, however, obtaining $L_p$ bounds on the positive part of $\Gea$, at least for high $p$, a supremum bound on $\Gea$ may be derived via a Stampacchia procedure as in \cite[section 5]{Hu84}
+\item This would imply our desired estimate. 
+\item Through a series of delicate estimates it is possible to deduce
+\bann
+\frac{d}{dt}\int_{M_t}(\Gea)_+^pd\mu_t&\leq &0
+\eann
+for any small $\epsilon,\sigma$ when $p$ is sufficiently large. 
+\item This implies the required $L_p$ bounds and gives us our estimate.
+\item Unfortunately, these steps are not easy!
+\ei
+\ef
+
+\bf
+\bi
+\item We've bounded $g$!
+\item Is there $g$ satisfying conditions $(1), (2), (3), (4), (5)$ such that $g>-\lambda_1$?
+\ei
+\ef
+
+\section{Constructing $G$ ($n>2$)}
+
+\bf{Step 2: Constructing $g$.}
+\bi
+\item Construct $g$ using the level set expansion flow by reciprocal harmonic mean curvature,
+\begin{equation}
+\frac{\pd X}{\pd t}(p,t)= \frac{1}{m}\left(\frac{1}{\kappa_1(p,t)},\dots,\frac{1}{\kappa_{m}(p,t)} \right)\nu(p,t)\;.\tag{RHMCF}\label{RHMCF}
+\end{equation}
+\item Initial data will be the boundary of the $n$-simplex, $T^{n-1}=\pd\{\lambda\in\Gamma_1:0<\lambda_i<1\;\forall\;i\;\;\mbox{and}\;\; \sum_{i=1}^n\lambda_i<1\}$, in the space of principal curvatures. 
+\ei
+\ef
+
+\bf{Step 2: Constructing $g$.}
+\bi
+\item Urbas `91 \cite{Ur91}: Existence-uniqueness of smooth solutions of \eqref{RHMCF} for smooth, strictly convex initial data,
+\bi
+\item[(a)] solution exists for all positive times $t> 0$,
+\item[(b)] convexity preserved,
+\item[(c)] surface asymptotes to infinity
+\item[(d)] and becomes spherical in shape.
+\ei
+\item Smoczyk `05 \cite{Sm05}: For weakly convex, Lipschitz initial data $X_0:M\to\R^n$, there is a smooth strictly convex solution satisfying (a), (b), (c), (d) for which $X_t\to X_0$ as $t\to 0$.
+\ei
+\ef
+
+\bf{Step 2: Constructing $g$.}
+\bi
+\item Therefore we have a solution, $\Lambda:T^{n-1}\times \R_+\to\R^n$ corresponding to the hypertetrahedral initial data, $T^{n-1}$, which satisfies (a), (b), (c), (d) for positive times.
+\item It follows that $\Lambda$ is a local diffeomorphism and the function $\tau: \R^n\backslash\Gamma_+\to \R$ defined implicitly by $\tau(\Lambda(\lambda,t))=t$ is well-defined. 
+\item That is, $\tau(\lambda)$ is the time taken for the evolving hypersurface $T_t:=\Lambda(T,t)$ to reach the point $\lambda\in \R^n\backslash\T^{n-1}$.
+\ei
+\ef
+
+\bf{Step 2: Constructing $g$.}
+\begin{figure}
+\includegraphics[scale=0.5]{RHMCF.png} 
+\caption{Flowing $T^{n-1}$ by reciprocal harmonic MCF.}
+\end{figure}
+\ef
+
+\bf{Step 2: Constructing $g$.}
+\bi
+\item $\tau$ is convex, but not uniformly.
+\item $\tau^{\frac{n+1}{2}}$ is uniformly convex on the constant mean curvature slice $\breve{\Gamma}:=\{H=1\}\cap (\Gamma\backslash \Gamma_+)$. 
+\item Define $g:\Gamma\to\R$ by extending $\tau^{\frac{n+1}{2}}\big|_{\breve{\Gamma}}$ via homogeneity to $\Gamma\backslash \Gamma_+$ and setting it to zero in $\Gamma_+$. That is,
+\bann
+g(k\lambda)&:=&k\tau^{\frac{n+1}{2}}(\lambda)\quad \;\forall\;\lambda\in\breve{\Gamma}\\
+g(\lambda)&:=&0\quad\;\forall\;\lambda\in\Gamma_+
+\eann 
+\ei
+\ef
+
+\bf{Step 2: Constructing $g$.}
+\bi
+\item We have
+\begin{enumerate}
+\item $g$ is trivially homogeneous of degree 1 on $\Gamma$.
+\item $D^2_{ij} g$ is homogeneous of degree -1. So $g$ is uniformly convex on $\Gamma\backslash\Gamma_+$ (By uniform convexity of $\tau^{\frac{n+1}{2}}$ on $\breve{\Gamma}$).
+\item Clearly $g>0$ outside $\bar\Gamma_+$ ($\tau>0$ outside $\bar\Gamma_+$) \item $g=0$ on $\bar{\Gamma}_+$ ($\tau=0$ on $\pd\Gamma_+$), and, finally,
+\item $D_ig(\gamma)=0$ on $\pd\Gamma_+$ via the chain rule ($\tau=0$ on $\pd\Gamma_+$). 
+\end{enumerate}
+\item Thus, for all $\alpha\in (0,1)$, there exists $C_\alpha$ such that $g\leq\alpha H+C_\alpha$.
+\ei
+\ef
+
+\bf{Step 2: Constructing $g$.}
+Furthermore,
+\ef
+
+\section{Extension to more general flows}\label{sec:generalflows}
+
+\bf{Homogeneous Flows of Degree 1.}
+\bi
+\item More generally, one can consider flows of the form
+\bann
+\frac{\pd X}{\pd t}(p,t) ={}&F(h(p,t))\nu(p,t)
+\eann
+where $F$ is a degree 1 homogeneous function of (the components ${h_i}^j$ of) the Weingarten map $h$ of the evolving hypersurface.
+\item Examples
+\bi
+\item Mean curvature $F=H=\sum_i{h_i}^i$,
+\item $f=$
+\item $f=$
+\ei
+\ei
+\ef
+
+\bf{Homogeneous Flows of Degree 1.}
+ff
+\ef
+
+\bibliographystyle{amsalpha}
+\bibliography{../../../Documents/refs}
+
+
+\end{document}
+

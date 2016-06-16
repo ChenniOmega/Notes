@@ -1,0 +1,100 @@
+\chapter{PDEs}
+
+Fix an integer $k\geq 1$, and let $\Omega$ denote a subset of $\Rbb^d$.
+
+\begin{defn} A \textbf{k-th order partial differential equation} is an expression of the form 
+\begin{equation}\label{def:PDE}
+F(D^k u(x), D^{k-1} u(x), \cdots, D u(x), u(x), x)=0
+\end{equation}
+where 
+\[ F:\Rbb^{d^k} \times \Rbb^{d^{k-1}} \times \cdots \Rbb^d \times \Rbb \times \Omega \rightarrow \Rbb \]
+is given and 
+\[ u: \Omega \rightarrow \Rbb \]
+is the unknown.
+\end{defn}
+
+We \textit{solve} \ref{def:PDE} if we find all $u$ satisfying \ref{def:PDE}. We may also require $u$ to satisfy boundary conditions on some part $\Gamma \subset \pd \Omega$
+
+\begin{defn}
+\begin{enumerate}
+\item \ref{def:PDE} is \textbf{linear} if it has the form
+\[ \sum_{|\al| \leq k} a_\al(x) D^{\al} u = f(x) \]
+for given functions $a_\al(x)$, $f$. This linear PDE is \textbf{homogeneous} if $f\equiv 0$.
+\item \ref{def:PDE} is \textbf{semilinear} if it has the form
+\[ \sum_{|\al| = k} a_\al(x) D^{\al} u + a_0(D^{k-1}u,\ldots,Du,u,x)=0 \]
+\item \ref{def:PDE} is \textbf{quasilinear} if it has the form
+\[ \sum_{|\al| = k} a_\al(D^{k-1}u,\ldots,Du,u,x)D^{\al} u+ a_0(D^{k-1}u,\ldots,Du,u,x)=0 \]
+\item \ref{def:PDE} is \textbf{fully nonlinear} if it depends nonlinearly upon the highest order derivatives.
+\end{enumerate}
+\end{defn}
+
+\begin{defn}
+A \textbf{k-th order system of PDEs} is an expression of the form 
+\begin{equation}\label{def:PDEsys}
+\mathbf{F}(D^k \mathbf{u}(x), D^{k-1} \mathbf{u}(x), \cdots, D \mathbf{u}(x), \mathbf{u}(x), x)=\mathbf{0}
+\end{equation}
+where
+\[ F:\Rbb^{mn^k} \times \Rbb^{mn^{k-1}} \times \cdots \Rbb^{mn} \times \Rbb^m \times U \rightarrow \Rbb^m \]
+is given and
+\[ \mathbf{u}: U \rightarrow \Rbb^m,  \mathbf{u}=(u^1,\ldots, u^m)\]
+is the unknown.
+\end{defn}
+
+We now turn our attention to linear second order PDEs. As per the definitions above, this can be written in the form 
+\begin{equation}\label{def:secondorderPDE}
+\sum_{i,j = 1}^d a_{ij} u_{x_i x_j} + \sum_{i=1}^d b_i u_{x_i} + cu = f
+\end{equation}
+where $a_{ij}, b_i, c_i$ and $f$ are functions of $\bfx = (x_1,\ldots, x_d \in \Omega \subset \Rbb^d$. We can assume without loss of generality that $a_{ij}=a_{ji}$. 
+
+\begin{defn}
+Let $A$ be the symmetric matrix with entries $a_{ij}$. Then the equation \ref{def:secondorderPDE} is called
+\begin{enumerate}
+\item \textbf{elliptic} if all eigenvalues of $A$ have the same sign,
+\item \textbf{hyperbolic} if $(d-1)$ eigenvalues of $A$ have the same sign and one is of opposite sign,
+\item \textbf{parabolic} if one eigenvalue is $0$ and the others are of the same sign.
+\end{enumerate}
+\end{defn}
+
+Many practical problems have discontinuous right hand side function $f$. In these cases, the problem does not have a classical solution $u$.
+
+\begin{defn}
+Let $a_ij$,$b$,$c \in L^{\infty}(\Omega)$, $i,j = 1\ldots, d$ and $f \in L^2(\Omega)$. A function $u \in H^1_0(\Omega)$ satisfying
+\[ \sum^d_{i,j=1} \int_{\Omega} a_{ij}(\xbf) \frac{\pd u}{\pd x^i}\frac{\pd v}{\pd x^j}dx + \sum^d_{i=1} \int_{\Omega} b_{i}(\xbf) \frac{\pd u}{\pd x^i}vdx+ \int_{\Omega} c(\xbf)u v dx = \int_{\Omega} f(\xbf)v(\xbf)dx, \mbox{  } \forall v \in H^1_0(\Omega)\]
+is called a \textbf{weak solution} of \ref{def:secondorderPDE}. All partial derivatives are understood in the weak sense.
+\end{defn}
+
+A classical solution is also a weak solution. however a weak solution may not be smooth enough to be a classical solution. We define the folowing bilinear form
+\begin{equation}
+a(u,v)=\sum^d_{i,j=1} \int_{\Omega} a_{ij}(\xbf) \frac{\pd u}{\pd x^i}\frac{\pd v}{\pd x^j}dx + \sum^d_{i=1} \int_{\Omega} b_{i}(\xbf) \frac{\pd u}{\pd x^i}vdx+ \int_{\Omega} c(\xbf)u v dx,
+\end{equation}
+and linear form 
+\begin{equation}
+l(v)=\int_{\Omega} f(\xbf)v(\xbf)dx, \mbox{  } \forall v \in H^1_0(\Omega).
+\end{equation}
+With this notation the problem becomes to find $u\in H^1_0(\Omega)$ such that 
+\begin{equation}
+\label{eq:EulerLagrange}
+a(u,v)=l(v), \mbox{  } \forall v \in H^1_0(\Omega).
+\end{equation}
+The existence of a unique solution is guaranteed by the Lax-Milgram lemma. Consider the following quadratic functional $J:H^1_0(\Omega)\rightarrow \Rbb$:
+\begin{equation}
+J(v)=\frac{1}{2} a(u,v)-l(v), \mbox{  } \forall v \in H^1_0(\Omega).
+\end{equation}
+Then if $u$ is the weak solution of \ref{eq:EulerLagrange}, then it is the unique minimiser of $J(\cdot)$ over $H^1_0(\Omega)$. Conversely, if $u$ minimises $J(\cdot)$ over $H^1_0(\Omega)$, then $u$ is the unique solution to \ref{eq:EulerLagrange}. 
+
+\section{Cauchy Problems}
+We now turn our attention to \textit{initial value} or \textit{Cauchy} problems, in particular those of the form 
+\begin{equation}
+\begin{array}{rcl}
+\frac{\pd}{\pd t}u(t,x) & = & F(D^k u(t,x), D^{k-1} u(t,x), \cdots, D u(t,x), u(t,x), x)\\
+u(0,x) & = & f(x),
+\end{array}
+\end{equation}
+where $F$ is a linear, constant coefficient differential operator of order $k=1,2$. 
+
+
+The Einstein Equations are hyperbolic equations. The protypical hyperbolic equation is the wave equation
+\begin{equation}
+\label{eq:Wave}
+\eta^{\al \beta}\pd_{\al} \pd_{\beta} u = 0.
+\end{equation}

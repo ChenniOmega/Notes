@@ -1,0 +1,54 @@
+%\documentclass[12pt]{report}
+%\newtheorem{defn}{Definition}[section]
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+%\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
+%\newenvironment{proof}
+%       {\begin{flushleft} \begin{description}
+%              \item \textit{\textbf{Proof:}}}
+%        {\hfill\rule{2.1mm}{2.1mm}
+%              \end{description}\end{flushleft}}
+%%\newenvironment{myexample}{\begin{flushleft}
+%%i would like to make defn in a slightly different font to distinguish it from normal text
+%\usepackage{amssymb, mathrsfs, graphicx}
+%\addtolength{\textwidth}{100pt}
+%\addtolength{\oddsidemargin}{-50pt}
+%\addtolength{\evensidemargin}{-50pt}
+%\linespread{1.2}
+%\def\R{{\mathbb R}}
+%\def\pd{{\partial}}
+%\def\Lie{{\mathcal{L}}}
+%\def\d{{\mbox{d}}}
+%\def\grad {{\nabla}}
+%\begin{document}
+
+\chapter{Data analysis}           
+\section{Introduction}     
+For a known waveform the most efficient data analysis tool is matched filtering. But often the waveforms of GW are poorly known, limiting the matched filter's applicability. 
+
+A linear time frequency transform correlates the signal with a family of waveforms that are well concentrated in time and space. These waveforms are called \textit{time frequency atoms}.
+
+\section{Fourier Transforms}
+\[\hat{f}(\omega)=\int^{+\infty}_{-\infty}f(t)e{-i\omega t}dt \]
+
+\section{Windowed Fourier Transforms}
+Gabor atoms 
+\[ g_{u,\xi} (t)=g(t-u)e^{i\xi t} \]
+When $g$ is Gaussian, best localisation and the atoms are called \textit{Gabor functions.} Fourier transform of Gabor atom
+\[ \hat{g}_{u,\xi} (\omega) =\hat{g}(\omega-\xi) e^{-iu(\omega-\xi)} \]
+Windowed Fourier transform:
+\[ Sf(u,\xi)=\int^{+\infty}_{-\infty}f(t)g*_{u,\xi}(t)dt=\int^{+\infty}_{-\infty}f(t)g(t-u)e^{-i\xi t}dt \]
+Also can be written as frequency integral
+\[ Sf(u,\xi)=\frac{1}{2\pi}\int^{+\infty}_{-\infty}\hat{f}(\omega)\hat{g}^{*}_{u,\xi}(\omega)d\omega \]
+
+\section{wavelet transforms}
+Wavelet transforms are described in terms of families of basis functions $\psi_{a,b}(x)$ which are dilations and translations of a real function $\psi(x)$ of zero average:
+\[ \psi_{a,b}(t)=\frac{1}{\sqrt{|a|}}\psi\left(\frac{t-b}{a}\right) \]
+A wavelet transform of a function $f$ has a different time frequency resolution to a windowed Fourier transfrom. It is computed by correlating $f$ with a wavelet atom 
+\[Wf(a,b)=\int^{+\infty}_{-\infty}f(t)\psi^{*}_{a,b}(t)dt=\frac{1}{2\pi}\int^{+\infty}_{-\infty} \hat{f}(\omega)\hat{\psi}^{*}_{a,b}(\omega) d\omega \]
+
+
+
+
+
+%\end{document}

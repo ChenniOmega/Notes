@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,graphics, setspace}
+\def\pd{{\partial}}
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\tmdfn}[1]{\textbf{#1}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+\title{Solving Extreme Mass Ratio Binary Black Hole Systems}
+
+\section{Structure}
+\begin{enumerate}
+\item Motivation- gravitational wave detection, expectation of EMR systems
+\item Numerical Relativity- Cauchy surfaces, initial data (maybe)
+\item Codes
+\item So what's the problem?
+\end{enumerate}
+
+\subsection{Motivation}
+Gravitational waves are one of the fundamental predictions made by Einstein's relativity, yet the phenomenon is yet to be detected directly. This is expected to change in the near future, however, with the next generation of gravitational wave detectors soon to come online. e.g Advanced LIGO-VIRGO, 2015.
+
+An important step in the detection of GW is the modelling of gravitational waveforms, as the data is analysed using theoretical templates and matched filtering techniques. There are many sources of gravitational waves in the universe such as gravitational collapse, supernovae, binary star systems and spinning pulsars. Binary black hole mergers are one of the most promising sources of detectable gravitational waves, due to the quasi-periodicity of the predicted waveform and the (comparitively) large amplitude of the waveform.
+
+A binary black hole merger occurs in three phases: the inspiral, plunge and merger, and ringdown. During the inspiral and ringdown phases, perturbative analytic methods give good approximations of the resultant waveform. However for the plunge and ringdown phase, when the amplitude is highest and therefore we have the greatest chance of detection, numerical techniques are required. 
+
+The modelling of binary black holes with small mass ratios is particularly difficult, but it is also particularly important astrophysically. Firstly it is reasonable to expect that binary black hole systems in nature will comprise of black holes of different masses, \textit{find more info on BBH populations by mass}. Another important reason is that the mass asymmetry means there is an asymmetry in the linear momentum which results in the merged black hole recoiling out of the zero momentum initial reference frame.
+
+\textit{check this table}
+
+\begin{tabular}{ccccc}
+type of system & mass ratio & detectable by & frequency & events/yr\\
+intermediate mass, stellar mass & 1:10-1:100 & LIGO/ VIRGO\\
+supermassive, intermediate mass & 1:10-1:100 & LIGO & 10-100Hz & 0.4-1000\\
+supermassive, stellar mass & 1:$10^5$ and higher & LISA/NGO &  $10^{-4}-10^{-1}$ Hz & 3-300 
+\end{tabular}
+2011 capability could nnot simulate binaries with mass ratios smaller than about $10^{-2}$. EMRIs with mass raios less than $10^{-5}$ can be handled with purturbation theory (low freq, LISA). NR is needed for when intermediate mass black holes spiral into supermassive black holes.
+
+\subsection{Numerical Relativity}
+The field of numerical relativity tackles the complications that arise when modelling physical spacetime singularities such as black holes. Here the spacetime curvature becomes infinite. \textit{describe ways to deal with the space time singularity}.
+
+There are a few formalisms available in numerical relativity, but the 3+1 decomposition is the most common. In this formalism, the spacetime is foliated into 3-dimensional spacelike hypersurfaces parameterised by a "universal time function" t. Initial data is set on a "slice" where t=0, and then evolved to subsequent slices. 
+
+Some formulations behave better than others when implemented numerically. Rounding errors lead to constraint violations that can grow unstably.
+
+BSSN formulation, generalised harmonic formulation. BSSN simulate binary neutron star coalescence. 
+
+Handling black hole singularities: excision in which the interior is removed from the computational mesh (by def. the interior cannot affect the exterior). Moving puncture coordinates- adopt special criterior for the lapse and shift such that the spatial slices never reach the spacetime singularity. 
+
+Finite difference techniques partial derivatives are aprroximated as the differences between the values of functions on neighbouring grid points.
+
+Spectral or pseudo spectral all functions are expanded in terms of basis functions and equations recast as equations for expansion coefficients.
+ 
+\subsection{Computation}
+numerical work on parallel computers and AMR.
+
+\subsection{Codes}
+There are a number of codes and frameworks used by the numerical relativity community
+\subsubsection{The Spectral Einstein Code (SpEC)}
+The Spectral Einstein Code uses multidomain spectral methods for solving the partial differential equations of numerical relativity. It uses codes including PETSc, SPHEREPACK, FFTW, DFFTPACK, the GNU Scientific Library and Numerical Recipes.
+
+\subsubsection{Llama}
+Developed at the AEI in Germany, Llama uses cartesian grids close to black holes, and Spherical coordinates in the wave zone.
+
+\subsubsection{Cactus}
+
+\subsubsection{NINJA collaboration}
+Numerical Injection Analysis assembling waveforms from various groups and testing search algorithms
+
+\subsubsection{NRAR collaboration}
+Numerical Relativity and Analytical Relativity - combining post-Newtonian and Numerical waveforms to provide the best calibrated template families covering the larges parameter space of masses and spins.
+
+\subsection{Physical surprises}
+Recoil of a merged unequal mass binary- sprinkler analogy. Each companion in the binary emits linear momentum in the form of gravitational waves. If the binary is symmetric, this cancels. If not, center of mass describes a spiral and once the binary merges the remnant recoils. First simuplated 2006,  for nonspinning unequal mass black holes. Max speed 175km/s for mass ratio 0.36. Larger speeds for spinning black holes- equal mass binary 4000 km/s- higher han escape speed from largest galaxies.
+
+\section{Questions} 
+Are second order effects for same mass bbh orbital decay necessary?
+
+\section{notes}
+\subsection{Hinder2010}
+Unequal masses are expected to be commonplace astrophysically, hence waveforms from these systems are essential. Mass asymmetry leads to an asymmetry in the linear mo- mentum emitted in the gravitational waves around the merger, leading the final black hole to recoil out of the initial zero momentum frame (\textit{kick} or \textit{rocket effect}-important consequences for astrophysics). Gonzales et al simulated mass ratio 10, 2 Schwarzschild merge and ringdown to Kerr. 
+
+The reason for the increase in computational expense is that, for a fixed total mass M = m1 +m2, the gravitational wavelength remains approximately constant with varying q, but the length and time scale required to resolve the smaller hole scales approximately with q.With adaptive mesh refinement as used in Gonzales et al, for large q, the com- putational cost in CPU hours is q times higher than for an equal mass simulation. 
+
+One technical problem which arises when simulating unequal mass BBH systems relat- ing to the coordinate conditions used in many codes has been studied recently in M¨uller et al.
+
+Due to the computational expense of simulating high mass ratios, it can be desirable to propagate the gravitational waves in a separate evolution. In Lousto et al. [56], a BBH simula- tion with a mass ratio of 1:10 was presented, along with a computationally inexpensive perturbative evolution of the gravitational waves modelled using point particles as the sources, whose locations were determined from the coordinate tracks of the black holes in the numerical simulation.
+
+\subsection{Lousto and Zlochhower 2011}
+First fully nonlinear numerical simulations of black-hole binaries with mass ratios 100:1.Moving puncture numerical techniques.
+
+Supermassive BH collision most likely to occur in 1:10-1:100 mass ratio range and will be observable by LISA, while collision of intermediate mass BHs and solar mass BHs will lie in the sensitivy band of second an third gen ground based detectors.
+
+Using the LazEv [18] implementation of the moving punc- ture approach [8, 9]. Our code used the Cactus/Einstein toolkit [19, 20] and the Carpet [21] mesh refinement driver to provide a ‘moving boxes’ style mesh refinement.We use AHFinderDirect [22] to locate apparent hori- zons. We measure the magnitude of the horizon spin using the Isolated Horizon algorithm detailed in [23].
+
+Difficulty in extreme mass ratio limits recognised early by Regge and Wheeler (1957). Zerilli first order perturbations 1970. Teukolsky new formalism 1973: to take into account the decay of the orbit of the small bh due to gravitational radiation, second order effects have to be included- very challenging. 
+
+\subsection{Baumgarte and Shapiro 2011}
+
+
+
+
+
+\end{document}

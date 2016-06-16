@@ -1,0 +1,1079 @@
+%\documentclass[12pt]{report}
+%\newtheorem{defn}{Definition}[section]
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+%\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
+%\newenvironment{proof}
+%       {\begin{flushleft} \begin{description}
+%              \item \textit{\textbf{Proof:}}}
+%        {\hfill\rule{2.1mm}{2.1mm}
+%              \end{description}\end{flushleft}}
+%%\newenvironment{myexample}{\begin{flushleft}
+%%i would like to make defn in a slightly different font to distinguish it from normal text
+%\usepackage{amssymb, mathrsfs, graphicx, tikz}
+%\addtolength{\textwidth}{100pt}
+%\addtolength{\oddsidemargin}{-50pt}
+%\addtolength{\evensidemargin}{-50pt}
+%\linespread{1.2}
+%\def\R{{\mathbb R}}
+%\def\pd{{\partial}}
+%\def\Lie{{\mathcal{L}}}
+%\def\d{{\mbox{d}}}
+%\def\grad {{\nabla}}
+%\def\al{{\alpha}}
+%\input{ThesisPreamble}
+%\begin{document}
+
+\chapter{Differential Geometry}
+This chapter will give a rigorous mathematical introduction to differential geometry to lay the groundwork for general relativity. This includes notes on notation.
+
+\section{Topological Spaces}
+Topology is the branch of mathematics concerned with extending concepts that are familiar in $\mathbb{R}^n$, such as convergence and continuity, to arbitrary sets. If $X$ is a nonempty set, then a \textit{topology}, $\mathscr{T}$, on $X$ is a collection of subsets of $X$ with the following properties:
+\begin{enumerate}
+	\item $X \in \mathscr{T}$ and $\emptyset \in \mathscr{T}$,
+	\item If $\left\{U_i\right\}_{i \in I} \subseteq \mathscr{T}$ for an
+index set $I$, then $\bigcup_{i \in I} U_i \in 		            
+\mathscr{T}$,
+	\item $T_1 \cap T_2 \in \mathscr{T}$ whenever $T_1, T_2 \in
+\mathscr{T}$.
+\end{enumerate}
+
+That is, a topology $\mathscr{T}$ is a set of subsets of $X$ that is closed under arbitrary unions and finite intersections. The pair $(X,\mathscr{T})$ is called a \textit{topological space}. Often, when the intention is obvious, the topological space is referred to simply as $X$. The subsets $T \in \mathscr{T}$ are called the \textit{open sets}, and their complements $X \setminus T$, $T \in \mathscr{T}$ are the \textit{closed sets}. \\
+
+An \textit{open cover} of a subset $S\subseteq X$ is a collection of open sets $\{U_i\}_{i\in I}$ such that $S\subseteq\bigcup_{i\in I}U_i$. The set $S$ is \textit{compact} if every open cover of $S$ has a finite subcover.\\
+
+An example of a topological space is a \textit{metric space}; a pair $(X,d)$ where $X$ is a set and $d:X \times X \rightarrow \left[ 0, \infty \right)$ is a function such that for all $x,y,z \in X$
+\begin{enumerate}
+	\item $d(x,y)=0 \: \Leftrightarrow \: x=y$,
+	\item $d(x,y)=d(y,x)$,
+	\item $d(x,y)\leq	d(x,z) + d(z,y)$.
+\end{enumerate}
+In a metric space, an \textit{open ball} centred at $a$ with radius $r\in \mathbb{R}^+$ is the set  $$B(a,r)=\{ x\in X | d(a,x)<r \}.$$ A subset of $X$ is called \textit{open} if it is a union of open balls. In a metric space $(X,d)$, the \textit{metric topology}, $\mathscr{T}_m$, is the set of open subsets of $X$ with respect to the metric $d$.\\
+
+If $X$ is a topological space, and $x_0 \in X$, then a \textit{neighbourhood} of
+$x_0$ is any open subset of $X$ containing $x_0$. A topological space is called
+\textit{Hausdorff} if any pair of distinct points have disjoint neighbourhoods.
+Any metric space $(X,d)$ is a Hausdorff space: for any $x,y \in X$, simply take
+the neighbourhoods to be the open balls $d(x,r)$ and $d(y,r)$ with
+$r=\frac{1}{2}d(x,y)$. \\
+
+A space $X$ is \textit{second countable} if there is a countable set
+$\mathcal{U}$ of open sets in $X$ such that every open set in $X$ is a union of
+sets in $\mathcal{U}$.\\
+
+A mapping $f$ between topological spaces $X$ and $Y$ is \textit{continuous} at
+$x_0 \in X$ if for all open neighbourhoods $U$ of $f(x_0)\in Y$, the preimage
+$f^{-1}(U)$ contains an open neighbourhood of $x_0$. It is said to be
+\textit{continuous} on $X$ if it is continuous at each point.\\
+
+A \textit{homeomorphism} between $X$ and $Y$ is a continuous \textit{bijection}
+$f$ (i.e. $f$ is 1-1 and onto) with a continuous inverse $f^{-1}$. If such an
+$f$ exists, $X$ and $Y$ are said to be \textit{homeomorphic}.\\ 
+
+\pagebreak
+\section{Manifolds}\label{sec:Manifolds}
+Analysis is a familiar concept in $\mathbb{R}^n$, however on general topological
+spaces it is not applicable in the same way. A manifold is a structure used to
+describe and investigate certain topological spaces by identifying them with
+Euclidean space on ``small enough" scales. We shall only define and discuss {\em
+smooth} manifolds. To make this idea precise and to use it, we require the
+following new concepts.\\
+
+Let $M$ be a topological space. A homeomorphism $x:U\rightarrow U^\prime$, for
+open subsets $U\subseteq M$ and $U^\prime\subseteq \R^n$, is called a
+\textit{coordinate chart}. We write $x=\left(x^1(p),x^2(p),...,x^n(p)\right)$,
+where the $x^i$, called \textit{(local) coordinates}, are functions of the point
+$p\in U$. Strictly speaking, the coordinate chart is a map, but commonly it
+is used to identify the set $U$ with $U'$ and $p\in U$ with $x(p)$ in $\R^n$.\\
+
+Usually more than one chart is required to cover the whole space, and these
+charts must be consistent where they overlap. We say two charts $(U, x)$ and
+$(V, y)$ are \textit{compatible} if $x \circ y^{-1} : y(U\cap V) \rightarrow x(U\cap V)$
+is smooth. \\
+
+An \textit{atlas} $\cal A$ on $M$ is a set of coordinate charts on $M$ such
+that 
+\begin{enumerate}
+\item the domains of the charts, $U$, cover $M$
+\item any two charts are compatible.
+\end{enumerate}
+If the compatibility criterion above is applied in the reverse order, it is seen
+that $y \circ x^{-1} = (x \circ y^{-1})^{-1}$ must also be smooth, that is, the
+maps between the two charts are smooth homeomorphisms with smooth inverses. Such
+maps are called \textit{diffeomorphisms}. The set of all charts compatible with
+every chart in an atlas $\mathcal{A}$ is called the \textit{maximal atlas}
+containing $\mathcal{A}$ and is unique. A maximal atlas may also be called a
+\textit{smooth structure} on $M$.\\
+
+A \textit{(smooth) manifold} $M$ is a second countable Hausdorff space equipped
+with a maximal atlas $\mathcal{A}$. If the charts in $\mathcal{A}$ map $U\in
+M\rightarrow \mathbb{R}^n$, then $n$ is called the \textit{dimension} of the
+manifold. Sometimes $M$ is referred to as an \textit{n-manifold}. If $N$ is a
+closed subset of an n-manifold $M$, we say that $N$ is a \textit{k-submanifold}
+of $M$ if $N$ can be covered by charts $(x,U)$ in $M$ such that $x(N\cap
+U)\subset \R^k\times {\bf 0}$, where ${\bf 0}$ is the zero of $\R^{n-k}$.\\ 
+
+The \textit{Jacobian} of a map $y:\R^n\rightarrow \R^n$,
+$y(x^1,\dots,x^n)=(y^1,\dots,y^n)$ is defined to be the matrix
+\[ J_{ij}=\frac{\partial y^i}{\partial x^j}. \]
+On a manifold $M$, two charts $(U,x)$ and $(V,y)$ are said to have the same
+\textit{orientation} if the diffeomorphism 
+\[ x\circ y^{-1} : y(U\cap V)\rightarrow x(U\cap V) \]
+has positive Jacobian determinant. An atlas $\mathcal{A}$ is \textit{oriented}
+if each pair of overlapping charts have the same orientation. A manifold $M$ is
+\textit{orientable} if it has an oriented atlas.\\
+
+Let $M$ be a smooth manifold with an atlas $\mathcal{A}={(x_\alpha,
+U_\alpha)}_{\alpha\in I}$ for some index set $I$. A \textit{partition of unity
+subordinate to $(U_\alpha)$} is a family of smooth functions
+$(\psi_\beta)_{\beta\in J}$, $\psi_\beta : M\rightarrow [0,1]$ with compact
+support such that:
+\begin{enumerate}
+\item for each $\beta \in J$ there is $\alpha \in I$ such that
+$\mbox{supp}\psi_\beta \subset U_\alpha$, 
+\item for every compact subset $S\in M$, $S\cup \mbox{supp}\psi_{\beta}\neq
+\emptyset$ for only finitely many $\beta$, 
+\item $\sum_{\beta \in J} \psi_{\beta}(x)=1$ for all $x\in M$.\\
+\end{enumerate}
+
+\begin{thm}\label{thm:partunity}
+Let $M$ be a smooth manifold, and let $(x_\alpha,U_\alpha)$ be an atlas on $M$.
+Then there exists a partition of unity subordinate to $(U_\alpha)$.
+\end{thm}
+
+ For any open cover $(U_\alpha)$ we can find a refinement such that we can use
+the same index set for the partition of unity as we use for the cover. For a
+proof of this statement and Theorem \ref{thm:partunity} see \cite{Sternberg}.\\
+
+Examples of manifolds include:
+\begin{enumerate}
+\item $\R^n$ itself, which is covered by a single chart, namely the identity;
+\item The $n$-sphere $S^n$, which is a submanifold of $\R^{n+1}$.
+\item Lie groups (where being a smooth manifold is part of the definition);
+\item The product of two manifolds \cite{Carroll}.
+\end{enumerate}
+
+\section{Calculus on Manifolds}
+
+Within the framework of smooth structures it is possible to define concepts from
+analysis on a manifold $M$. It is usually convenient to describe these concepts
+in terms of local coordinates, however it is important to be sure that such
+definitions are coordinate independent. In this chapter, whenever a concept is
+defined in terms of a local coordinate chart, the coordinate independence is
+verified by showing the definition is invariant under a change of coordinates.\\
+
+
+\subsection{The Tangent Space}\label{sec:tangentspace}
+In $\mathbb{R}^n$ we are used to thinking of a vector as pointing from one point
+in space to another. In an arbitrary space this idea no longer makes sense.
+Instead, we must regard a vector as an object associated with a single point on
+the space. To develop these ideas we think about a vector as acting on functions
+on $M$.\\
+
+A function $f:M\rightarrow\mathbb{R}$ is \textit{smooth} at a point $p\in M$ if
+there is a coordinate chart $(U,x)$ covering $p$ such that the function
+$\bar{f}=f\circ x^{-1}:x(U)\rightarrow \mathbb{R}$ is smooth at $x(p)$. Note
+that this definition does not depend on the choice of chart. For suppose
+$f:M\rightarrow\mathbb{R}$ is smooth at $p$ for a coordinate chart $(U,x)$ and
+let $(V,y)$ be another coordinate chart at $p$. Then, as $x\circ y^{-1}$ is
+smooth by definition, the function $f\circ y^{-1}=\bar{f}\circ x \circ y^{-1}$
+is smooth.\\
+
+Let $C^{\infty}(U)$ denote the space of smooth functions $f:U\rightarrow
+\mathbb{R}$. A \textit{vector field} on $U$ is a linear functional
+$X:C^{\infty}(U)\rightarrow C^{\infty}(U)$ that satisfies the \textit{Leibniz
+Rule},
+\[X(fh)=f X(h) + X(f)h, \]
+for $f,h\in C^{\infty}(U)$. Given a coordinate chart
+$(x^1,\dots,x^n)$ at $p$, a vector field $X$ in a neighbourhood $U$ of $p$ can
+be written
+ \begin{equation} 
+ X= X^i(x^1,\dots,x^n) \frac{\partial}{\partial x^i},
+\label{eq:vectorfield}
+\end{equation}
+where the $X^i$ are functions on $U$ and are referred to as the
+\textit{components} of $X$ with respect to the coordinate system. The vector
+field is \textit{smooth} if all of the $X^i$ are smooth. Thus, we are able to
+extend the definition of a vector field to a global vector field
+$X:C^{\infty}(M)\rightarrow C^{\infty}(M)$. The space of all smooth vector
+fields on $M$ is denoted $\mathcal{T}(M)$. The expression $X^i(p)
+\frac{\partial}{\partial x^i}=X^i_p \frac{\partial}{\partial x^i}$ is referred
+to as a \textit{tangent vector} at $p$.\\
+
+In equation (\ref{eq:vectorfield}) and here on the
+\textit{Einstein Summation Convention} will apply: when an index appears twice
+in an expression, summation over that index is implicitly assumed. That is, the
+expression (\ref{eq:vectorfield}), should be interpreted as
+\[  X= \sum_i X^i \frac{\partial}{\partial x^i}. \]
+
+%By requiring that the vector $v$ is unchanged under a coordinate transformation
+%we can derive the vector transformation property.  Then
+%\begin{eqnarray*}
+%v^{j'} \frac{\partial}{\partial x^{j'}}&=& v^i \frac{\partial}{\partial x^i}\\
+%   &=& v^i \frac{\partial x^{j'}}{\partial x^i}\frac{\partial}{\partial x^{j'}}
+%\end{eqnarray*}
+
+Let $(x^{1'},\dots,x^{n'})$ be another coordinate chart at $p$. Using the chain
+rule we obtain the \textit{contravariant transformation law}
+\begin{equation} X= X^i \frac{\partial}{\partial x^i}= X^i \frac{\partial
+x^{j'}}{\partial x^i}\frac{\partial}{\partial x^{j'}} .\label{eq:contratp}
+\end{equation}
+By defining $X^{j'}=X^i \frac{\partial x^{j'}}{\partial x^i}$ we see that in
+this alternative coordinate chart the vector field has the same form. \\
+
+The space of all tangent vectors $X^i_p  \frac{\partial}{\partial x^i}$ at a
+point $p$ is called the \textit{tangent space to $M$} at $p$, denoted $T_p M$.
+It is clear that $T_p M$ is a vector space and that for a given coordinate chart
+$(x^1,\dots,x^n)$ it has basis $\frac{\partial}{\partial x^i}$. For brevity,
+when the coordinate chart is clear, we sometimes use the notation
+$\partial_i\equiv\frac{\partial}{\partial x^i}$. The disjoint union of the
+tangent spaces is denoted $TM$ and is called the \textit{tangent bundle}.\\
+
+A \textit{smooth curve} on $M$ is a smooth map $\mathcal{C}:I \rightarrow M$ for
+an open interval $I=(t_1,t_2)\subset\mathbb{R}$. The curve passes through a
+point $p\in M$ if there is $t_p \in I$ so that $\mathcal{C}(t_p)= p$. Under a
+chart $(U,x)$, the coordinate representation of $\mathcal{C}$ is denoted
+$\bar{\mathcal{C}}=(x^1(t),\dots,x^n(t))$.\\
+
+Let $\mathcal{C}:I\rightarrow M$ be a smooth curve with $\mathcal{C}(t_p)=p$,
+and $f\in C^{\infty}(M)$, with coordinate representations $\bar{\mathcal{C}}$
+and $\bar{f}$ respectively. The composition $f\circ \mathcal{C}$ maps the
+interval $I$ to $\mathbb{R}$. The \textit{derivative}, $df$ of $f$ along
+$\mathcal{C}$ at $p$ is 
+\begin{eqnarray}
+\left. \frac{d}{dt}f\circ \mathcal{C}\right|_{t_p}&=&
+\frac{d}{dt}\bar{f}(x^1(t),\dots,x^n(t))\nonumber \\
+  &=& \left.\frac{\partial \bar{f}}{\partial x^i}\right|_{x_p}
+\left.\frac{\partial x^i}{\partial t}\right|_{t_p} \nonumber \\
+  &=& X_p(f). \label{eqn:devcurve}
+\end{eqnarray}
+where $X_p=\left.\frac{\partial x^i}{\partial
+t}\right|_{t_p}\frac{\partial}{\partial x^i}$ is the \textit{tangent vector} to
+$\mathcal{C}$ at $p$.
+
+\subsection{The Cotangent Space}
+
+Consider a vector space $V$ with basis $\{e_1,\dots,e_n\}$ so that any vector
+$v\in V$ can be written $v=v^i e_i$ with respect to that basis. The \textit{dual
+space} $V^*$ to $V$ is the vector space of linear functionals
+$\omega:V\rightarrow\mathbb{R}$. The basis for $V^*$ is defined to be
+$\{\varepsilon^1,\dots,\varepsilon^n\}$ such that
+\[\left< \varepsilon^i, e_j \right> \equiv \varepsilon^i e_j = \delta^i_j ,\]
+where the symbol $\left< \omega, v \right>$ denotes the \textit{inner product}
+of $v\in V$ and $\omega\in V^*$, and $\delta^i_j$ is the \textit{Kronecker
+delta} defined by
+\[ \delta^i_j = \left\{ \begin{array}{ll}
+										
+	1 & \mbox{if}\  i=j,\\
+										
+	0 & \mbox{otherwise.} \end{array}\right. \]\\
+
+
+The dual space to the tangent space $T_p M$ is called the \textit{cotangent
+space}, denoted $T^*_p M$. The elements of $T^*_p M$ are called
+\textit{covectors} or \textit{1-forms}. For a function $f\in C^{\infty}(M)$, we
+define its \textit{exterior derivative}, $\mbox{d}f$, by the unique 1-form such that 
+\begin{equation}
+\mbox{d}f(X) = \left<\mbox{d}f,X\right> := X(f)
+\label{eq:extderiv} 
+\end{equation}
+for all $X\in TM$. Observe that if we apply this definition to each of the
+simple functions \mbox{$f=x^1,\dots x^n$}, where the basis for $T_p M$ is
+$(\partial_1,\dots, \partial_n)$, we obtain
+\[ \left<\mbox{d}x^i,\partial_j \right>=\delta^i_j. \]
+Thus, the basis for the cotangent space is $\mbox{d} x^1,\dots, mbox{d} x^n$.\\
+
+The form for a general covector is $\omega=\omega_i \mbox{d} x^i$. As in the
+case for vectors, we require that covectors are invariant under coordinate
+transformations, and so can derive the \textit{covariant transformation
+property}:
+\begin{equation}
+\omega = \omega_{i}\mbox{d}x^{i}=\omega_i \frac{\partial x^i}{\partial x^{j'}} \mbox{d}x^{j'}. 
+\label{eq:covtp}
+\end{equation}
+The components of $\omega$ in the new frame are $\omega_{j'}=\omega_i
+\frac{\partial x^i}{\partial x^{j'}}.$
+
+%--------------------------------------------Tensors----------------------------------%
+
+\subsection{Tensors}
+
+A $(r,s)$\textit{-tensor} (say ``$r$ times contravariant and $s$ times
+covariant'') over a vector space $V$ is a multilinear map 
+\[ T:\underbrace{V^*\times \dots \times V^* }_{r \;\mbox{copies}}\times
+\underbrace{V \times \dots \times V}_{s\; \mbox{copies}} \rightarrow \mathbb{R}.
+\]
+The specification that the map is multilinear means that it is linear in each
+argument. The rank of a tensor is $(r+s)$, that is, the total number of
+arguments it takes. The space of $(r,s)$-tensors on a vector space $V$ is
+denoted by $T^r_s(V)$. \\
+
+Given tensors $T\in T^r_s$ and $S\in T^p_q$, the \textit{tensor product},
+$T\otimes S \in T^{r+p}_{s+q}$ is defined by
+\[
+T\otimes S (\omega^1,\dots,\omega^{r+p};v_1,\dots,v_{s+q}) =
+ T(\omega^1,\dots,\omega^r;v_1,\dots,v_s)S(\omega^{r+1},\dots,\omega^{r+p};v_{
+s+1},\dots,v_{s+q}) \]
+The tensor product is not commutative, but it is associative, that is
+\[ (T\otimes S)\otimes R =T\otimes(S\otimes R), \]
+so a product of three tensors can be written $T\otimes S \otimes R$ without
+ambiguity.\\
+
+On the tangent space $T_p$, a $(r,s)$-tensor maps an ordered set of $r$ 1-forms
+and $s$ vectors to $\mathbb{R}$. We can immediately see that vectors are type
+(1,0)-tensors and 1-forms are type (0,1)-tensors. Scalar functions are tensors
+of type (0,0). The components of a $(r,s)$-tensor over $T_p M$ can be determined
+in coordinates by acting on the basis vectors and 1-forms,
+\[ T^{i_1\dots i_r}_{j_1\dots
+j_s}=T(\mbox{d}x^{i_1},\dots,\mbox{d}x^{i_r};\partial_{j_1},\dots,\partial_{j_s}
+), \]
+where each of the $i$'s and $j$'s run through $1\dots n$. Thus, the tensor can
+be written in expanded form
+\[ T=T^{i_1\dots i_r}_{j_1\dots j_s}\partial_{i_1}\otimes \dots \otimes
+\partial_{i_r}\otimes \mbox{d}x^{j_1}\otimes \dots \otimes \mbox{d}x^{j_s}. \]\\
+
+Under a coordinate change the \textit{tensor transformation law} is
+\begin{equation} T^{i'_1\dots i'_r}_{j'_1 \dots j'_s}=\frac{\partial
+x^{i'_1}}{\partial x^{i_1}}\dots \frac{\partial x^{i'_r}}{\partial
+x^{i_r}}\frac{\partial x^{j_1}}{\partial x^{j'_1}}\dots \frac{\partial
+x^{j_s}}{\partial x^{j'_s}} T^{i_1\dots i_r}_{j_1 \dots j_s}.
+\label{eq:ttl}\end{equation}
+This is consistent with the transformation laws already seen for vectors
+(equation (\ref{eq:contratp})) and 1-forms (equation (\ref{eq:covtp})).\\
+
+The operation \textit{contraction} is a map performed by summing over one upper
+and one lower index. Precisely which indices are involved can be conveniently
+indicated by using repeated indices in local coordinates. For example, on an
+$n$-dimensional vector space, contraction over the second upper index and first
+lower index on a $(3,2)$-tensor produces:
+\[ T^{ijk}_{jl}=\sum^n_{j=1}T^{ijk}_{jl} = S^{ik}_{l}.\]\\
+
+\begin{lemma}
+Contraction of a tensor is a tensor.
+\end{lemma}
+\begin{proof}
+In order to prove this we must prove that the resultant tensor obeys the
+transformation law (\ref{eq:ttl}). We prove the lemma for the tensor in the
+above example for simplicity. A proof for a general tensor proceeds in the same
+way. \\
+
+For the tensor $T=T^{ijk}_{jl}$, (\ref{eq:ttl}) gives
+\[T^{i'j'k'}_{j'l'}=\frac{\pd x^{i'}}{\pd x^i}\frac{\pd x^{j'}}{\pd
+x^j}\frac{\pd x^{k'}}{\pd x^k}\frac{\pd x^{j}}{\pd x^{j'}}\frac{\pd x^{l}}{\pd
+x^{l'}}T^{ijk}_{jl}. \]
+Here we recall that 
+\[ \frac{\pd x^{j}}{\pd x^n}\frac{\pd x^{m}}{\pd x^j}=\delta^m_n \]
+where $\delta^m_n$ is the Kronecker delta. Thus we have 
+\[T^{i'j'k'}_{j'l'}=\frac{\pd x^{i'}}{\pd x^i}\frac{\pd x^{k'}}{\pd
+x^k}\frac{\pd x^{l}}{\pd x^{l'}}T^{ijk}_{jl}.\]
+That is
+\[S^{i'k'}_{l'}=\frac{\pd x^{i'}}{\pd x^i}\frac{\pd x^{k'}}{\pd x^k}\frac{\pd
+x^{l}}{\pd x^{l'}}S^{ik}_{l}, \]
+i.e. $S^{ik}_{l}$ obeys the tensor transformation law as required.
+\end{proof}
+Thus, contraction is a mapping from $(r+1,s+1)$-tensors to $(r,s)$-tensors. \\
+
+A tensor is \textit{symmetric} in some of its indices if it is unchanged by an
+interchange of those indices. For example, if 
+\[ S_{ijkl}=S_{jikl},\]
+we say $S_{ijkl}$ is symmetric in $i$ and $j$. We can \textit{symmetrize} a
+tensor over any number of its indices by summing over the permutations of those
+indices and dividing by the number of permutations. The resulting tensor will be
+symmetric. Symmetrization is denoted by round brackets and is given by:
+\begin{equation} T_{(i_1,\dots,i_n)i_{n+1}\dots i_k} = \frac{1}{n!}\sum_{\sigma
+\in S_n}T_{\sigma(i_1,\dots,i_n)i_{n+1}\dots i_k}, \label{eq:symmetrization}
+\end{equation}
+where $S_n$ is the group of permutations on $(1,\dots,n)$. \\
+
+A tensor is \textit{skew-symmetric} in some of its indices if it changes sign
+under a swap of any two of those indices, for example, if
+\[ S_{ijkl}=-S_{ikjl},\]
+we say $S_{ijkl}$ is skew-symmetric in $i$ and $j$. In a similar fashion to
+symmetrization, we can \textit{skew} a tensor over a number of its indices by
+taking the alternating sum over the permutations of those indices and dividing
+by the number of permutations. This is denoted by square brackets:
+\begin{equation} T_{\left[ i_1,\dots,i_n\right] i_{n+1}\dots i_k} =
+\frac{1}{n!}\sum_{\sigma \in S_n}\mbox{sgn}\sigma \:
+T_{\sigma(i_1,\dots,i_n)i_{n+1}\dots i_k}, \label{eq:skewing}\end{equation}
+where $\mbox{sgn}\sigma= -1$ if the permutation $\sigma$ results from an odd
+number of swaps of indices, and $\mbox{sgn}\sigma= 1$ if the number of swaps is
+even. We can also symmetrize or skew over upper indices. Sometimes we may wish
+to symmetrize or skew over indices which are not adjacent. If so, the indices
+not included are placed within vertical bars, for example,
+\[ T_{(i|j|k)}=\frac{1}{2}(T_{ijk}+T_{kji}). \]
+
+\subsection{Riemannian Manifolds}\label{sec:Riemannian}
+A \textit{Riemannian metric} on a smooth manifold $M$ is a symmetric, positive
+definite, $(0,2)$-tensor field $g$. That is, $g(X,X) > 0$ if $X\in T_pM \neq 0$.
+A \textit{Riemannian manifold} is a smooth manifold equipped with a Riemannian
+metric. In coordinates, the metric has the form
+\[ g=g_{ij}\mbox{d}x^i\otimes \mbox{d}x^j. \]
+For the sake of brevity the tensor product symbol is usually dropped and this is
+written $g=g_{ij}\mbox{d}x^i \mbox{d}x^j$. \\ 
+
+
+On each tangent space $T_p M$ the Riemannian metric determines an inner
+product, 
+\begin{equation} \left<X_p,Y_p\right>=g_{ij}X_p^i Y_p^j, 
+\label{eqn:innerproduct} \end{equation}
+for $X_p,Y_p\in T_pM$. In particular, $\langle \pd_i,\pd_j\rangle=g_{ij}$. For
+example, in Euclidean space, $\R^n$, the metric is $g_{ij}=\delta_{ij}$.  Let
+$X_0=(X^1_0,\dots, X^n_0)$ and $Y_0=(Y_0^1,\dots,Y_0^n)$ be two vectors at a
+point $p_0\in\mathbb{R}^n$ in Cartesian coordinates. Then from
+(\ref{eqn:innerproduct}) we have
+\[ \left\langle X_0,Y_0 \right\rangle = \delta_{ij} X_0^i Y_0^j = X_0^1 Y_0^1 +
+\dots + X_0^n Y_0^n, \]
+which is the familiar dot product. \\
+
+\begin{thm}
+Every smooth manifold $M$ may be equipped with a Riemannian metric.
+\end{thm}
+\begin{proof}
+Let $(x_i,U_i)_{i\in I}$ be an atlas on $M$, and let $(\psi_i)_{i\in I}$ be a
+partition of unity subordinate to this atlas. For $p\in U_i$ let $X_p,Y_p\in
+T_pM$, be given in coordinates by $(X_{pi}^1,\dots,X_{pi}^n)$ and
+$(Y_{pi}^1,\dots,Y_{pi}^n)$ respectively. Then we can define a Riemannian metric
+on $M$ by
+\[ g(X_p,Y_p)=\sum_{i\in I} \psi_i X^j_{pi} Y^j_{pi}. \]
+\end{proof}
+
+We define the \textit{inverse metric tensor} $g^{ij}$ by 
+\[ g^{ij}g_{jk}=g_{jk}g^{ij}=\delta^i_k. \]
+Clearly this is also symmetric. The metric and inverse metric can be used to
+perform the important operations of \textit{raising and lowering indices} on a
+tensor, which allows us to identify the contravariant and covariant components.
+In particular, we can use the metric and inverse to change vectors to covectors
+and vice versa:
+\[\begin{array}{lcl}
+X_i &=& g_{ij} X^j \\
+\omega^i &=& g^{ij}\omega_j
+\end{array}.\]\\
+
+If we take a n-submanifold $M$ of $\mathbb{R}^m$ then our knowledge of the
+metric in $\mathbb{R}^m$ allows us to construct a metric on $M$. Let
+$(u^1,\dots,u^m)$ be the usual Cartesian coordinates in $\mathbb{R}^m$ and let
+$M$ have local coordinates $(x^1,\dots,x^n)$. The \textit{induced metric} is
+\cite{Lee}
+\begin{equation} g=\sum^{m}_{i=1}
+(\mbox{d}u^i)^2=\sum^{m}_{i=1}\left(\frac{\partial u^i}{\partial
+x^j}\mbox{d}x^j\right)^2. \label{eqn:inducedmetric}\end{equation}
+
+\section{Mappings between Manifolds}
+
+Consider two manifolds $M$ and $N$, and suppose there exists a diffeomorphism $\phi:M\rightarrow N$. Let $f$ be a function $f:N\rightarrow \mathbb{R}$. We can precompose the diffeomorphism $\phi$ with $f$ to define a corresponding function on $M$. This is the \textit{pull back} of $f$ by $\phi$:
+\begin{equation} \phi^* f = (f\circ \phi). \label{eq:pullback} \end{equation}
+
+%\begin{figure}[htbp]
+%	\centering
+%		\includegraphics{pullback}
+%	\caption{The pullback of a function $f$ by $\phi$}
+%	\label{fig:pullback}
+%\end{figure}
+
+Recalling that a vector field on a manifold is a differential operator on the space of smooth functions on the manifold, we can use $\phi$ to define vector fields on $N$ in terms of vector fields on $M$. This is called the \textit{push forward} of a vector field $X$ by $\phi$, denoted $\phi_{*}X$, and is defined by its action on functions $f\in C^\infty(N)$,
+\begin{equation} (\phi_{*}X)f = X(\phi^* f).\label{eq:pushforward} \end{equation}
+That is, the action of the vector field $\phi_* X \in \mathcal{T}(N)$ is the action of $X\in \mathcal{T}(M)$ on the pulled back function $\phi^* f$. \\
+
+The pull back and push forward can be extended to purely contravariant or purely covariant tensors. For a diffeomorphism $\phi:M\rightarrow N$, with coordinate representation $\phi(x^1,\dots x^n)=(\phi^1(x),\dots,\phi^m(x))$, the general formulae are \cite{Carroll}:
+\begin{eqnarray}
+(\phi^*T)_{i_1,\dots,i_s}&=& \frac{\pd \phi^{j_1}}{\pd x^{i_1}}\dots\frac{\pd \phi^{j_s}}{\pd x^{i_s}}T_{j_1\dots j_s}\label{eq:pullbackcov}\\
+(\phi_*T)^{j_1,\dots,j_r}&=& \frac{\pd \phi^{j_1}}{\pd x^{i_1}}\dots\frac{\pd \phi^{j_r}}{\pd x^{i_r}}T^{i_1\dots i_r}\label{eq:pushforwardcontra}
+\end{eqnarray}
+If $\phi:M\rightarrow N$ is a diffeomorphism and $Y$ is a vector field on $N$, we put
+\begin{equation} \phi^* Y = (\phi^{-1})_* Y. \label{eq:invpush}\end{equation}
+
+\section{Isometries}\label{sec:Isometries}
+Intuitively, we think of a symmetry on a manifold as a transformation of the manifold under which the geometry ``looks the same", that is, the metric remains the same under the transformation. Mathematically, symmetries on a Riemannian manifold $M$ with metric $g$ are given by \textit{isometries}; diffeomorphisms $\phi: M\rightarrow M$ for which $\phi^*g = g$. A composition of isometries is clearly also an isometry, as is the inverse of an isometry. Thus, the set of isometries on $M$ forms a group, called the \textit{isometry group}, $\mathcal{I}(M)$, of $M$. In fact, the isometry group can be shown to be a finite dimensional Lie group acting on $M$ \cite{Lee}. \\
+
+An important example is the Euclidean space $\R^n$ with metric $g_{ij}=\delta_{ij}$. By elementary geometry, the isometry group $\mathcal{I}(\R^n)$ turns out to be the \textit{Euclidean group} $E(n)=\mathcal{O}(n)\times R^n$, where $\mathcal{O}(n)$ is the group of orthogonal matrices (invertible $n\times n$ matrices $A$ such that $A^T A=\mathbb{I}$). The group acts on $x\in \R^n$ by 
+\[ x\mapsto A(x) + b \]
+where $b \in \R^n$ is a translation, and $A\in \mathcal{O}(n)$ corresponds to orthogonal transformations, that is, the reflections and rotations. The connected component of $E(n)$ containing the identity forms the continuous subgroup of \textit{orientation preserving} isometries. The structure $SE(n)=\mathcal{SO}(n)\times \R^n$, where $\mathcal{SO}(n)=\{A\in \mathcal{O}(n)|\det A=1\}$ corresponds to the rotations. The reflections are \textit{orientation reversing}.\\
+
+A \textit{1-parameter family of diffeomorphisms} is a group of diffeomorphisms $\phi_t:M\rightarrow M$, $t\in \mathbb{R}$ such that $\phi_t \circ \phi_s = \phi_{t+s}$. The identity is $\phi_0$ and $\phi_{-t}=\phi_{t}^{-1}$. On an $n$-manifold $M$ there is a 1-1 correspondence between 1-parameter families of diffeomorphisms and vector fields \cite{Carroll}. Under a family of diffeomorphisms $\phi_t$, each point $p$ traces out a smooth curve $\mathcal{C}_p(t)=(x^1_p(t),\dots,x^n_p(t))$ with $\mathcal{C}(0)=p$. We can define a vector field $X^i \frac{\partial}{\partial x^i}$ along $\mathcal{C}_p$ (cf. (\ref{eqn:devcurve})) by 
+\begin{equation} \frac{dx^i_p}{dt}=X^i. \label{eq:intcurve}\end{equation}
+This can be done for every point on our manifold and thus we have a vector field on $M$. The curves $\mathcal{C}$ are called \textit{integral curves} of $X$. Now, we wish to view this as the diffeomorphisms parameterised by $t$ acting on a point $p\in M$, rather than a curve parameterised by $t$ through the point $p$, so we write
+\[ \phi_t(p)=\mathcal{C}_p(t).\]
+The vector field $X$ is called the \textit{generator} of the family of diffeomorphisms. \\
+
+The diffeomorphisms $R_\theta$ clearly form a 1-parameter family with parameter $\theta$. The corresponding vector field is
+\begin{equation} X= -x^2 \frac{\partial}{\partial x^1} + x^1 \frac{\partial}{\partial x^2}. \label{eq:Xrz}\end{equation}
+The integral curves of $X$ are concentric circles about the origin.\\
+
+\section{The Lie Derivative}
+
+On a manifold $M$ we may ask how a tensor $T$ changes as it travels along the integral curves of a vector field.  To this end we define the \textit{Lie Derivative}, $\mathcal{L}_X T$, of a tensor field $T\in T^r_s$ along a vector field $X$  by
+\begin{equation}
+\mathcal{L}_X T := \frac{d}{dt}(\phi_t^* T)|_{t=0}
+\label{eq:Liedef}
+\end{equation}
+where $\phi_t$ is the 1-parameter family of diffeomorphisms generated by $X$. The Lie derivative is a well-behaved differential operator, that is, for real numbers $a,b$ and tensors $T,S$,
+ \begin{enumerate} \item it is linear:
+\begin{equation} \mathcal{L}_X (aT + bS) = a\mathcal{L}_X T+ b\mathcal{L}_X S \label{eq:Lielinear}\end{equation}
+\item it obeys the Leibniz Rule:
+\begin{equation} \mathcal{L}_X(T\otimes S)=(\mathcal{L}_X T)\otimes S + T\otimes(\mathcal{L}_X S) \label{eq:LieLeibniz}\end{equation}
+\end{enumerate}
+We use these properties to give explicit formulae for functions, 1-forms and vector fields, then extend them to a general tensor. In the working that follows, $M$ is a Riemannian $n$-manifold with local coordinates $(x^1,\dots,x^n)$ in which the vector field is $X=X^i\frac{\partial}{\partial x^i}$.
+
+\begin{thm}
+Let $f:M\rightarrow \R$ be a smooth function on $M$. Then the Lie derivative of $f$ with respect to $X$ is
+\begin{equation} \Lie_X (f) = X f, \label{eq:LieFunction}\end{equation}
+where the right hand side is the action of the vector field on the function as in {\S}\ref{sec:tangentspace}.
+\end{thm}
+\begin{proof}
+\begin{eqnarray*}
+\Lie_X (f) &=& \frac{d}{dt}(\phi_t^* f)|_{t=0}\\
+&=& \frac{d}{dt}(f \circ \phi_t)|_{t=0}\\
+&=& X^i\frac{\pd f}{\pd x^i} \mbox{\hspace{1cm} (cf. equation (\ref{eqn:devcurve}))}\\
+&=& X(f)
+\end{eqnarray*}
+\end{proof}
+
+Unlike functions, we are unable to write the Lie derivative of a 1-form in a manifestly coordinate free manner. Thus, we must operate in a local chart and check the coordinate independence explicitly.
+
+\begin{thm}
+ Let $\omega=\omega_i \mbox{d}x^i $ be a 1-form with respect to the coordinate system $(x^1,\dots,x^n)$. The Lie derivative of $\omega$ with respect to $X$ is
+\begin{equation} \Lie_X \omega = \left(\omega_i \frac{\partial X^i}{\partial x^j}+X^i \frac{\partial \omega_j }{\partial x^i} \right)\mbox{d}x^j. \label{eq:Lie1form} \end{equation}
+\end{thm}
+\begin{proof}
+From (\ref{eq:pullbackcov}) we have
+\[ \phi^*\omega = \omega_i \frac{\pd \phi^i}{\pd x^j} \mbox{d}x^j. \]
+Consider the action of the Lie derivative on the basis 1-forms $\mbox{d}x^i$:
+\begin{eqnarray}
+\frac{d}{dt}(\phi^*_t \mbox{d}x^i)|_{t=0} &=& \frac{d}{dt}\left(\frac{\pd \phi^i_t}{\pd x^j}\mbox{d}x^j\right)|_{t=0}\nonumber\\
+&=& \left.\frac{d}{dt}\frac{\pd\phi^i_t}{\pd x^i}\right|_{t=0}\mbox{d}x^j \nonumber \\
+&=& \frac{\pd X^i}{\pd x^j}\mbox{d}x^j \mbox{ \hspace{1cm} (since $\phi_0=id$).} \label{eq:Liebasis1form}
+\end{eqnarray}
+Now consider the general 1-form $\omega_i \mbox{d}x^i$. Applying the Leibniz rule,
+\begin{eqnarray*}
+\Lie_X(\omega_i \mbox{d}x^i)&=& \omega_i \Lie_X(\mbox{d}x^i)+\Lie_X(\omega_i) \mbox{d}x^i\\
+&=& \omega_i\frac{\pd X^i}{\pd x^j}\mbox{d}x^j+X^j\frac{\pd \omega_i}{\pd x^j} \mbox{d}x^i\\
+&=& \left( \omega_i\frac{\pd X^i}{\pd x^j}+X^i\frac{\pd\omega_j}{\pd x^i} \right)\mbox{d}x^j,
+\end{eqnarray*}
+where in the last term we have swapped dummy indices.
+\end{proof}
+
+Now we must confirm the coordinate independence of this result. Let $x'$ be a change of coordinates. Then by equation (\ref{eq:contratp}) in this coordinate system 
+\[X = X^{j'}\frac{\partial}{\partial x^{j'}}=X^i \frac{\partial x^{j'}}{\partial x^i} \frac{\partial}{\partial x^{j'}},\]
+and by equation (\ref{eq:covtp}),
+ \[\omega=\omega_{j'}\mbox{d}x^{j'}=\omega_i \frac{\partial x^i}{\partial x^{j'}} \mbox{d}x^{j'}.\]
+Substituting this into (\ref{eq:Lie1form}) in the $x'$ frame:
+
+\begin{eqnarray}
+\Lie_{X} \omega &=& \left( X^{i'} \frac{\partial}{\partial x^{i'}}\omega_{j'} + \omega_{i'} \frac{\partial}{\partial x^{j'}}{X}^{i'} \right)dx^{j'} \nonumber \\
+&=&\left(X^m\frac{\partial x^{i'}}{\partial x^m} \frac{\partial}{\partial x^{i'}}\left(\omega_n\frac{\partial x^n}{\partial x^{j'}}\right) + \omega_n\frac{\partial x^n}{\partial x^{i'}}\frac{\partial}{\partial x^{j'}}\left(X^m \frac{\partial x^{i'}}{\partial x^m}\right)\right)d x^{j'} \nonumber \\
+&=& \left(X^m\frac{\partial x^{i'}}{\partial x^m}\left( \frac{\partial\omega_n}{\partial x^{i'}}\frac{\partial x^n}{\partial x^{j'}}+\omega_n\frac{\partial^2 x^n}{\partial x^{i'}\partial x^{j'}}\right) + \omega_n \frac{\partial x^n}{\partial x^{i'}}\left(\frac{\partial X^m}{\partial x^{j'}}\frac{\partial x^{i'}}{\partial x^m}+X^m\frac{\partial^2 x^{i'}}{\partial x^{i'} \partial x^m} \right) \right)d x^{i'} \nonumber \\
+&=&\left(X^m\frac{\partial x^{i'}}{\partial x^m}\frac{\partial\omega_n}{\partial x^{i'}}\frac{\partial x^n}{\partial x^{j'}}+X^m\omega_n\frac{\partial x^{i'}}{\partial x^m}\frac{\partial^2 x^n}{\partial x^{i'}\partial x^{j'}}+\omega_n\frac{\partial x^n}{\partial x^{i'}}\frac{\partial X^m}{\partial x^{j'}}\frac{\partial x^{i'}}{\partial x^m}+\omega_n X^m\frac{\partial x^n}{\partial x^{i'}}\frac{\partial^2 x^{i'}}{\partial x^{j'} \partial x^m} \right)d x^{j'}\nonumber \\
+&=&\left(\left(X^m\frac{\partial\omega_n}{\partial x^{j'}}+\omega_n\frac{\partial X^m}{\partial x^{j'}}\right)\delta_{m}^{n}+\omega_n X^m\left(\frac{\partial x^{i'}}{\partial x^m}\frac{\partial^2 x^n}{\partial x^{i'}\partial x^{j'}}+\frac{\partial x^n}{\partial x^{i'}}\frac{\partial^2 x^{i'}}{\partial x^{j'} \partial x^m}\right)\right)d x^{j'}. \label{eq:last}
+\end{eqnarray}
+Here we notice that
+ \[ \frac{\partial y^i}{\partial x^m}\frac{\partial x^n}{\partial y^i}=\delta_{m}^{n}, \]
+therefore
+\[\frac{\partial}{\partial y^j}\left(\frac{\partial y^i}{\partial x^m}\frac{\partial X^n}{\partial y^i}\right)=\frac{\partial^2 y^i}{\partial y^j\partial x^m}\frac{\partial x^n}{\partial y^i} + \frac{\partial y^i}{\partial x^m}\frac{\partial^2 x^n}{\partial y^j \partial y^i}=0.\]
+Thus the second term in the expression (\ref{eq:last}) vanishes and we have
+\[\Lie_X \omega =\left(X^m\frac{\partial x^{j'}}{\partial x^n}\frac{\partial\omega_m}{\partial x^{j'}}+\omega_m\frac{\partial x^{j'}}{\partial x^n}\frac{\partial X^m}{\partial x^{j'}}\right)\frac{\partial x^n}{\partial x^{j'}}d x^{j'} = \left(X^m\frac{\partial}{\partial x^m}\omega_n + \omega_m\frac{\partial}{\partial x^n}X^m\right)dx^n. \]
+Hence proving coordinate independence.\\
+
+\begin{thm}
+Let $Y$ be a vector field. The Lie derivative of $Y$ with respect to $X$ is
+\begin{equation} \Lie_X Y = \left[X,Y\right], \label{eq:LieVfield}\end{equation}
+where $[\ ,\ ]$ denotes the \textit{Lie bracket}:
+\[ \left[X,Y\right] = XY - YX. \]
+\end{thm}
+While this is inherently coordinate independent, the proof requires working in coordinates. 
+
+\begin{proof}
+Consider the left hand side first. Let $Y=\frac{\pd}{\pd x^j}$ and recall $\langle\frac{\pd}{\pd x^j},\mbox{d}x^i\rangle=\delta^i_j$. It follows that
+\[
+\Lie_X \langle\frac{\pd}{\pd x^j},\mbox{d}x^i\rangle = \left(\Lie_X\frac{\pd}{\pd x^j}\right)\mbox{d}x^i + \left(\Lie_X\mbox{d}x^i\right)\frac{\pd}{\pd x^j}=0, \]
+therefore, from (\ref{eq:Liebasis1form}) we have
+\[
+\Lie_X\frac{\pd}{\pd x^j} = -\frac{\pd X^i}{\pd x^j}\frac{\pd}{\pd x^i}.
+\]
+Now consider $Y=Y^j\frac{\pd}{\pd x^j}$
+\begin{eqnarray*}
+\Lie_X (Y^j\frac{\pd}{\pd x^j})&=& \Lie_X(Y^j)\frac{\pd}{\pd x^j}+Y^j\Lie(\frac{\pd}{\pd x^j})\\
+&=& X^i\frac{\pd Y^j}{\pd x^i}\frac{\pd}{\pd x^j}-Y^i\frac{\pd X^i}{\pd x^j}\frac{\pd}{\pd x^i} \\
+&=& \left(X^i\frac{\pd Y^j}{\pd x^i}-Y^i\frac{\pd X^j}{\pd x^i}\right)\frac{\pd}{\pd x^j}
+\end{eqnarray*}
+(again, swapping dummy indices in the last step). 
+
+Now consider the right hand side of (\ref{eq:LieVfield}). The action of a product of vector fields on a function $(XY)f$ is $X(Yf)$ so we have
+\begin{eqnarray*}
+(XY-YX)f &=& X^i \frac{\partial}{\partial x^i}\left(Y^j \frac{\partial f}{\partial x^j}\right) - Y^i \frac{\partial}{\partial x^i}\left(X^j \frac{\partial f}{\partial x^j}\right) \\
+&=& X^i \frac{\partial Y^j}{\partial x^i} \frac{\partial f}{\partial x^j} + X^i Y^j \frac{\partial^2 f}{\partial x^i \partial x^j} -Y^i \frac{\partial X^j}{\partial x^i} \frac{\partial f}{\partial x^i} - Y^i X^j \frac{\partial^2 f}{\partial x^i \partial x^j} \\
+&=& \left(X^i \frac{\partial Y^j}{\partial x^i}-Y^i \frac{\partial X^j}{\partial x^i}\right) \frac{\partial f}{\partial x^j},
+\end{eqnarray*}
+that is, the same as the left hand side. Thus the result is proved.
+\end{proof}
+
+Now we can deduce the Lie derivative of a general tensor. Consider the arbitrary $(r,s)$-tensor 
+\[ T=T^{i_1\dots i_r}_{j_1\dots j_s}\partial_{i_1}\otimes \dots \otimes \partial_{i_r}\otimes \mbox{d}x^{j_1}\otimes \dots \otimes \mbox{d}x^{j_s} \]
+By the linearity (\ref{eq:Lielinear}) and the Leibniz rule (\ref{eq:LieLeibniz}), we find Lie derivative of $T$ to be
+\begin{eqnarray*}
+\Lie_X T&=& (XT^{i_1\dots i_r}_{j_1\dots j_s})\partial_{i_1}\otimes \dots \otimes \partial_{i_r}\otimes \mbox{d}x^{j_1}\otimes \dots \otimes \mbox{d}x^{j_s}\\
+& & \hspace{1.2cm} + T^{i_1\dots i_r}_{j_1\dots j_s}\left[\sum^{r}_{n=1}\partial_{i_1}\otimes \dots \otimes (\Lie_X \partial_{i_n}) \otimes \dots \partial_{i_r}\otimes \mbox{d}x^{j_1}\otimes \dots \otimes \mbox{d}x^{j_s} \right. \\
+& & \hspace{1.8cm} + \left. \sum^{s}_{m=1}\partial_{i_1}\otimes \dots \otimes \partial_{i_r}\otimes \mbox{d}x^{j_1}\otimes \dots \otimes (\Lie_X \mbox{d}x^{j_m})\otimes \dots \otimes \mbox{d}x^{j_s} \right].
+\end{eqnarray*}
+
+This is coordinate independent by virtue of the independence of the tensor product and since we have already shown independence for (1,0)- and (0,1)-tensors.\\
+
+Of particular interest is the covariant 2-tensor, that is tensors of the same type as the Riemannian metric. The Lie derivative for a covariant 2-tensor $\varphi =\varphi_{ij} dx^i \otimes dx^j$ is:
+\begin{equation}\Lie_X \varphi = \left( X^i \frac{\partial}{\partial x^i}\varphi_{jk} + \frac{\partial X^i}{\partial x^j}\varphi_{ik} + \frac{\partial X^i}{\partial x^k}\varphi_{ji}\right)dx^j \otimes dx^k \label{eq:LieCov2}\end{equation}
+
+\section{The Covariant Derivative}
+
+A \textit{linear connection} on $M$ is a map
+\[ \nabla:\mathcal{T}(M)\times \mathcal{T}(M) \rightarrow \mathcal{T}(M) \]
+written $\nabla_X Y$, such that 
+\begin{enumerate}
+\item $\nabla_X Y$ is linear over $\R$ in $Y$:
+\[ \nabla_X (aY_1+bY_2)=a\nabla_X Y_1 +b\nabla_X Y_2, \]
+\item $\nabla_X Y$ is linear over $f$ in $X$:
+\[ \nabla_{(fX_1+gX_2)} Y=f\nabla_{X_1} Y+g\nabla_{X_2} Y, \]
+\item and $\nabla$ obeys the Leibniz rule:\[ \nabla_X (fY)=f\nabla_X Y + (Xf)Y. \]
+\end{enumerate}
+$\nabla_X Y$ is the \textit{covariant derivative} of $Y$ in the direction $X$.\\ 
+
+For a given vector field $X$, the covariant derivative is a map from the space of vector fields into itself. With respect to a local coordinate system $(x,U)$, we can consider the covariant derivative of the basis vectors along each coordinate direction. This will define a $n\times n$ matrix of components for the resulting vector field:
+\[ \nabla_{\partial_i} \partial_j = \Gamma^k_{ij}\partial_k. \]
+The $\Gamma^j_{ik}$ are called the \textit{Christoffel Symbols}. We write $\nabla_{\partial_i}\equiv \nabla_i$. As the following lemma shows, for general vector fields $X,Y$, the action of a connection is completely determined by its Christoffel symbols \cite{Lee}. 
+
+\begin{lemma}
+Let $\nabla$ be a linear connection on $U$ and let $X,Y\in \mathcal{T}(U)$ be written $X=X^i\partial_i$ and $Y=Y^j\partial_j$ in local coordinates. Then
+\[ \nabla_X Y= (XY^k + X^i Y^j \Gamma^k_{ij})\partial_k \]
+\end{lemma}
+\begin{proof}
+\begin{eqnarray*}
+\nabla_X Y &=& \nabla_X (Y^j \partial_j)\\
+&=& Y^j \nabla_X \partial_j + (XY^j)\partial_j \mbox{\hspace{1.5cm} (Leibniz)}\\
+&=& Y^j \nabla_{X^i \partial_i}\partial_j + (XY^j)\partial_j \\
+&=& X^i Y^j \nabla_{\partial_i}\partial_j + (XY^j)\partial_j \mbox{\hspace{1cm} ($C^\infty$-linearity in X)}\\
+&=& X^i Y^j \Gamma^k_{ij}\partial_k + (XY^j)\partial_j \\
+&=& (XY^k + X^i Y^j \Gamma^k_{ij})\partial_k 
+\end{eqnarray*}
+where in the last line we have simply changed the dummy index.
+\end{proof}
+
+In particular, the above lemma tells us 
+\begin{equation} 
+\nabla_i Y^j = \partial_i Y^j + \Gamma^j_{ik} Y^k. \label{cov1} 
+\end{equation}
+We can use the above expression to derive coordinate transformation properties for the Christoffel symbols. We constructed the Christoffel symbols so that the left hand side of (\ref{cov1}) transforms as a tensor. Therefore, from equation (\ref{eq:ttl}), under a coordinate change $x\rightarrow x'$ we require
+\begin{equation}
+\nabla_{i'}Y^{j'}=\frac{\partial x^i}{\partial x^{i'}}\frac{\partial x^{j'}}{\partial x^j}\nabla_i Y^j.
+\label{eq:covtl} 
+\end{equation}
+Expanding both sides of (\ref{eq:covtl})
+\begin{eqnarray*}
+\frac{\partial}{\partial x^{i'}}Y^{j'}+\Gamma^{j'}_{i'k'}Y^{k'}&=& \displaystyle{\frac{\partial x^i}{\partial x^{i'}}\frac{\partial x^{j'}}{\partial x^j}\left(\frac{\partial}{\partial x^{i}}Y^{j}+\Gamma^{j}_{ik}Y^{k}\right)}\\
+\frac{\pd x^i}{\pd x^{i'}}\frac{\pd}{\pd x^i}\left(\frac{\pd x^{j'}}{\pd x^j}Y^j\right)+\Gamma^{j'}_{i'k'}\frac{\pd x^{k'}}{\pd x^k} Y^k &=& \frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\frac{\pd}{\pd x^{i}}Y^j +\frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\Gamma^j_{ik}Y^k \\
+\frac{\pd x^i}{\pd x^{i'}}\frac{\pd^2x^{j'}}{\pd x^i\pd x^j}Y^j+\frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\frac{\pd}{\pd x^i}Y^j+\Gamma^{j'}_{i'k'}\frac{\pd x^{k'}}{\pd x^k} Y^k &=& \frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\frac{\pd}{\pd x^{i}}Y^j +\frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\Gamma^j_{ik}Y^k \\
+\Gamma^{j'}_{i'k'}\frac{\pd x^{k'}}{\pd x^k} Y^k &=& \frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\Gamma^j_{ik}Y^k-\frac{\pd x^i}{\pd x^{i'}}\frac{\pd^2x^{j'}}{\pd x^i\pd x^j}Y^j \\
+\Gamma^{j'}_{i'k'} Y^k &=& \frac{\pd x^{k}}{\pd x^{k'}}\frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\Gamma^j_{ik}Y^k-\frac{\pd x^{k}}{\pd x^{k'}}\frac{\pd x^i}{\pd x^{i'}}\frac{\pd^2x^{j'}}{\pd x^i\pd x^k}Y^k
+\end{eqnarray*}
+Where in the last term the dummy index has been changed $j\rightarrow k$. The law must hold for all $Y$, thus the transformation law for Christoffel symbols is 
+\begin{equation} \Gamma^{j'}_{i'k'} = \frac{\pd x^{k}}{\pd x^{k'}}\frac{\pd x^i}{\pd x^{i'}}\frac{\pd x^{j'}}{\pd x^j}\Gamma^j_{ik}-\frac{\pd x^{k}}{\pd x^{k'}}\frac{\pd x^i}{\pd x^{i'}}\frac{\pd^2x^{j'}}{\pd x^i\pd x^k}.\label{eq:tpChristo}\end{equation}
+Note that (\ref{eq:tpChristo}) is not the tensor transformation law. This is because the Christoffel symbols themselves are not tensors. \\
+
+\pagebreak
+The linear connection $\nabla$ can be extended to act over tensor fields so that the resultant connection (also denoted $\nabla$) \cite{Lee}:
+\begin{enumerate}
+\item agrees with the linear connection over the tangent space,
+\item gives the ordinary derivative on functions:
+\[ \nabla_X f = Xf, \]
+\item obeys the Leibniz rule when acting on tensor products:
+\[ \nabla_X(T\otimes S)= (\nabla_X T)\otimes S + T\otimes(\nabla_X S),\]
+\item and commutes with contraction 
+\[ \nabla(T^{i_1,\dots k, \dots ,i_r}_{j_1,\dots,k,\dots ,j_s})=(\nabla T)^{i_1,\dots k, \dots ,i_r}_{j_1,\dots,k,\dots ,j_s}.\]
+\end{enumerate}
+
+Lee \cite{Lee} offers the following Lemma for finding the covariant derivative of a tensor field:
+
+\begin{lemma}
+Let $\nabla$ be a linear connection. The components of the covariant derivative of an $(r,s)$-tensor field $T$ with respect to a coordinate system are given by
+\begin{equation} \nabla_k T^{i_1\dots i_r}_{j_1\dots j_s}=\pd_k T^{i_1\dots i_r}_{j_1\dots j_s} + \sum^{r}_{l=1}T^{i_1\dots p \dots i_r}_{j_1\dots j_s} \Gamma^{i_l}_{kp}-\sum^{s}_{l=1}T^{i_1\dots i_r}_{j_1\dots p\dots j_s} \Gamma^{p}_{k j_l} \label{covdevtensor}\end{equation}
+\end{lemma}
+
+A linear connection is \textit{metric compatible} if for all vector fields $X,Y$ and $Z$ the following product rule holds:
+\[ \nabla_X \left< Y,Z \right> = \left<\nabla_X Y, Z \right> + \left<Y, \nabla_X Z \right>. \]
+
+\begin{lemma}
+A connection $\nabla$ is metric compatible if and only if $\nabla g\equiv 0$
+\end{lemma}
+\begin{proof}
+Suppose $\nabla$ is metric compatible.
+\begin{equation}\nabla_X \left< Y,Z \right> = \left<\nabla_X Y, Z \right> + \left<Y, \nabla_X Z \right> \label{eq:metriccompatible}\end{equation}
+Expanding the left hand side,
+\[\begin{array}{lcl} \nabla_X \left< Y,Z \right> &=& \nabla_X (g_{mn}Y^mZ^n)\\
+&=& (\nabla_X g_{mn})Y^mZ^n + g_{mn}(\nabla_X Y^m)Z^n + g_{mn}Y^m(\nabla_X Z^n)\\
+&=& (\nabla_X g_{mn})Y^mZ^n + \left<\nabla_X Y, Z \right> + \left<Y, \nabla_X Z \right>. \end{array}\]
+Therefore, 
+\[ (\nabla_X g_{mn})Y^mZ^n=0. \]
+This is true for all $X,Y,Z$, so
+\[ \nabla g =0 \]
+\end{proof}
+
+Therefore, for a metric compatible connection
+\begin{eqnarray*}
+ \nabla_i (Y_k)&=&\nabla_i (g_{jk}Y^j)\\
+ &=&(\nabla_i g_{jk})Y^j + (\nabla_i Y^j)g_{jk}\\
+ &=&(\nabla_i Y^j)g_{jk}. \end{eqnarray*}
+
+\section{Derivation of the Levi-Civita Connection}
+
+Consider the equation 
+\begin{equation}
+\Lie_X g= \frac{\partial}{\partial x^j}(X_k) + \frac{\partial}{\partial x^k}(X_j) - X_l g^{il}(\frac{\partial}{\partial x^j}g_{ik}+\frac{\partial}{\partial x^k}g_{ji}-\frac{\partial}{\partial x^i}g_{jk})=0.
+\label{eq:kill}
+\end{equation}
+Define as Christoffel symbols
+\begin{equation} 
+\Gamma^l_{jk}=\frac{1}{2}g^{il}( \frac{\partial}{\partial x^j}g_{ik}+\frac{\partial}{\partial x^k}g_{ji}-\frac{\partial}{\partial x^i}g_{jk}) 
+\label{eq:Christoffel}\end{equation}
+It is possible (but tedious) to check that these transform as Christoffel symbols should. By the symmetry of the metric tensor, these Christoffel symbols $\Gamma^l_{jk}$ are symmetric in $j$ and $k$. A connection has this property if and only if it is \textit{torsion free}, that is, $\nabla$ satisfies
+\begin{equation} \nabla_X Y - \nabla_Y X=[X,Y]. \label{eq:torsionfree} \end{equation}
+
+With these Christoffel symbols, (\ref{eq:kill}) becomes:
+\begin{equation} 
+\pd_j(X_k) + \pd_k(X_j) - 2X_i \Gamma^i_{jk}=0.
+\label{eq:Killingg}\end{equation}
+Now define a connection $\nabla$ by:
+\begin{equation} \nabla_j X_k = \pd_j X_k - \Gamma^l_{jk}X_l. \label{eq:nablaX} \end{equation}
+
+Which gives 
+\begin{equation}
+\Lie_X g_{jk}=2 \nabla_{(j}X_{k)}
+\label{eq:LieCon}
+\end{equation}
+This connection is metric compatible: from (\ref{covdevtensor}),
+\begin{equation}\begin{array}{lcl}
+\nabla_k g_{ij} &=& \pd_k g_{ij} - \Gamma^l_{ki}g_{lj} - \Gamma^l_{kj}g_{il} \\
+&=& \pd_k g_{ij}-\frac{1}{2}g^{ml}g_{lj}(\pd_k g_{im}+\pd_i g_{km}-\pd_m g_{ki})-\frac{1}{2}g^{lm}g_{il}( \pd_k g_{jm}+\pd_j g_{km}-\pd_m g_{kj})\\
+&=& \pd_k g_{ij}-\frac{1}{2}( \pd_k g_{ij}+\pd_i g_{kj}-\pd_j g_{ki})-\frac{1}{2}( \pd_k g_{ji}+\pd_j g_{ki}-\pd_i g_{kj})\\
+&=& 0
+\end{array}
+\end{equation}
+
+
+\begin{thm}\label{FundLemma}\textbf{Fundamental Lemma of Riemannian Geometry}
+Let $(M,g)$ be a Riemannian Manifold. There exists a unique linear connection $\nabla$ on $M$ that is compatible and 
+torsion free.
+\end{thm}
+\begin{proof}
+We have already shown existence by construction, so all that is left is to show uniqueness. Following the proof in \cite{Lee}, we do this by deriving a formula for $\nabla$. By metric compatibility (\ref{eq:metriccompatible}) we have the following three equations:
+\begin{eqnarray*}
+X\left<Y,Z\right>&=&\left<\nabla_X Y,Z\right> + \left<Y, \nabla_X Z \right>\\
+Y\left<Z,X\right>&=&\left<\nabla_Y Z,X\right> + \left<Z, \nabla_Y X \right>\\
+Z\left<X,Y\right>&=&\left<\nabla_Z X,Y\right> + \left<X, \nabla_Z Y \right>
+\end{eqnarray*}
+Using the torsion free condition (\ref{eq:torsionfree}) in each of the above we get
+\begin{eqnarray*}
+X\left<Y,Z\right>&=&\left<\nabla_X Y,Z\right> + \left<Y, \nabla_Z X \right>+\left<Y,[X,Z]\right>\\
+Y\left<Z,X\right>&=&\left<\nabla_Y Z,X\right> + \left<Z, \nabla_X Y \right>+\left<Z,[Y,X]\right>\\
+Z\left<X,Y\right>&=&\left<\nabla_Z X,Y\right> + \left<X, \nabla_Y Z \right>+\left<X,[Z,Y]\right>.
+\end{eqnarray*}
+Adding the first two equations and subtracting the third
+\[ X\left<Y,Z\right>+Y\left<Z,X\right>-Z\left<X,Y\right>= 2\left<\nabla_X Y,Z\right> + \left<Y,[X,Z]\right> + \left<Z,[Y,X]\right>-\left<X,[Z,Y]\right>. \]
+Now we can solve for $\left<\nabla_X Y,Z\right>$,
+\[ \left<\nabla_X Y,Z\right>= \frac{1}{2}\left(X\left<Y,Z\right>+Y\left<Z,X\right>- Z\left<X,Y\right> -\left<Y,[X,Z]\right>-\left<X,[Y,X]\right>+\left<X,[Z,Y]\right>\right).\]
+Noticing that the right hand side of the above equation does not depend on the connection, it follows that if $\nabla^1$ and $\nabla^2$ are two connections
+\[ \left<\nabla^1_X Y,Z\right>=\left<\nabla^2_X Y,Z\right>\]
+for all $X,Y$ and $Z$. This can only happen if $\nabla^1=\nabla^2$.
+\end{proof}
+
+This connection is called the \textit{metric connection} or the \textit{Levi-Civita connection}. 
+
+\section{Parallel Transport, geodesics and the Riemann curvature tensor}
+Consider a closed curve $\mathcal{C}(t)=(x^1(t),... x^n(t))$ which passes through a point $p \in M$ at $t_p$, i.e. $\mathcal{C}(t_p)=p$. The tangent vector to $\mathcal{C}$ at $p$ is given by $X_p = \frac{dx^i}{dt}\mid_{t_p} \pd_i = X^i \pd_i$. A vector $V^j$ undergoes \textit{parallel transport} along $\mathcal{C}$ if at all points on $\mathcal{C}$ 
+\begin{equation}\label{ParaTrans}
+X^i \nabla_i V^j = 0.
+\end{equation}
+This generalises as expected to an arbitrary tensor. 
+
+Imagine you're standing at the north pole and you walk south until you reach the equator. Then you sidestep 90 degrees around the equator before walking backwards until you return to the north pole. Although on your travels you maintained the direction you were facing, you now appear to be facing at right angles to where you started. If you consider different paths for our example, such as traversing just 45 degrees around the equator instead of 90, it is clear that you would be facing at 45 degrees to your starting position. Thus the difference in angle is path dependent. This is because of the curvature of the earth- if you traversed a closed loop on flat space you would end up facing the same way regardless of path. 
+
+By the definition of parallel transport, the covariant derivative of a tensor in a direction along which it is parallelly transported is zero. Therefore, the covariant derivative of a tensor in an arbitrary direction is a measure of the the change in the tensor compared to if it had been parallelly transported and as such is a measure of curvature. The commutator of two covariant derivatives $\nabla_i$ and $\nabla_j$ is the difference between parallelly transporting the tensor along the $x^i$ then $x^j$ compared to $x^j$ then $x^i$. 
+
+Consider this action on a dual vector field $\omega_k$ and a smooth function $f$.
+\begin{equation}
+\begin{array}{lcccl}
+\nabla_i \nabla_j (f \omega_k) &=& \nabla_i(\omega_k \nabla_j f + f \nabla_j \omega_k) &=& \nabla_i \omega_k \nabla_j f + \omega_k \nabla_i \nabla_j f + \nabla_i f \nabla_j \omega_k + f \nabla_i \nabla_j \omega_k \\
+\nabla_j \nabla_i (f \omega_k) &=& \nabla_j(\omega_k \nabla_i f + f \nabla_i \omega_k) &=& \nabla_j \omega_k \nabla_i f + \omega_k \nabla_j \nabla_i f + \nabla_j f \nabla_i \omega_k + f \nabla_i \nabla_j \omega_k \\
+\end{array}
+\end{equation}
+Subtract the second equation from the first, and using the torsion free property of the connection find that the commutator gives:
+\[ \nabla_{[i} \nabla_{j]} (f \omega_k) = f(\nabla_i \nabla_j - \nabla_j \nabla_i) \omega_k \]
+Now consider a second 1-form $\omega_k'$ such that $\omega_k'=\omega_k$ at a point $p$. Then we can find a set of 1-forms $\mu_k^{\alpha}$ and smooth functions $f_{\alpha}$ with $f_{\alpha}(p)=0$ such that $\omega_k'-\omega_k=\sum_\alpha f_\alpha \mu^\alpha_k$. Therefore,
+\[ (\nabla_i \nabla_j - \nabla_j \nabla_i) (\omega_k'-\omega_k)\mid_p=\sum_\alpha f_\alpha (\nabla_i \nabla_j - \nabla_j \nabla_i)\mu_k^\alpha \mid_p =0 \]
+\[ (\nabla_i \nabla_j - \nabla_j \nabla_i)\omega_k'=(\nabla_i \nabla_j - \nabla_j \nabla_i)\omega_k\].
+Therefore, $(\nabla_i \nabla_j - \nabla_j \nabla_i)\omega_k$ can only depend on $\omega_k (p)$ and $\nabla_i \nabla_j - \nabla_j \nabla_i$ is a $(1,3)$ tensor. This defines the \textit{Riemann Curvature Tensor}:
+\begin{equation}\label{eq:Riedef}
+R_{ijk}^{   m} \omega_m = (\nabla_i \nabla_j - \nabla_j \nabla_i)\omega_k
+\end{equation}
+
+%\section{Prolongation of the Killing Equation}\label{sec:ProlKill}
+%
+%This section follows the method outlined in \cite{Eastwood}. We are going to introduce a dependent variable into the Killing equation. This will enable us to produce a closed system that will give us an upper bound for the dimension of the solution space. Using the Levi-Civita connection, the Killing Equation (\ref{eq:Killingg}) becomes:
+%\begin{equation} \nabla_j X_k + \nabla_k X_j = 0. \label{eq:Killinggg} \end{equation}
+%This is twice the symmetric part in $j,k$, so can be written
+%\begin{equation} \nabla_{(j} X_{k)} = 0. \label{eq:Killsym} \end{equation}
+%Let us define the tensor
+%\begin{equation} F_{jk}=\nabla_j X_k. \label{eq:partone}\end{equation}
+%Then (\ref{eq:Killsym}) is equivalent to saying $F_{jk}$ is skew. Hence, we can write $F_{jk}=\nabla_{[j}X_{k]}$. Since in (\ref{eq:nablaX}) the Christoffel symbols $\Gamma^l_{jk}$ are symmetric in $j$ and $k$, it follows that
+%\[ F_{jk}=\nabla_{[j}X_{k]} = \pd_{[j}X_{k]}. \]
+%Now,
+%\begin{equation} \nabla_iF_{jk}=\pd_iF_{jk}-\Gamma_{ij}^lF_{lk}-\Gamma_{ik}^lF_{jl}, \label{eq:covF}\end{equation}
+%so similarly,
+%\[ \nabla_{[i}F_{jk]}=\pd_{[i}F_{jk]}. \]
+%Therefore,
+%\begin{equation} \nabla_{[i}F_{jk]}=\pd_{[i}\pd_jX_{k]}=0 \label{eq:dF} \end{equation}
+%since $\pd_i$ and $\pd_j$ commute. However, there is another way of computing the left hand side of (\ref{eq:dF}). From (\ref{eq:covF}) 
+%\begin{eqnarray*}
+%\nabla_i F_{jk}&=& \partial_i F_{jk} - \Gamma^l_{ij}F_{lk}-\Gamma^l_{ik}F_{jl}\\
+%    &=&\partial_i \nabla_j X_k - \Gamma^l_{ij}\nabla_l X_k-\Gamma^l_{ik}\nabla_j X_l\\
+%    &=&\partial_i(\partial_j X_k - \Gamma^m_{jk}X_m)-\Gamma^l_{ij}(\partial_l X_k - \Gamma^m_{lk}X_m)-\Gamma^l_{ik}(\partial_j X_l -\Gamma^m_{jl}X_m)\\
+%    &=&\partial_i\partial_j X_k - (\partial_i\Gamma^m_{jk})X_m-\underbrace{\Gamma^m_{jk}\partial_i X_m}_{} -\underline{\Gamma^l_{ij}}\partial_l X_k +\underline{\Gamma^l_{ij}} \Gamma^m_{lk}X_m-\underbrace{\Gamma^l_{ik}\partial_j X_l}_{} +\Gamma^l_{ik}\Gamma^m_{jl}X_m.\\
+%    \end{eqnarray*}
+%Notice that the first term is symmetric in $i$ and $j$, as are the underlined terms, and the underbraced terms when taken together. Therefore,
+%\begin{eqnarray}
+%2\nabla_{[i}F_{j]k}&=& -(\partial_i\Gamma^m_{jk})X_m+\Gamma^l_{ik}\Gamma^m_{jl}X_m+(\partial_j\Gamma^m_{ik})X_m- \Gamma^l_{jk}\Gamma^m_{il}X_m\nonumber \\
+%	&=& \left(\partial_j\Gamma^m_{ik}+\Gamma^l_{ik}\Gamma^m_{jl}-\partial_i\Gamma^m_{jk}- \Gamma^l_{jk}\Gamma^m_{il}\right)X_m. \label{eq:Rie2}
+%\end{eqnarray}
+%The term in parentheses is called the \textit{Riemann curvature tensor}
+%\begin{equation} R^m_{kji}=\partial_j\Gamma^m_{ik}+\Gamma^l_{ik}\Gamma^m_{jl}-\partial_i\Gamma^m_{jk}- \Gamma^l_{jk}\Gamma^m_{il}. \label{eq:Riedef} \end{equation}
+%The Riemann curvature tensor measures the change of a vector as it is transported around a closed circuit while keeping it parallel to itself "parallel transport".
+
+As usual we can lower the $m$ index on the Riemann tensor using the metric. Then it can be seen that the following symmetry properties hold \cite{Stephani}:
+\begin{enumerate}
+\item $R_{ijkm}=-R_{jikm}$ (skew in first two indices)
+\item $R_{ijkm}=-R_{ijmk}$ (skew in last two indices)
+\item $R_{m[kij]}=0$ (cyclic property)
+\end{enumerate}
+Some manipulation using properties 1 to 3 will give you another useful symmetry \cite{Lee}:\\
+
+\hspace{0.4mm}4. $R_{mkij}=R_{ijmk}$ (symmetric under index pair interchange).\\
+
+The Riemann tensor gives rise to two additional important tensors. The first is the \textit{Ricci curvature tensor} which is defined to be contraction over the first and third components of the Riemann tensor
+\begin{equation} R_{kj}=R^i_{kij}. \label{Ricci} \end{equation}
+By the symmetry property, of the Riemann curvature tensor, it is clear that the Ricci tensor is symmetric. The second is the \textit{scalar curvature}, which is the trace of the Ricci curvature:
+\begin{equation} R=g^{kj}R_{kj}=R^j_j. \label{scalarcurv} \end{equation}
+
+For an n-manifold, we may at first naively suppose that the Riemann tensor has $n^4$ independent components. However, consideration of the symmetry properties shows that not all of these are independent. As $R_{mjik}$ is skew in the first two and last two components, this gives us $n\choose2$ independent components for each pair. The cyclic property imposes $n\choose3$ constraints. Thus, the number of independent components of the Riemann tensor is
+\begin{equation} 
+{n\choose2}^2 -n {n\choose3} =\frac{n^2(n^2-1)}{12}. 
+\label{eq:compRie} 
+\end{equation}
+
+For a surface $n=2$, and there is one independent component. By inspection we see that $(g_{mi}g_{kj}-g_{mj}g_{ki})$ satisfies the symmetry properties, therefore for a surface the Riemann curvature tensor is 
+\begin{equation} R_{mkij}=K(g_{mi}g_{kj}-g_{mj}g_{ki})\label{eq:Riesurface} \end{equation}
+where $K$ is a scalar function. If we calculate the Ricci tensor we get
+\begin{equation} R_{kj}=Kg^{mi}(g_{mi}g_{kj}-g_{mj}g_{ki})=Kg_{kj}, \label{riccisurface} \end{equation}
+and then the scalar curvature is 
+\begin{equation} R=g^{kj}R_{kj}=Kg^{kj}g_{kj}=2K. \label{scalarsurf} \end{equation}\\
+The function $K$ is called the \textit{Gaussian curvature}. Note that for manifolds of dimension $n>2$, the Gaussian curvature can still be defined, but is not necessarily scalar. Notice that 
+\begin{equation} 2\nabla_{[i}F_{j]k}=\nabla_i \nabla_j X_k-\nabla_j \nabla_i X_k, \label{eq:Rie1}\end{equation}
+therefore, by comparing (\ref{eq:Rie1}) with (\ref{eq:Rie2}) and (\ref{eq:Riedef}), we see that the Riemann tensor can also be written
+\[ R^m_{kij}X_m = (\nabla_i\nabla_j - \nabla_j \nabla_i)X_k.\]
+
+\section{Geodesics}
+A \textit{geodesic} is a path that parallel transports its own tangent vector. Expanding (\ref{ParaTrans}) gives:
+\begin{equation}\label{geoEq}
+\begin{array}{rcl}
+\frac{dx^i}{dt}\nabla_i \frac{dx^j}{dt}&=&0 \\
+\frac{dx^i}{dt}\left(\pd_i \frac{dx^j}{dt} + \Gamma^j_{ik}\frac{dx^k}{dt} \right)&=&0 \\
+\frac{d^2x^j}{dt^2} + \Gamma^j_{ik}\frac{dx^i}{dt} \frac{dx^k}{dt}&=&0
+\end{array}
+\end{equation}
+The last equation above is called the \textit{geodesic equation.} In flat space, where we can choose coordinates such that $\Gamma^j_{ik}=0$, the geodesic equation is simply $\frac{d^2x^j}{dt^2}=0$, the equation for a straight line. In curved space, geodesics can be thought of as representing the shortest distance between points. 
+
+In flat space we know that parallel straight lines never meet, but obviously this is not true for geodisics in curved space. To explore this further consider a 1-parameter family of geodesics $\gamma_s(t)$, $s \in \mathbb{R}$, that do not cross. These define a smooth two dimensional surface on which we can choose the coordinates to be $s$ and $t$ so that the points on the surface are $x^j (s,t)$. The vector fields $T^j = \frac{\pd x^j}{\pd t}$ and $S^j = \frac{\pd x^j}{\pd s}$ represent the the tangent vectors to the geodesics and the deviation vectors respectively. The deviation vectors can be interpreted as pointing from one geodesic to the next. We want to explore how these change, so we define $V^i = (\nabla_T S)^i = T^j \nabla_j S^i$, which we interpret as the relative velocity of the geodesics, and $A^i = (\nabla_T V)^i = T^j \nabla_j V^i$ the relative acceleraton between geodesics. It can be shown (see, eg. \cite{Carroll}) that the relative acceleration between geodesics is proportional to the curvature:
+\begin{equation}\label{GeoDevEq}
+A^i = R^i_{jkl}T^j T^k S^l
+\end{equation}
+This is known as the \textit{geodesic deviation equation}. 
+
+
+
+%We can rewrite (\ref{eq:dF}) as
+%\[ \nabla_i F_{jk}=\nabla_k F_{ji}-\nabla_j F_{ki}=\nabla_k \nabla_j X_i - \nabla_j \nabla_k X_i = R^m_{ijk}X_m, \]
+%thus, the equation (\ref{eq:Killsym}) is equivalent to the closed system
+%\begin{eqnarray}
+%\nabla_j X_k &=& F_{jk} \label{eq:ClosedSys1}\\
+%\nabla_i F_{jk} &=& R^m_{ijk} X_m.\label{eq:ClosedSys2}
+%\end{eqnarray}
+%This closed system tells us important information about the solutions of the Killing equation.  Given $(X_k, F_{jk})_p$ at a point $p$, for another point $q$ on $M$ we can find $(X_k, F_{jk})_q$ by integrating an ordinary differential equation along a smooth path between $p$ and $q$, so a Killing field is completely determined by the values of $(X_k, F_{jk})$ at a point. Thus, if a Killing field and its derivative are zero at a point, they are zero everywhere. The closed form also gives an upper bound for the number of independent Killing fields on an $n$-manifold. This is equal to the dimension of the space of initial conditions $(X_k, F_{jk})$ which is 
+%\begin{equation}	 \underbrace{n}_{\# \mbox{of components of }X_k}+ \underbrace{\frac{n(n-1)}{2}}_{\# \mbox{of components of } F_{jk}} =\frac{n(n+1)}{2}. \label{eq:maxkill} \end{equation}
+%A manifold which has the maximal number of Killing fields is called \textit{maximally symmetric}. A space of constant scalar curvature is maximally symmetric \cite{Xanthopoulos}.
+%
+%\section{Prolongation of the Killing equation on the 2-sphere}\label{sec:prol2sphere}
+%We can use the results from the previous section to find the Killing fields for the 2-sphere. From (\ref{eq:maxkill}), the maximum number of independent Killing equations is $\frac{2(2+1)}{2}=3$. We suspect that the three independent rotations about the $u^1$, $u^2$ and $u^3$ axes are continuous isometries. Here, we explicitly show that the set of solutions to the system (\ref{eq:ClosedSys1}), (\ref{eq:ClosedSys2}) give the Killing fields that generate these rotations. \\
+%
+%First, calculating the Christoffel symbols using (\ref{eq:Christoffel}) gives
+%\[\begin{array}{ccc}
+%\displaystyle{\Gamma^1_{11} = \frac{-2x^1}{1+(x^1)^2+(x^2)^2}}, & & \displaystyle{\Gamma^2_{22} = \frac{-2x^2}{1+(x^1)^2+(x^2)^2}},\\ \\
+%\displaystyle{\Gamma^1_{22} = \frac{2x^1}{1+(x^1)^2+(x^2)^2} },& & \displaystyle{\Gamma^2_{11} = \frac{2x^2}{1+(x^1)^2+(x^2)^2}},\\ \\
+%\displaystyle{\Gamma^1_{12} = \frac{-2x^2}{1+(x^1)^2+(x^2)^2}},& & \displaystyle{\Gamma^2_{12} = \frac{-2x^1}{1+(x^1)^2+(x^2)^2}},\\ \\
+%\Gamma^1_{21}= \Gamma^1_{12}, & & \Gamma^2_{21}=\Gamma^2_{12}.
+%\end{array}	\]
+%
+%To calculate the Riemann curvature tensor we need to find the Gaussian curvature $K$ in equation (\ref{eq:Riesurface}). For the sphere, $K$ is constant, thus we only need to calculate one component. Using equation (\ref{eq:Riedef}),
+%\begin{eqnarray}
+%R^1_{212}&=&\partial_1\Gamma^1_{22}-\Gamma^l_{21}\Gamma^1_{2l}-\partial_2\Gamma^1_{21}+ \Gamma^l_{22}\Gamma^1_{1l} \nonumber\\
+%&=& \partial_1\Gamma^1_{22}-\Gamma^1_{21}\Gamma^1_{21}-\Gamma^2_{21}\Gamma^1_{22}-\partial_2\Gamma^1_{21}+ \Gamma^1_{22}\Gamma^1_{11}+\Gamma^2_{22}\Gamma^1_{12}\nonumber\\
+%&=& \frac{4}{(1+(x^1)^2+(x^2)^2)^2}. \label{eq:R}
+%\end{eqnarray}
+%
+%Now, $ R^m_{kij}=g^{ml}R_{lkij}$, so by comparing (\ref{eq:R}) and (\ref{eq:Riesurface}),
+%\[ R^1_{212}=g^{11}R_{1212}=Kg^{11}(g_{11}g_{22}-g_{12}g_{12})=2Kg_{22}=\frac{2K}{(1+(x^1)^2+(x^2)^2)^2}, \]
+%we find $K=2$. Therfore,
+%\begin{equation}
+%R^m_{ijk}=2g^{ml}(g_{li}g_{ik}-g_{lj}g_{ki})=2(\delta^m_ig_{kj}-\delta^m_jg_{ki}), \end{equation}
+%and the system (\ref{eq:ClosedSys1}),(\ref{eq:ClosedSys2}) reduces to 
+%\begin{eqnarray}
+%\nabla_j X_k &=& F_{jk} \label{eq:Closedsyssphere1}, \\
+%\nabla_i F_{jk} &=& 2(X_i g_{jk} - X_j g_{ki}). \label{eq:Closedsyssphere2}
+%\end{eqnarray}
+%This leads to the following set of equations:
+%\begin{eqnarray}
+%\nabla_1 X_1 &=\displaystyle{ \frac{2x^1}{1+(x^1)^2+(x^2)^2}X_1 - \frac{2x^2}{1+(x^1)^2+(x^2)^2}X_2 +\frac{\partial X_1}{\partial x^1}}&=0, \label{eq:F11} \\ 
+%\nabla_2 X_2 &=\displaystyle{ \frac{-2x^1}{1+(x^1)^2+(x^2)^2}X_1 + \frac{2x^2}{1+(x^1)^2+(x^2)^2}X_2 +\frac{\partial X_2}{\partial x^2}}&=0, \label{eq:F22}\\
+%\nabla_1 X_2 &=\displaystyle{ \frac{2x^2}{1+(x^1)^2+(x^2)^2}X_1 + \frac{2x^1}{1+(x^1)^2+(x^2)^2}X_2 +\frac{\partial X_2}{\partial x^1}}&=F_{12}, \label{eq:F12}  \\
+%\nabla_2 X_1 &=\displaystyle{ \frac{2x^2}{1+(x^1)^2+(x^2)^2}X_1 + \frac{2x^1}{1+(x^1)^2+(x^2)^2}X_2 +\frac{\partial X_1}{\partial x^2}}&= -F_{12}, \label{eq:F21}
+%\end{eqnarray}
+%and
+%\begin{eqnarray}
+%\nabla_1 F_{12} &= \displaystyle{\frac{4x^1}{1+(x^1)^2+(x^2)^2}F_{12}+\frac{\partial}{\partial x^1}F_{12}}=\displaystyle{\frac{-4}{(1+(x^1)^2+(x^2)^2)^2}}X_2,\\
+%\nabla_2 F_{12} &= \displaystyle{\frac{4x^2}{1+(x^1)^2+(x^2)^2}F_{12}+\frac{\partial}{\partial x^2}F_{12}}=\displaystyle{\frac{4}{(1+(x^1)^2+(x^2)^2)^2}}X_1.
+%\end{eqnarray}
+%
+%Recalling the conformal factor (equation (\ref{eq:conffactor})),
+%\[ \Omega(x^1,x^2) = \frac{1}{1+(x^1)^2+(x^2)^2}, \]
+%we rewrite the above as
+%\begin{eqnarray*}
+%\partial_1X_1+2\Omega x^1X_1&=&2\Omega x^2X_2,\\
+%\partial_1X_2+2\Omega x^1X_2&=&-2\Omega x^2X_1+F_{12},\\
+%\partial_1F_{12}+4\Omega x^1F_{12}&=&-4\Omega^2X_2,\\
+%\partial_2X_1+2\Omega x^2X_1&=&-2\Omega x^1X_2-F_{12},\\
+%\partial_2X_2+2\Omega x^2X_2&=&2\Omega x^1X_1,\\
+%\partial_2F_{12}+4\Omega x^2F_{12}&=&4\Omega^2X_1.
+%\end{eqnarray*}
+%
+%Notice that 
+%$$\partial_1\Omega^{-1}=2x^1,\quad\partial_2\Omega^{-1}=2x^2,\quad
+%\partial_1\Omega^{-2}=4x^1\Omega^{-1},\quad
+%\partial_1\Omega^{-2}=4x^1\Omega^{-1},$$
+%so, by multiplying by an appropriate power of $\Omega$, we can rewrite the system as 
+%\begin{equation}
+%\begin{array}{rcl}
+%\partial_1P_1&=&2x^2\Omega P_2, \nonumber \\[2pt]
+%\partial_1P_2&=&-2x^2\Omega P_1+\Omega G_{12},\nonumber \\[2pt]
+%\partial_1G_{12}&=&-4\Omega P_2,\nonumber \\[2pt]
+%\partial_2P_1&=&-2x^1\Omega P_2-\Omega G_{12},\nonumber \\[2pt]
+%\partial_2P_2&=&2x^1\Omega P_1,\nonumber \\[2pt]
+%\partial_2G_{12}&=&4\Omega P_1,\nonumber
+%\end{array}
+%\label{simplified} \end{equation}
+%where 
+%\begin{equation} P_1=\Omega^{-1}X_1,\quad P_2=\Omega^{-1}X_2,\quad G_{12}=\Omega^{-2}F_{12}. \label{eq:PPG}\end{equation}
+%
+%We may group (\ref{simplified}) into two systems of ordinary differential equations
+%$$\begin{array}{rcl}
+%\partial_1P_1&=&2x^2\Omega P_2,\\[2pt]
+%\partial_1P_2&=&-2x^2\Omega P_1+\Omega G_{12},\\[2pt]
+%\partial_1G_{12}&=&-4\Omega P_2,\\[2pt]
+%\end{array}$$ and
+%$$\begin{array}{rcl}
+%\partial_2P_1&=&-2x^1\Omega P_2-\Omega G_{12},\\[2pt]
+%\partial_2P_2&=&2x^1\Omega P_1,\\[2pt]
+%\partial_2G_{12}&=&4\Omega P_1.
+%\end{array}$$
+%
+%Let's take the first system and use it to propogate along the $x^1$-axis. On
+%this axis $x^2=0$, so we obtain
+%$$\begin{array}{rcl}
+%\partial_1P_1&=&0,\\[2pt]
+%\partial_1P_2&=&\Omega G_{12},\\[2pt]
+%\partial_1G_{12}&=&-4\Omega P_2.\\[2pt]
+%\end{array}$$
+%Putting $G_{12}=2H_{12}$, our equations become
+%$$\begin{array}{rcl}
+%\partial_1P_1&=&0,\\[2pt]
+%\partial_1P_2&=&2\Omega H_{12},\\[2pt]
+%\partial_1H_{12}&=&-2\Omega P_2.\\[2pt]
+%\end{array}$$
+%Now let $x^1=\tan\left(\frac{t}{2}\right)$. Then
+%$$\frac{dx^1}{dt}=\frac{1+(x^1)^2}2=\frac{1}{2\Omega}$$
+%\vspace{2pt}on the $x^1$-axis, so $\left(\frac{1}{2\Omega}\right)\partial_1P_2=\frac{dx^1}{dt}\frac{dP_2}{dx^1}=\frac{dP_2}{dt},$ and similarly $\frac{d H_{12}}{dt}=-P_{2}$. Our system becomes
+%$$\begin{array}{rcl}
+%\displaystyle{\frac{dP_1}{dt}}&=&0,\\[9pt]
+%\displaystyle{\frac{dP_2}{dt}}&=&H_{12},\\[9pt]
+%\displaystyle{\frac{dH_{12}}{dt}}&=&-P_2.
+%\end{array}$$
+%
+%This is a familiar system whose general solution is conveniently written 
+%$$ P_1=\frac{C_1}{2},\quad P_2=\left(\frac{C_2}{2}\right)\cos t+\left(\frac{C_3}{2}\right)\sin t,\quad H_{12}=-\left(\frac{C_2}{2}\right)\sin t+\left(\frac{C_3}{2}\right) \cos t . $$
+%\vspace{2pt}But $\sin t =\frac{2x^1}{1+(x^1)^2}$ and $\cos t=\frac{1-(x^1)^2}{1+(x^1)^2}$, so the
+%general solution along the $x^1$-axis is
+%$$P_1=\frac{C_1}{2},\quad P_2=C_2\frac{1-(x^1)^2}{2(1+(x^1)^2)}+C_3\frac{x^1}{1+(x^1)^2},
+%\quad H_{12}=-C_2\frac{x^1}{1+(x^1)^2}+C_3\frac{1-(x^1)^2}{2(1+(x^1)^2)},$$
+%so
+%$$P_1=\frac{C_1}{2}\quad P_2=C_2\frac{1-(x^1)^2}{2(1+(x^1)^2)}+
+%C_3\frac{x^1}{2(1+(x^1)^2)}
+%\quad G_{12}=-2C_2\frac{x^1}{1+(x^1)^2}+C_3\frac{1-(x^1)^2}{1+(x^1)^2}$$
+%and so finally from (\ref{eq:PPG}) (and bearing in mind that $\Omega=\frac{1}{(1+(x^1)^2)}$ on the $x^1$-axis),
+%$$\begin{array}c
+%\displaystyle X_1=\frac{C_1}{2(1+(x^1)^2)},\quad 
+%X_2=C_2\frac{1-(x^1)^2}{2(1+(x^1)^2)^2}+C_3\frac{x^1}{(1+(x^1)^2)^2},\\[20pt]
+%\displaystyle
+%F_{12}=-2C_2\frac{x^1}{(1+(x^1)^2)^3}+C_3\frac{1-(x^1)^2}{(1+(x^1)^2)^3}.
+%\end{array}$$
+%
+%Therefore, along the $x^1$-axis the solution space is $3$-dimensional (as
+%expected by the general theory of ordinary differential equations) with basis
+%$$X_1=0,\quad 
+%X_2=\frac{1-(x^1)^2}{2(1+(x^1)^2)^2}$$
+%$$X_1=\frac{1}{2(1+(x^1)^2)},\quad 
+%X_2=0$$
+%$$X_1=0,\quad 
+%X_2=\frac{x^1}{(1+(x^1)^2)^2}$$
+%for the functions $X_1$ and $X_2$. 
+%Propagating in the $x^2$-direction is more complicated only in
+%notation, and our basis extends to
+%$$X_1=\frac{x^1x^2}{(1+(x^1)^2+(x^2)^2)^2},\quad X_2=\frac{1-(x^1)^2+(x^2)^2}{2(1+(x^1)^2+(x^2)^2)^2}$$
+%$$X_1=\frac{1+(x^1)^2-(x^2)^2}{2(1+(x^1)^2+(x^2)^2)^2},\quad X_2=\frac{x^1x^2}{(1+(x^1)^2+(x^2)^2)^2},$$
+%and
+%$$X_1=\frac{-x^2}{(1+(x^1)^2+(x^2)^2)^2},\quad X_2 = \frac{x^1}{(1+(x^1)^2+(x^2)^2)^2}.$$  
+%These correspond to the vector fields 
+%$$X^1=x^1x^2, \quad X^2=1-(x^1)^2+(x^2)^2$$
+%$$X^1=1+(x^1)^2-(x^2)^2, \quad X^2=x^1x^2,$$
+%and
+%$$X^1=-x^2, \quad X^2 = x^1,$$
+%which we recognise as the rotations around the $u^1$, $u^2$ and $u^3$ axes respectively. Finally, we must confirm that these satisfy the Killing equation. This has already been done for the $u^3$ and $u^1$ rotations in {\S}\ref{sec:KEKF}, so it only remains be shown for the $u^2$ rotation.\\
+%
+%We check the 1-forms 
+%$$X_1=\frac{1+(x^1)^2-(x^2)^2}{2(1+(x^1)^2+(x^2)^2)^2}, X_2=\frac{x^1x^2}{(1+(x^1)^2+(x^2)^2)^2},$$
+%satisfy equation(\ref{eq:Killinggg}):
+%\[ \nabla_j X_k + \nabla_k X_j = 0. \]
+%We require $\nabla_1 X_1=\nabla_2 X_2=\nabla_1 X_2+\nabla_2 X_1=0.$ Making the appropriate substitutions:
+%\begin{equation}
+%\nabla_1 X_1 =\displaystyle{\frac{x^1(1+(x^1)^2-(x^2)^2)}{(1+(x^1)^2+(x^2)^2)^3} -\frac{2x^1( x^2)^2}{(1+(x^1)^2+(x^2)^2)^3}+\frac{(x^1)(1+(x^1)^2-3(x^2)^2)}{(1+(x^1)^2+(x^2)^2)^3}}=0,
+%\end{equation}
+%and in the same way, $\nabla_2 X_2=0$. Now,
+%\begin{eqnarray}
+%\nabla_1 X_2 &=& \frac{x^2(1+(x^1)^2(x^2)^2)}{(1+(x^1)^2+(x^2)^2)^3}+\frac{2(x^1)^2x^2}{(1+(x^1)^2+(x^2)^2)^3}+\frac{x^2-3(x^1)^2x^2+(x^2)^3}{(1+(x^1)^2+(x^2)^2)^3}\nonumber\\
+%&=&\frac{2x^2}{(1+(x^1)^2+(x^2)^2)^3}
+%\end{eqnarray}
+%and similarly $\nabla_2 X_1=\displaystyle{\frac{-2x^2}{(1+(x^1)^2+(x^2)^2)^3}}$. Therefore
+%$$\nabla_1 X_2+\nabla_2 X_1=0,$$
+%as required. Hence, as the maximum number of Killing fields is 3, the prolongation found all the Killing fields on the sphere.
+
+\section{Euclidean and Hyperbolic space}
+Consider the following family of metrics parameterised by $p$:
+\[ g=\frac{1}{(1+p((x^1)^2+(x^2)^2))^2}((\d x^1)^2+(\d x^2)^2). \]
+When $p=1$, this is the (now familiar) metric for the sphere $S^2$. When $p=0$, $g$ is the metric for Euclidean space $\R^2$, and when $p=-1$, and we confine our attention to the unit disc $\|x\|<1$, we have \textit{hyperbolic space} $\mathbb{H}^2$. These three spaces are are the 2-dimensional versions of the ``model spaces" for Riemannian geometry.\\
+
+The Riemann curvature for each of these spaces satisfies (\ref{eq:Riesurface}). As done for the sphere in the previous section, we find the Gaussian curvature by calculating one component of the tensor using the definition (\ref{eq:Riedef}):
+\[ R^1_{212} = \frac{4p}{(1+p((x^1)^2+(x^2)^2))^2}. \]
+Using (\ref{eq:Riesurface}), we find the Gaussian curvature $K=2p$. Thus, each of these spaces have constant Gaussian curvature, and therefore are maximally symmetric. 
+
+%\end{document}

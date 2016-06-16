@@ -1,0 +1,71 @@
+\documentclass[12pt]{report}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
+\newenvironment{proof}
+       {\begin{flushleft} \begin{description}
+              \item \textit{\textbf{Proof:}}}
+        {\hfill\rule{2.1mm}{2.1mm}
+              \end{description}\end{flushleft}}
+%\newenvironment{myexample}{\begin{flushleft}
+%i would like to make defn in a slightly different font to distinguish it from normal text
+\usepackage{amsmath, amssymb, mathrsfs, graphicx}
+\usepackage{algpseudocode}
+\usepackage[T1]{fontenc}
+%\usepackage{natbib}
+\algnotext{EndFor}
+\addtolength{\textwidth}{100pt}
+\addtolength{\oddsidemargin}{-50pt}
+\addtolength{\evensidemargin}{-50pt}
+\linespread{1.2}
+
+\def\pd{{\partial}}
+\def\d{{\mbox{d}}}
+
+\def\grad {{\nabla}}
+\def\al{{\alpha}}
+\def\be{{\beta}}
+\def\ga{{\gamma}}
+\def\muv{{\overrightarrow{\mu}}}
+
+\def\bfe{{\mathbf{e}}}
+\newcommand{\Fbf}{\mathbf{F}}
+\newcommand{\fbf}{\mathbf{f}}
+\newcommand{\nbf}{\mathbf{n}}
+\newcommand{\Pbf}{\mathbf{P}}
+\def\bfp{{\mathbf{p}}}
+\newcommand{\pbf}{\mathbf{p}}
+\newcommand{\Ubf}{\mathbf{U}}
+\def\bfu{{\mathbf{u}}}
+\newcommand{\Xbf}{\mathbf{X}}
+\newcommand{\xbf}{\mathbf{x}}
+\def\bfx{{\mathbf{x}}}
+\newcommand{\Ybf}{\mathbf{Y}}
+\newcommand{\ybf}{\mathbf{y}}
+\def\bfy{{\mathbf{y}}}
+
+\def\bfmu{{\mathbf{\mu}}}
+
+\def\Lie{{\mathcal{L}}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Ucal}{\mathcal{U}}
+
+\newcommand{\Abb}{\mathbb{A}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Ibb}{\mathbb{I}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\def\R{{\mathbb R}}
+\newcommand{\Xbb}{\mathbb{X}}
+\newcommand{\Zbb}{\mathbb{Z}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\MAP}{\operatorname{\textsc{map}}}
+\newcommand{\range}{\operatorname{range}}
+\renewcommand{\span}{\operatorname{span}}
+\newcommand{\argmax}{\arg\!\max}
