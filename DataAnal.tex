@@ -47,7 +47,49 @@ Wavelet transforms are described in terms of families of basis functions $\psi_{
 A wavelet transform of a function $f$ has a different time frequency resolution to a windowed Fourier transfrom. It is computed by correlating $f$ with a wavelet atom 
 \[Wf(a,b)=\int^{+\infty}_{-\infty}f(t)\psi^{*}_{a,b}(t)dt=\frac{1}{2\pi}\int^{+\infty}_{-\infty} \hat{f}(\omega)\hat{\psi}^{*}_{a,b}(\omega) d\omega \]
 
+\section{Notes from "method for detection and reconstruction of gravitational wave transients with networks of advanced detectors}
+\subsection{Low latency search}
+Designed to identify potentially significant candidates in real time (within minutes). Streaming? Promptly share sky location with partner telescopes to search for EM counterparts eg Gamma ray burst and afterglow or kilonova which will fade within seconds to days. 
 
+\subsection{Archive analysis}
+Establish significance of event and identify progenitors. Slower and more detailed. 
+
+\subsection{Inverse problem for data from a network of detectors}
+Network of $K$ detectors. Time series data from the detectors is transformed with the Wilson-Debauchies-Meyer (WDM) transform so that each detector $k$ presents data $x_k[i]$ in a general time-frequency (TF) domain, where $i$ is the data sampling (TF pixel) index. 
+
+Detector noise assumed to be Gaussian, described by WDM power spectral density $S_k[i]$ estimated for every data sample. The noise-scaled (whitened) data is defined as $\omega_k[i] = x_k[i]/\sqrt{S_k[i]}$
+
+TF series combined to obtain energy TF maps $E[i]=\sum_k \omega^2_k [i]$ where the $E[i]$ are maximised over all possible time-of-flight delays in the network (i think this means it's lining up the signals based on the travel time of GW from one detector to another. Obviously this depends on where in the sky the GW is coming from). The energy maps are are used to identify TF areas with excess energy above baseline detector noise using an appropriate clustering algorithm. The inverse problem is to extract the signal waveform, polarisation and sky location. (Note that this slightly differs from my definition of the inverse problem which is to determine the parameters from the waveform. Many steps to the inverse problem). 
+
+Data vector $\bfx [i]={x_1[i], \ldots , x_K[i]}$ recorded by detector at time of a GW signal $\bfh [i] = [h_+[i], h_{\times}[i] ]$ coming from sky location $\theta$ and $\phi$ is a superposition of network response $\Fcal \bfh[i]$ and noise $\bfn[\bfi]$:
+\[ \bfx [i] = \Fcal \bfh[i]+\bfn[\bfi] \]
+where $\Fcal$ is the network antenna pattern matrix:
+\[ \Fcal = \left[ \begin{array}{cc} 
+				F_{1+}(\theta, \phi) & F_{1\times}(\theta, \phi) \\
+				\ldots				& \ldots	\\
+				F_{K+}(\theta, \phi) & F_{K \times}(\theta, \phi) \end{array} \right] \]
+
+(Antenna patterns often also include a transformation by polarisation angle $\Psi$, but this is equivalent to a rotation of the wave frame and can be included in the definition of $\bfh$).
+
+\subsection{Matched Filtering}
+
+from \cite{PhysRevD.82.044025}
+Searches for GWs from CBC events employ matched filtering as the first step. 
+
+"whitening": Optimal strategy, weight detector output and template wavefor by inverse of amplitude spectral density of detector noise 
+
+discretely sampled time series
+whitened data: $\overrightarrow{s}={s_i}$
+whitened template waveform: $\overrightarrow{h}_\alpha = {h_{\alpha i}$
+noise: $\overrightarrow{n}={n_i}$ zero-mean $<n_i>=0$, unit-variance Gaussian random process $<n_i,n_j>=\delta_{ij}$
+
+
+output of matched filter is given by the vector inner product 
+\begin{equation}
+\rho_\alpha = \overrightarrow{h}_\alpha^*\cdot \overrightarrow{s}
+\end{equation}
+
+search over phase by using complex-valued templates where $\mathfrak{R}\overrightarrow{h}_\alpha$ contains the cosine like phase and $\mathfrak{I}\overrightarrow{h}_\alpha$ contains the sine-like phase. 
 
 
 

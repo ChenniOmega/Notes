@@ -1,180 +1,349 @@
-%\documentclass[12pt]{report}
-%\newtheorem{defn}{Definition}[section]
-%\newtheorem{thm}{Theorem}[section]
-%\newtheorem{lemma}{Lemma}[section]
-%\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
-%\newenvironment{proof}
-%       {\begin{flushleft} \begin{description}
-%              \item \textit{\textbf{Proof:}}}
-%        {\hfill\rule{2.1mm}{2.1mm}
-%              \end{description}\end{flushleft}}
-%%\newenvironment{myexample}{\begin{flushleft}
-%%i would like to make defn in a slightly different font to distinguish it from normal text
-%\usepackage{amssymb, mathrsfs, graphicx}
-%\addtolength{\textwidth}{100pt}
-%\addtolength{\oddsidemargin}{-50pt}
-%\addtolength{\evensidemargin}{-50pt}
-%\linespread{1.2}
-%\def\R{{\mathbb R}}
-%\def\pd{{\partial}}
-%\def\Lie{{\mathcal{L}}}
-%\def\d{{\mbox{d}}}
-%\def\grad {{\nabla}}
-%\def\ga{{\gamma}}
-%\begin{document}
+\input{ThesisPreamble}
+\begin{document}
 
 \chapter{Formalism of Numerical Relativity}      
      
 \section{Introduction}     
-There are several formalisms used in numerical relativity. These include 
-\begin{itemize}
-\item the ``3+1 formalism"
-\item the ``characteristic formalism"
-\item the ``conformal formalism".
-\end{itemize}
-
-ADM, hyperbolicity, BSSN. There also exists spectral etc
-Initial data problem. Parameters for BBH.
-Matching PN methods.
-Extracting GW signatures.
-
-\begin{itemize}
-\item During inspiral and after the merger during the ringdown, can use perturbative (Post-Newtonian) methods (McWilliams- that's all he said about it) expansion in powers of $v/c$
-\item NR needed in merger phase. Match NR to PN in transition phases. How to know what the matching point is? Equal mass, no spin can match at 10 orbits before merger, but for midrange mass ratios and moderate spins PN is still inaccurate dozens of orbits out \cite{Scheel2013}. Compare longest waveforms.
-\item choices of $\alpha$ and $\beta$ lead to different numerical properties- for 4 decades most research was dedicated to finding stable choices (McWilliams). 
-\end{itemize}
-
-%\section{The 3+1 formalism}
 The Einstein field equations are written in such a way that space and time are treated with equal footing. This is very elegant, but in order to study the evolution of a system we must re-write them as a Cauchy problem. The natural way to do this is to view spacetime as a family of 3D spatial hypersurfaces evolving in time. A spacetime in which this is possible is called ``globally hyperbolic'', and contain no closed timelike curves. Although it is a loss of mathematical generality, we assume that all physically realistic spacetimes have this property.
 
-Consider a time-orientable spacetime $(M, g)$, and define on it a global time function $t:M \rightarrow \R$. Our spacelike hypersurfaces $\Sigma_t$ are the level sets of this function:
-\begin{equation}
-\Sigma_{t_a} = \left\lbrace p \in M | t(p)=t_a \right\rbrace.
+\section{Splitting Space and Time}
+Consider a time-orientable spacetime $(M, g)$, and define on it a global time function $t:M \rightarrow \R$ satisfying
+\begin{equation}\label{eq:gtf}
+\| \grad_\alpha t \|= g^{\alpha \beta}\grad_\alpha t \grad_\beta t \equiv -\frac{1}{\alpha^2} < 0.
 \end{equation}
 
-Given $t$ we can define a 1-form $\Omega_\alpha =\grad_\alpha t$ which is closed by construction:
+Our spacelike hypersurfaces $\Sigma_t$ are the level sets of this function:
 \begin{equation}
-\grad_{[\alpha}\Omega_{\beta]} = \grad_{[\alpha}\grad_{\beta]}t=0.
+\Sigma_{t} = \left\lbrace p \in M | t(p)=t \right\rbrace.
 \end{equation}
-We can calculate the norm of $\Omega_\alpha$ using the 4-metric which for reasons which will become apparent later we will call $-\alpha^{-2}$:
-\[ ||\Omega ||^2=g^{\alpha \beta}\grad_\alpha t \grad_\beta t \equiv -\frac{1}{\alpha^2}. \]
-
-We can now define the unit normal to the slices as 
+We define the unit normal to the slices in terms of the 1-form  $\grad_\alpha t$
 \begin{equation}
-n^\alpha = -\alpha g^{\alpha \beta} \Omega_\beta,
+n^\alpha \equiv -\alpha g^{\alpha \beta} \grad_\beta t
 \end{equation}
-where the negative sign is chosen so that $\nbf$ is in the direction of increasing $t$. Observers travelling with 4-velocities $n^{\alpha}$ are called ``Eulerian observers''.
-
-We use the normal to construct the three dimensional spatial metric on the slice $\Sigma$, which is inherited from the 4D spacetime metric $g$, and allows us to calculate distances within a slice:
+where the negative sign is chosen so that $n^{\alpha}$ is in the direction of increasing $t$. By construction, $n^{\alpha}$ is normalised and timelike,
 \begin{equation}
-\gamma_{\alpha \beta} = g_{\alpha \beta} + n_{\alpha} n_{\beta}.
+n^{\alpha}n_{\alpha}=\alpha^2 g^{\alpha \beta} \grad_\alpha t \grad_\beta t =-1,
+\end{equation}
+so may be thought of as the 4-velocities of observers whose worldlines are always normal to the spacelike hypersurfaces. These are called ``Eulerian observers'' and have acceleration given by
+\begin{equation}
+\label{eq:NormalAcceleration}
+a_{\alpha}= n^{\beta} \grad_{\beta} n_{\alpha}.
+\end{equation}
+Contracting all free indices of an arbitrary tensor with the expression $-n^\alpha n_\beta$ will return the timelike components of the tensor, and so we call this the \textit{normal projection operator}. If the timelike components of a tensor vanish, the tensor is described as \textit{spatial}.
+
+We can now use the normal to construct the spatial metric on the slices $\gamma_{\alpha \beta}$ by calculating the spacetime distance with $g_{\alpha \beta}$ and killing off the timelike components:
+\begin{equation}
+\label{eq:spatialmetric}
+\gamma_{\alpha \beta}=g_{\alpha \beta}+n_\alpha n_\beta.
+\end{equation}
+This metric is purely spatial ($\gamma_{\alpha \beta} n^{\alpha}=0$), positive definite, and has inverse
+\begin{equation}
+\label{eq:spatialmetricinverse}
+\gamma^{\alpha \beta}=g^{\alpha \beta}+n^\alpha n^\beta.
 \end{equation}
 
-We construct an operator to project 4-dimensional tensors into the spatial hypersurfaces by raising one index of the spatial metric
+We construct the \textit{spatial projection operator} to project 4-dimensional tensors into the spatial hypersurfaces by raising one index of the spatial metric
 \begin{equation}
 \gamma^\alpha_\beta = g^\alpha_\beta + n^\alpha n_\beta = \delta^\alpha_\beta + n^\alpha n_\beta. 
 \end{equation} 
-To project a tensor into the spatial surface, each free index must be contracted with the projection operator. The resultant tensor is purely spatial. This can be seen for an arbitrary vector $v^\alpha$ by contracting the projected vector with the normal $n_\alpha$
-\[ n_\alpha \gamma^\alpha _\beta v^\beta = n_\alpha \delta^\alpha_\beta v^\beta + n_\alpha n^\alpha n_\beta v^\beta = n_\beta v^\beta - n_\beta v^\beta = 0 \]
+To project a tensor into the spatial surface, each free index must be contracted with the projection operator. The indices on the resultant tensor can be raised or lowered with either $g_{\alpha \beta}$ or $\gamma_{\alpha \beta}$. Further, the projected tensor is purely spatial, which can be seen for an arbitrary vector $v^\alpha$ by contracting the projected vector with the normal $n_\alpha$
+\begin{equation}
+\gamma^\alpha _\beta v^\beta = n_\alpha \delta^\alpha_\beta v^\beta + n_\alpha n^\alpha n_\beta v^\beta = n_\beta v^\beta - n_\beta v^\beta = 0
+\end{equation}
 
-Conversely, the normal projection operator $-n^\alpha n_\beta$ projects tensors along the normal to the surface. We can now decompose any tensor into its spatial and timelike parts. For example, our arbitrary vector $v^\alpha$ can be decomposed as 
-\[ v^\alpha = \delta^\alpha_\beta v^\beta = (\gamma^\alpha_\beta - n^\alpha n_\beta)v^\beta. \]
+Using this and normal projection operator we can now decompose any tensor into its spatial and timelike parts. For example, our arbitrary vector $v^\alpha$ can be decomposed as 
+\begin{equation}
+v^\alpha = \delta^\alpha_\beta v^\beta = (\gamma^\alpha_\beta - n^\alpha n_\beta)v^\beta.
+\end{equation}
 
-We will require a covariant derivative to act on spatial tensors, which we can obtain by projecting the four dimensional covariant derivative into $\Sigma$. For a general tensor
+The covariant derivative on the slice can be induced from the four dimensional covariant derivative by projecting it into $\Sigma$. For a general tensor
 \begin{equation}
 D_\alpha T^{\mu_1 ... \mu_n}_{\nu_1 ... \nu_m}=\gamma^{\beta}_{\alpha} \gamma^{\mu_1}_{\rho_1}... \gamma^{\mu_n}_{\rho_n}...\gamma^{\sigma_1}_{\nu_1}... \gamma^{\sigma_m}_{\nu_m}\nabla_\beta T^{\rho_1 ... \rho_n}_{\sigma_1 ... \sigma_m}.
 \end{equation}
-It is straightforward to show that this is compatible with the 3-metric $\gamma_{\alpha \beta}$.  
+It is straightforward to show that this is compatible with the 3-metric, that is $D_\alpha \gamma_{\mu \nu}=0$.  
 
-The 3-dimensional Riemann tensor defined in terms of the the 3 metric $\gamma_{ij}$ in the usual way, along with the Ricci tensor and Ricci scalar, and are all purely spatial. However, these only tell us about the curvature intrinsic to the 3-dimensional slice $\Sigma_t$. We have lost information about curvature in the fourth dimension. This information is contained in the extrinsic curvature.
-
-\section{Extrinsic Curvature}
-The extrinsic curvature comes from the way the hypersurfaces are are immersed in four-dimensional spacetime. It is defined in terms of what happens to the normal vector $n^\alpha$ as it is parallel transported from one point in the hypersurface to another. In general, it will not be normal to the hypersurface anymore.
-
-Using the projection operator the extrinsic curvature tensor is defined as 
-\begin{equation}\label{eq:ExtCurve}
-K_{\alpha \beta} = -\gamma_{\alpha}^{\mu} \gamma_{\beta}^{\nu} \grad _{\mu} n_{\nu}. 
-\end{equation}
-Clearly this is purely spatial, and it can be shown that the anti-symmetric part $K_{[\alpha \beta]}=0$. The extrinsic curvature can alternatively be written 
+The 3-dimensional Riemann tensor is defined in terms of the 3-dimensional covariant derivative in the usual way,
 \begin{equation}
-\label{eq:ExtCurve2}
+\label{eq:3Riemann}
+R^{\delta}_{\gamma \beta \alpha} v_\delta = 2 D_{[\alpha} D_{\beta]} v_\gamma 
+\end{equation}
+for any spatial vector $v_\gamma$, with the additional requirement that 
+\begin{equation}
+R^{\delta}_{\gamma \beta \alpha}n_\delta =0.
+\end{equation}
+Thus, it, along with the Ricci tensor and Ricci scalar, are all purely spatial. However, these only tell us about the curvature intrinsic to the 3-dimensional slice $\Sigma_t$. We have lost information about curvature in the fourth dimension. This information is contained in the extrinsic curvature.
+
+The \textit{extrinsic curvature} represents how the hypersurfaces are are curved with respect to the 4-dimensional spacetime by measuring how normal vectors differ from point to point.  It is defined by projecting gradients of the normal vector into the slice $\Sigma$:
+\begin{equation}\label{eq:ExtCurve}
+K_{\alpha \beta} \equiv -\gamma_{\alpha}^{\mu} \gamma_{\beta}^{\nu} \grad _{\mu} n_{\nu}. 
+\end{equation}
+Clearly this is purely spatial, and it can be shown \cite{BaumgarteShapiro} that it is symmetric and can
+% We can also express the extrinsic curvature in terms of the acceleration of Eulerain observers give in equation \ref{eq:NormalAcceleration}
+%\begin{equation}
+%\label{eq:ExtCurve2}
+%K_{\alpha \beta}=-\grad_{\alpha}n_{\beta} -n_{\alpha}a_{\beta}
+%\end{equation}
+%Finally, the extrinsic curvature can also 
+be written as 
+\begin{equation}
+\label{eq:ExtCurve3}
 K_{\alpha \beta}=-\frac{1}{2} \Lie_{\nbf} \gamma_{\alpha \beta},
 \end{equation}
-which makes clear another interpretation of the extrinsic curvature as the rate at which the hypersurface deforms as it is carried along the unit normal.
+which makes clear another interpretation of the extrinsic curvature as the rate at which the hypersurface deforms as measured by Eulerian observers.
 
-Taking the trace of \ref{eq:ExtCurve2} gives us the \textit{mean curvature}
+The relationship between the four dimensional Riemann tensor $^{(4)}R^{\delta}_{\gamma \beta \alpha}$, its 3-dimensional counterpart and the extrinsic curvature is found by taking spatial and mixed projections of $^{(4)}R^{\delta}_{\gamma \beta \alpha}$. The normal projection of all four indices vanishes identically due to symmetries of the Riemann tensor, and these also cause the mixed projection of one index into the spatial direction and three in the normal direction to cancel. Therefore we need to consider the three remaining projections.
+The completely spatial projection yields \textit{Gauss' equation},
 \begin{equation}
-K= - \Lie_{\nbf} \ln \gamma^{1/2}.
+\label{eq:Gauss}
+\gamma_\alpha^\mu \gamma_\beta^\nu \gamma_\gamma^\rho \gamma_\delta^\sigma {}^{(4)}R_{\mu \nu \rho \sigma} = R_{\alpha \beta \gamma \delta} + K_{\alpha \gamma}K_{\beta \delta} - K_{\alpha \delta}K_{\beta \gamma}.
+\end{equation}
+Projecting one index in the normal direction and the others spatially results in \textit{Codazzi's equation},
+\begin{equation}
+\label{eq:Codazzi}
+\gamma_\alpha^\mu \gamma_\beta^\nu \gamma_\gamma^\rho n^\sigma {}^{(4)}R_{\mu \nu \rho \sigma} = D_\beta K_{\alpha \gamma} - D_\alpha K_{\beta \gamma}.
+\end{equation}
+Lastly, two spatial and two normal projections gives \textit{Ricci's equation}
+\begin{equation}
+\label{eq:Ricci}
+\Lie_\nbf K_{\alpha \beta} = n^\delta n^\gamma \gamma^\nu_\alpha \gamma^\rho_\beta {}^{(4)}R_{\delta \rho \gamma \nu}-\frac{1}{\alpha}D_\alpha D_\beta \alpha - K^{\gamma}_\beta K_{\alpha \gamma}.
+\end{equation}
+For a derivation of these equations see \cite{BaumgarteShapiro}.
+
+\section{Projections of the Einstein Field Equations}
+We take contractions of the Gauss, Codazzi and Ricci equations to express the 4-dimensional Ricci tensor and scalar in terms of their 3-dimensional counterparts and use these to rewrite the Einstein Field Equations in $3+1$ form. 
+
+First we contract Gauss' equation \ref{eq:Gauss} twice:
+\begin{equation}
+\begin{array}{rcl}
+g^{\beta \delta}g^{\alpha \gamma}\gamma_\alpha^\mu \gamma_\beta^\nu \gamma_\gamma^\rho \gamma_\delta^\sigma {}^{(4)}R_{\mu \nu \rho \sigma} & = & g^{\beta \delta}g^{\alpha \gamma}(R_{\alpha \beta \gamma \delta} + K_{\alpha \gamma}K_{\beta \delta} - K_{\alpha \delta}K_{\beta \gamma}) \\
+\gamma^{\mu \rho} \gamma^{\nu \sigma}{}^{(4)}R_{\mu \nu \rho \sigma} & = &  R+K^2-K_{\alpha \beta}K^{\alpha \beta},
+\end{array}
+\end{equation}
+where $K=K^\alpha_\alpha$ is the trace of the extrinsic curvature. Expanding the left hand side as $(g^{\mu \rho}+n^\mu n^\rho)(g^{\nu \sigma}+n^\nu n^\sigma){}^{(4)}R_{\mu \nu \rho \sigma}$ yields 
+\begin{equation}
+\label{eq:contractedGauss}
+{}^{(4)}R+2 n^\mu n^\rho {}^{(4)}R_{\mu \rho} = R + K^2-K_{\alpha \beta}K^{\alpha \beta},
+\end{equation}
+because the expression $n^\mu n^\rho n^\nu n^\sigma {}^{(4)}R_{\mu \nu \rho \sigma}$ vanishes due to the symmetries of the Riemann tensor. We now project the Einstein Equations in the normal direction:
+\begin{equation}
+\label{eq:normalprojEFE}
+n^\mu n^\rho {}^{(4)}R_{\mu \rho} - \frac{1}{2}n^\mu n^\rho g_{\mu \rho} {}^{(4)}R =n^\mu n^\rho {}^{(4)}R_{\mu \rho}+\frac{1}{2}{}^{(4)}R = 8 \pi n^\mu n^\rho T_{\mu \rho}.
+\end{equation}
+We define the energy density $\rho$ to be the energy density as measured by Eulerian observers: 
+\begin{equation}
+\label{eq:energydensity}
+\rho = n_\mu n_\rho T^{\mu \rho}.
+\end{equation}
+Then combining \ref{eq:contractedGauss} and \ref{eq:normalprojEFE} gives us the \textit{Hamiltonian constraint}
+\begin{equation}
+\label{eq:HamiltonianConstraint}
+R + K^2-K_{\alpha \beta}K^{\alpha \beta}=16\pi \rho.
+\end{equation}
+This expression contains only information about the spatial metric and the extrinsic curvature, and their spatial derivatives. It contains no time derivatives, but imposes conditions on $\gamma_{\alpha \beta}$ and $K_{\alpha \beta}$ that must be satisfied, hence why it is called a constraint. The Codazzi equation \ref{eq:Codazzi} leads to another constraint.
+
+We proceed by contracting the Codazzi equation once:
+\begin{equation}
+\begin{array}{rcl}
+g^{\alpha \gamma}\gamma_\alpha^\mu \gamma_\beta^\nu \gamma_\gamma^\rho n^\sigma {}^{(4)}R_{\mu \nu \rho \sigma} &=& g^{\alpha \gamma}(D_\beta K_{\alpha \gamma} - D_\alpha K_{\beta \gamma})\\
+\gamma^{\mu \rho}\gamma^\nu_\beta n^\sigma {}^{(4)}R_{\mu \nu \rho \sigma} &=& D_\beta K - D_\alpha K_\beta^\alpha.
+\end{array}
+\end{equation}
+By again substituting $\gamma^{\mu \rho}=g^{\mu \rho}-n^\mu n^\rho$, and eliminating $n^\mu n^\rho n^\sigma {}^{(4)}R_{\mu \nu \rho \sigma}$ using symmetries, we obtain
+\begin{equation}
+\label{eq:contractedCodazzi}
+\gamma^\nu_\beta n^\sigma {}^{(4)}R_{\nu \sigma} = D_\beta K - D_\alpha K_\beta^\alpha.
+\end{equation}
+Now we perform a mixed projection on the Einstein equation,
+\begin{equation}
+\label{eq:mixedprojectionEFE}
+\gamma^\nu_\beta n^\sigma {}^{(4)}R_{\nu \sigma}-\frac{1}{2}\gamma^\nu_\beta n^\sigma g_{\nu \sigma} {}^{(4)}R= 8\pi \gamma^\nu_\beta n^\sigma T_{\nu \sigma}. 
+\end{equation}
+The second term on the left hand side vanishes because $\gamma^\nu_\beta n_\nu =0$. Combining equations \ref{eq:contractedCodazzi} and \ref{eq:mixedprojectionEFE} results in the \textit{momentum constraint},
+\begin{equation}
+\label{eq:MomentumConstraint}
+D_\alpha K_\beta^\alpha-D_\beta K = 8\pi S_{\beta},
+\end{equation}
+where we define the momentum density measured by a normal observer to be 
+\begin{equation}
+\label{eq:momentumDensity}
+S_{\beta} = - \gamma^\nu_\beta n^\sigma T_{\nu \sigma}.
+\end{equation}
+Note that the momentum constraint \ref{eq:MomentumConstraint} again has no time derivatives. 
+
+Next we turn our attention to the Ricci equation \ref{eq:Ricci}. We start by making the following expansion:
+\begin{equation}
+\label{eq:expandedRiemannProj}
+n^\delta n^\gamma \gamma^\nu_\alpha \gamma^\rho_\beta {}^{(4)}R_{\delta \rho \gamma \nu} = (\gamma^{\delta \gamma} - g^{\delta \gamma})\gamma^\nu_\alpha \gamma^\rho_\beta {}^{(4)}R_{\delta \rho \gamma \nu} = g^{\mu \sigma}\gamma^\delta_\mu \gamma^\rho_\beta \gamma^\gamma_\sigma \gamma^\nu_\alpha  {}^{(4)}R_{\delta \rho \gamma \nu} -\gamma^\nu_\alpha \gamma^\rho_\beta {}^{(4)}R_{ \rho  \nu}.
+\end{equation}
+We can make a substitution in the first term on the right hand side of \ref{eq:expandedRiemannProj} using Gauss' equation \ref{eq:Gauss}
+\begin{equation}
+\begin{array}{rcl}
+\label{eq:GaussRicciSub}
+g^{\mu \sigma}\gamma^\delta_\mu \gamma^\rho_\beta \gamma^\gamma_\sigma \gamma^\nu_\alpha  {}^{(4)}R_{\delta \rho \gamma \nu} &=& g^{\mu \sigma}(R_{\mu \beta \sigma \alpha} + K_{\mu \sigma}K_{\beta \alpha} - K_{\mu \alpha}K_{\beta \sigma})\\
+ &=& R_{\beta \alpha} + K K_{\beta \alpha}-K^\sigma_\alpha K_{\beta \sigma}.
+\end{array}
+\end{equation}
+We use a spatial projection of the Einstein equations to make a substition for the second term on the right hand side of \ref{eq:expandedRiemannProj}, recalling \ref{eq:traceEFE} (\textit{put the trace of the EFE in the GR chapter})
+\begin{equation}
+\begin{array}{rcl}
+\label{eq:spatialprojectionEFE}
+\gamma^\nu_\alpha \gamma^\rho_\beta {}^{(4)}R_{ \rho  \nu} &=& \gamma^\nu_\alpha \gamma^\rho_\beta( 8\pi T_{\rho \nu} + \frac{1}{2}g_{\rho \nu} {}^{(4)}R \\
+&=& 8\pi \gamma^\nu_\alpha \gamma^\rho_\beta( T_{\rho \nu} - \frac{1}{2}g_{\rho \nu} T).
+\end{array}
+\end{equation}
+We define the spatial stress to be
+\begin{equation}
+\label{eq:spatialStress}
+S_{\alpha \beta} = \gamma^\nu_\alpha \gamma^\rho_\beta T_{\rho \nu},
+\end{equation}
+with trace $S=S^\alpha_\alpha$. Now consider the term
+\begin{equation}
+\label{eq:Sterms}
+\begin{array}{rcl}
+\gamma^\nu_\alpha \gamma^\rho_\beta g_{\rho \nu} T &=& \gamma_{\alpha \beta} g^{\gamma \delta} T_{\gamma \delta} \\
+&=& \gamma_{\alpha \beta}(\gamma^{\gamma \delta}-n^\gamma n^\delta)T_{\gamma \delta} \\
+&=& \gamma_{\alpha \beta}(S-\rho).
+\end{array}
+\end{equation}
+Substituting this into \ref{eq:spatialprojectionEFE} and combining with \ref{eq:GaussRicciSub}, the Ricci Equation \ref{eq:Ricci} becomes
+\begin{equation}
+\label{eq:Ricci2}
+\Lie_\nbf K_{\alpha \beta}=  R_{\beta \alpha} + K K_{\beta \alpha}-2 K^\sigma_\alpha K_{\beta \sigma} - 8\pi(S_{\alpha \beta} - \frac{1}{2}\gamma_{\alpha \beta}(S-\rho))-\frac{1}{\alpha}D_\alpha D_\beta \alpha.
+\end{equation}
+However, the derivative $\Lie_\nbf$ is not a natural derivative to use as it is not dual to the one-form $\grad_\alpha t$ which was the foundation of this 3+1 framework. Instead, consider a timelike vector field $t^\al$ that is dual to $\grad_\alpha t$, i.e.,
+\begin{equation}\label{eq:duality}
+t^\al \grad_\alpha t = 1.
+\end{equation}
+We can decompose $t^\al$ into a spatial component $\beta^\alpha$, and a component parallel to the normal,
+\begin{equation}\label{eq:tdecomp}
+t^\alpha = cn^\alpha + \beta^\alpha.
+\end{equation}
+Then, by \ref{eq:duality},
+\begin{equation}
+-\alpha c g^{ \alpha \beta } \grad_\beta t \grad_\alpha t + \beta^\alpha \grad_\alpha t = 1.
+\end{equation}
+As $\beta^\alpha$ is purely spatial, $\beta^\alpha \grad_\alpha t=0$, thus from \ref{eq:gtf} we see $c=\alpha$. We can use this to replace $\Lie_\nbf$:
+\begin{equation}
+\label{eq:Lien}
+\Lie_\tbf K_{\alpha \beta} = \Lie_{\alpha \nbf + \beta} K_{\alpha \beta}=\alpha \Lie_\nbf  K_{\alpha \beta}+\Lie_\beta K_{\alpha \beta}.
+\end{equation}
+With this, \ref{eq:Ricci2} becomes
+\begin{equation}
+\label{eq:EvolutionEquationK}
+\Lie_\tbf K_{\alpha \beta}= -D_\alpha D_\beta \alpha + \alpha(R_{\beta \alpha} + K K_{\beta \alpha}-2 K^\sigma_\alpha K_{\beta \sigma}) - 8\pi\alpha(S_{\alpha \beta} - \frac{1}{2}\gamma_{\alpha \beta}(S-\rho))-\Lie_\beta K_{\alpha \beta}.
+\end{equation}
+This is the \textit{evolution equation for the extrinsic curvature}. 
+
+Finally, we use \ref{eq:Lien} in \ref{eq:ExtCurve3} to find the \textit{evolution equation for the spatial metric}:
+\begin{equation}
+\label{eq:EvolutionEquationGamma}
+\Lie_\tbf \gamma_{\alpha \beta} = -2\alpha K_{\alpha \gamma} + \Lie_\beta \gamma_{\alpha \beta}.
 \end{equation}
 
+\section{Choosing Coordinates}
+We choose global coordinates $x^{\alpha}$ such that $x^0 \equiv t$, the global time function introduced at the beginning of this chapter, and $x^i$ where $i=1,2,3$ denote the spatial coordinates on a particular slice. Here, and in the remainder of this thesis, Greek letters $\alpha,\beta,\ldots$ will be used for indices that take the values $0,\ldots, 3$, while denoted with Latin letters $i,j,\ldots$ will take values $1,\ldots3$. The motivation for this will become clear shortly. 
 
+With these choices,
+\begin{equation}
+\grad_\alpha t = (\pd_0 t, \pd_1 t, \pd_2 t, \pd_3 t) = (1,0,0,0),
+\end{equation}
+and therefore
+\begin{equation}\label{eq:n}
+n_\alpha=(-\alpha,0,0,0)
+\end{equation}
+Once coordinates have been chosen on a slice $\Sigma_t$, we need to know how they propagate to the subsequent slice $\Sigma_{t+dt}$. 
 
-Consider a specific foliation, and take two adjacent hypersurfaces $\Sigma_t$ and $\Sigma_{t+dt}$. The geometry of the region between these two hypersurfaces can be determined from the following:
-\begin{itemize} 
-\item The three dimensional metric $\gamma_{ij}$ $(i,j = 1,2,3)$ that measures proper distances within the hypersurface itself.
-\[ dl^2= \gamma_{ij} dx^i dx^j \]
-\item The lapse of proper time between the hypersurfaces as measured by those observers moving normal to the hypersurfaces
-\[ d\tau = \alpha(t,x^i) dt \]
-where $\alpha$ is the ``lapse function".
-\item The relative velocity $\beta^i$ between the Eulerian observers and the linse that correspond to constant spatial coordinates:
-\[ x^i_{t+dt} = x^i_t - \beta^i(t,x^j)dt \mbox{, for Eulerian observers} \]
-The 3-vector $\beta^i$ is known as the ``shift vector"
-\end{itemize}
-As the spacetime foliation and the way spatial coordinates propagate are not unique, both the lapse function $\alpha$ and the shift vector $\beta^i$ are functions that can be freely specified. They determine the coordinate system and are known as ``gauge functions". In terms of the gauge functions and the 3-metric the spacetime metric takes the following form:
-\[ ds^2=(-\alpha^2 + \beta_i \beta^i)dt^2 + 2 \beta_i dt dx^i + \gamma_{ij} dx^i dx^j \]
-where $\beta_i := \gamma_{ij} \beta^j$.
+We choose that points on the same integral curves $\Ccal(t)$ of $t^\alpha$, the timelike vector field introduced above, have the same spatial coordinates, that is, $\Ccal(t)=(\Ccal^0(t),\Ccal^1,\Ccal^2,\Ccal^3)$ where the $\Ccal^i$, $i=1,2,3$ are constant. As such, the vector $\beta^\alpha$ gives us the relative velocity between the Eulerian observers and the lines that correspond to constant spatial coordinates, and hence is called the \textit{shift vector}. 
 
-More explicitly:
-\begin{eqnarray}
-g_{\mu \nu} = & \left( \begin{array}{ccc}
-						-\alpha^2 + \beta_k \beta^k & \beta_i \\
-							\beta_j					& \gamma_{ij}
-						\end{array} \right), \\
-g^{\mu \nu} = & \left( \begin{array}{ccc}
+Invoking the duality condition \ref{eq:duality} once more, we find
+\begin{equation}\label{eq:tcomp}
+t^\alpha=(\frac{\d \Ccal^0}{\d t},0,0,0)=(1,0,0,0),
+\end{equation}
+and thus the Lie derivative along $t^\alpha$ reduces to the partial
+\begin{equation}
+\Lie_t=\pd_t=\pd_0.
+\end{equation}
+
+The result \ref{eq:n} tells us that the timelike contravariant components of any purely spatial tensor must vanish. For example, consider a purely spatial $(1,1)$ tensor $S^\alpha_\beta$:
+\begin{equation}
+n_\alpha S^\alpha_\beta = -\alpha S^0_\beta =0,
+\end{equation}
+thus $S^0_\beta=0$ for $\beta=0,...3$. In particular, the timelike components of the inverse spatial metric vanish, $\gamma^{0 \alpha}=0$, and we can write the spatial component of the vector field $t^\alpha$ as $\beta^\alpha=(0,\beta^i)$, $i=1,2,3$. This allows us to write the spacetime metric and its inverse in terms of $\alpha$, $\beta$ and $\gamma$. Recalling \ref{eq:tdecomp} and \ref{eq:tcomp}, we find
+\begin{equation}
+n^0 = \alpha^{-1} \mbox{ and } n^i= -\alpha^{-1} \beta^i, \mbox{ }i=1,2,3,
+\end{equation}
+and inserting this into \ref{eq:spatialmetricinverse} gives us the inverse spacetime metric
+\begin{equation}
+\label{eq:invmetric}
+g^{\alpha \beta} = \left( \begin{array}{ccc}
 						-1/\alpha^2 		& 	\beta^i / \alpha^2 \\
 						\beta^j / \alpha^2 	&	\gamma^{ij}-\beta^i\beta^j / \alpha^2 
-						\end{array} \right)
-\end{eqnarray}
+						\end{array} \right),
+\end{equation}
+which can be inverted to find
+\begin{equation}
+\label{eq:metric}
+g_{\alpha \beta} = \left( \begin{array}{ccc}
+						-\alpha^2 + \beta_k \beta^k & \beta_i \\
+							\beta_j					& \gamma_{ij}
+						\end{array} \right).
+\end{equation}
+In line element form, this is 
+\begin{equation}
+\label{eq:metriclineelement}
+ds^2=-\alpha^2 dt^s + \gamma_{ij}(dx^i + \beta^i dt)(dx^j + \beta^j dt).
+\end{equation}
+This expression makes clear the interpretation of the function $\alpha$. For Eulerian observers, $dx^i=-\beta^i dt$. Substituting this into \ref{eq:metriclineelement} gives us 
+\begin{equation}
+\d\tau^2 = -ds^2 =\alpha^2 dt^2,
+\end{equation}
+and we can now see that $\alpha$ is the rate of change of proper time $\tau$ with respect to coordinate time $t$ for Eulerian observers. For this reason, the function $\alpha$ is called the \textit{lapse}.
 
-The components of the unit normal vector $n^\mu$ to the spatial hypersurfaces are given by:
-\[ n^\mu = (1/ \alpha, -\beta^i / \alpha), \hspace{1cm} n_\mu=(-\alpha,0), \hspace{1cm} n^\mu n_\mu= -1 \]
+We have seen that the timelike contravariant components of purely spatial tensors vanish. This is not true for the timelike covariant components, however these can be determined from the spatial components. To see why, consider a purely spatial tensor $S_{\gamma \delta}$:
+\begin{equation}
+\begin{array}{rcl}
+S_{\gamma \delta} &=& \gamma^\alpha_\gamma \gamma^\beta_\delta S_{\alpha \beta} \\
+&=& g_{\gamma \mu} g_{\delta \nu} \gamma^{\alpha \mu} \gamma^{\beta_\nu} S_{\alpha \beta} \\
+&=& g_{\gamma \mu} g_{\delta \nu} (\gamma^{0\mu}\gamma^{0\nu}S_{00}+\gamma^{i\mu}\gamma^{0\nu}S_{i0}+ \gamma^{0\mu}\gamma^{j\nu}S_{0j}+\gamma^{i\mu}\gamma^{j\nu}S_{ij}) \\
+&=& g_{\gamma \mu} g_{\delta \nu}\gamma^{i\mu}\gamma^{j\nu}S_{ij}.
+\end{array}
+\end{equation}
+We can explicitly write the timelike covariant components in terms of the spacelike components:
+\begin{equation}
+S_{00}=\beta^i \beta^j S_{ij}, \hspace{12pt} S_{i0}=\beta^k S_{ik}, \hspace{12pt} S_{0j}=\beta^k S_{kj}.
+\end{equation}
 
-
-
-
-\section{The Einstein Equations in the 3+1 formalism}
-Using the projection operator we can separate Einstein's equations into three groups.
-\begin{itemize}
-\item Normal projection (1 equation)
-\[ n^\alpha n^\beta(G_{\alpha \beta}-8\pi T_{\alpha \beta})=0\]
-\item Mixed projection (3 equations):
-\[ P[n^\alpha ( G_{\alpha \beta}-8\pi T_{\alpha \beta})]=0\]
-\item Projection onto the hypersurface (6 equations)
-\[ P( G_{\alpha \beta}-8\pi T_{\alpha \beta})=0 \]
-\end{itemize}
-
-From the normal projection we get
-\begin{equation}\label{HamConstraint}
-R^{(3)} + ( \mbox{tr} K)^2-K_{ij}K^{ij}=16\pi\rho
-\end{equation}  
-where $R^{(3)}$ is the Ricci scalar associated with the 3-metric, $\mbox{tr} K \equiv \gamma^{ij}K_{ij}$ is the trace of the extrinsic curvature tensor and $\rho$ is the energy density of matter as measuered by the Eulerian observers:
-\[ \rho := n_\alpha n_\beta T^{\alpha \beta} \].
-Equation \ref{HamConstraint} contains no time derivatives, so is not a dynamical eqyation but a ``constraint" known as the ``energy" or ``hamiltonian" constraint.
-
-From the mixed projection of the field equations we find:
-\begin{equation}\label{MomConstraint}
-D_j [ K^{ij}-\gamma^{ij} \mbox{tr}K]=8\pi j^i
-\end{equation} 
-where now $j^i$ is the momentum flux of matter as measured by the Eulerian observers: 
-\[ j^i := P^i_\beta \left(n_\alpha T^{\alpha \beta} \right) \]
-This again has no time derivatives; it is known as the ``momentum" constraints.
-
-The remaining 6 equations are obtained from the projection onto the hypersurface and contain the true dynamics of the system. These equations take the form:
-\[ \partial_t K_{ij} = \beta^a \partial_a K_{ij} + K_{ik} \partial_j \beta^k + K_{jk}\partial_i \beta^k - D_i D_j \alpha +\alpha[R^{(3)}_{ij}-2K_{ik}K^k_j + K_{ij} \mbox{tr} K] +4\pi\alpha[\gamma_{ij}(\mbox{tr} S-\rho)-2S_{ij}] \]
-where $S_{ij}$ is the stress tensor of matter:
-\[ S_{ij} := P T_{ij}\]
+Since in these coordinates spatial tensors are determined entirely from their spacelike components, the constraint and evolution equations can be written in terms of these components alone. The Hamiltonian constraint \ref{eq:HamiltonianConstraint} becomes 
+\begin{equation}
+\label{eq:HamConstADM}
+R+K^2-K_{ij}K^{ij}=16\pi\rho, 
+\end{equation}
+and the momentum constraint \ref{eq:MomentumConstraint},
+\begin{equation}
+\label{eq:MomConstADM}
+D_j(K^{ij}-\gamma^{ij}K)=8\pi S^i.
+\end{equation}
+The evolution equation for the extrinsic curvature \ref{eq:EvolutionEquationK} becomes
+\begin{equation}
+\label{eq:EvEqK}
+\begin{array}{rl}
+\pd_t K_{ij}=&\alpha(R_{ij}-2K_{ik}K^k_j+K K_{ij})-D_i D_j \alpha - 8\pi \alpha(S_{ij} - \frac{1}{2}\gamma_{ij}(S-\rho)) \\
+& +\beta^k\pd_k K_{ij} + K_{ik}\pd_j \beta^k + K_{kj}\pd_i \beta^k,
+\end{array}
+\end{equation}
+where the final three terms come from the Lie derivative, and similarly the evolution equation for the spatial metric becomes
+\begin{equation}
+\label{eq:EvEqGamma}
+\pd_t \gamma_{ij}=-2\alpha K_{ij}+D_i\beta_j + D_j \beta_i.
+\end{equation}
+The equations \ref{eq:HamConstADM}, \ref{eq:MomConstADM}, \ref{eq:EvEqK} and \ref{eq:EvEqGamma} are called the \textit{ADM Equations} after Arnowitt, Deser and Misner who derived them in 1962 (although they weren't the first to do so).
 
 \section{Gauge Conditions}
+\begin{itemize}
+\item must avoid singularities
+\item must counteract grid stretching
+\end{itemize}
+
 Let us now consider our options for the gauge conditions, which can be chosen freely. Recall the lapse function gives the proper time as measured by Eulerian observers (those who are moving normal to the hypersurface). The acceleration of these observers is given by 
 \begin{equation}
 a^\mu = n^\nu \grad_\nu n^\mu
@@ -197,6 +366,38 @@ Require the volume elements remain constant- from  \ref{eq:VolElEvol}:
 K = \pd_t K =0
 \end{equation}
 
+\pagebreak
+
+
+
+%There are several formalisms used in numerical relativity. These include 
+%\begin{itemize}
+%\item the ``characteristic formalism"
+%\item the ``conformal formalism".
+%\end{itemize}
+%
+%ADM, hyperbolicity, BSSN. There also exists spectral etc
+%Initial data problem. Parameters for BBH.
+%Matching PN methods.
+%Extracting GW signatures.
+%
+%\begin{itemize}
+%\item During inspiral and after the merger during the ringdown, can use perturbative (Post-Newtonian) methods (McWilliams- that's all he said about it) expansion in powers of $v/c$
+%\item NR needed in merger phase. Match NR to PN in transition phases. How to know what the matching point is? Equal mass, no spin can match at 10 orbits before merger, but for midrange mass ratios and moderate spins PN is still inaccurate dozens of orbits out \cite{Scheel2013}. Compare longest waveforms.
+%\item choices of $\alpha$ and $\beta$ lead to different numerical properties- for 4 decades most research was dedicated to finding stable choices (McWilliams). 
+%\end{itemize}
+
+%\section{The 3+1 formalism}
+\begin{itemize}
+\item BSSN
+\item Initial Data
+\item Moving Punctures
+\item Weyl Tensor- GW extraction
+\end{itemize}
+ 
+
+
+\subsection{Bona-Masso}
 
 \section{Initial Data}
 To find the initial data for our system we must solve the constraint equations \ref{HamConstraint} and \ref{MomConstraint}. These form a system of four coupled partial differential equations of elliptic type. 
@@ -217,7 +418,8 @@ Post-Newtonian methods are used in low curvature and low velocity regimes, such 
 
 \section{perturbative methods}
 
+\section{Dealing with singluarities}
+Area inside the apparent horizon is causally disconnected from the outside, therefore boundary conditions are not important. However in practice the excision occurs well inside the horizon where the Einstein equations are highly non-linear. Further, the excised region moves on the grid which can be complicated to perform. Also, the apparent horizon must be found, this is expensive. (Rezzolla ppt).
 
 
-
-%\end{document}
+\end{document}

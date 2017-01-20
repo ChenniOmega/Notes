@@ -1,6 +1,6 @@
-%\input{ThesisPreamble}
+\input{ThesisPreamble}
 
-%\begin{document}
+\begin{document}
 
 \chapter{General Relativity}
 
@@ -88,6 +88,9 @@ This tells us that in 1+1 dimensions, the stress energy tensor $T_{ij}$ must be 
 \section{Minkowski Space}\label{sec:Minkowski}
  The \textit{Minkowski metric} is the model metric for Lorentz spaces, in the same way $\R^n$ with metric $\delta_{ij}$ is the model Riemannian space. In four dimensions, the Minkowski metric corresponds to flat space-time, is denoted by $\eta$, and is given by
 \begin{equation} \eta = -(d x^0)^2 + (d x^1)^2 + (d x^2)^2 + (d x^3)^2 .\label{eq:MinkMetric} \end{equation}
+
+\emph{include Minkowski in other coordinates, show that $T_{ij}=0$}
+
 %Minkowski space is maximally symmetric \cite{Carroll}, thus has the maximal number of independent Killing vector fields. From equation (\ref{eq:maxkill}), this is 10. Notice that the components of the Minkowski metric are independent of the coordinates. This immediately indicates that the translations along each of the coordinate axes provide four linearly independent Killing fields (c.f. {\S}\ref{sec:KEKF}),
 %\begin{equation} X=\frac{\pd}{\pd x^\alpha}. \label{minktrans}\end{equation}
 %The remaining six isometries of Minkowski space are the \textit{Lorentz transformations}, which form the \textit{Lorentz group}, $\mathcal{O}(3,1)$. The Lorentz transformations are rotations in space-time. Three are rotations of the spatial dimensions, and three are rotations between the spatial and temporal dimensions. The Killing fields for the Lorentz transformations are \cite{Hawking}
@@ -97,16 +100,23 @@ This tells us that in 1+1 dimensions, the stress energy tensor $T_{ij}$ must be 
 %                                    1 & \mbox{if $\mu=1,2,3$}. \end{array}\right. \]
 %These Killing fields are exactly the same as in Euclidean space, apart from the changes of sign corresponding to the time dimension.
 
-\section{The Schwarzschild Solution}
+\section{Black Holes}
+
+\subsection{The Schwarzschild Solution}
 The Schwarzschild metric corresponds to the space-time in a vacuum around a spherically symmetric massive body, such as the Earth, a star, or a black hole. The metric is given in spherical coordinates $\{t,r,\theta,\phi\}$ by
 \begin{equation} d s^2 = -\left(1-\frac{2m}{r}\right)d t^2+\left(1-\frac{2m}{r}\right)^{-1}d r^2 + r^2(d \theta^2 + \sin^2 \theta d \phi^2), \label{Schwarzschild} \end{equation}
 where $m$ is the mass of the body and $r>2m$. 
+
+
 %The metric is inherently independent of the time coordinate $t$, thus we immediately see $\frac{\pd}{\pd t}$ is a Killing field for this solution. If we set $r,t$ to be constant, we see that the last term is the metric for $S^2$ in polar coordinates. Thus, we also have that the group $\mathcal{SO}(3)$ is a group of isometries on the space time. In fact, it is this property that defines a spherically symmetric space time. These are all the solutions for this metric \cite{Xanthopoulos}.\\
 
+\subsection{The Reissner-Nordstrom Solution}
 Outside a spherically symmetric charged body the metric is:
 \begin{equation} d s^2 = -\left(1-\frac{2m}{r} + \frac{e^2}{r^2}\right)d t^2+\left(1-\frac{2m}{r}+\frac{e^2}{r^2}\right)^{-1}d r^2 + r^2(d \theta^2 + \sin^2 \theta d \phi^2). \label{eq:R-N}
 \end{equation}
-This is called the \textit{Reissner-Nordstrom} solution. \textit{Birkhoff's theorem}, 1923, states that these are the only allowable solutions for a spherically symmetric space-time, and in particular there are no time dependent solutions. This is not to say that the source must be static, just that it must be spherically symmetric. Thus, a spherically symmetric supernova explosion would produce no gravitational radiation. 
+This is called the \textit{Reissner-Nordstrom} solution. \textit{Birkhoff's theorem}, 1923, states that these are the only allowable solutions for a spherically symmetric space-time, and in particular there are no time dependent solutions. This is not to say that the source must be static, just that it must be spherically symmetric. Thus, there is no spherically symmetric gravitational radiation. 
+
+\textit{include Riemann etc tensors for these metrics.}
 
 \begin{itemize}
 \item Kerr metric
@@ -305,6 +315,23 @@ where $\Theta$ is the Heaviside function
 \end{equation}
 The argument of the delta function is sometimes denoted $t_r = t-r$ for ``retarded time'' to indicate that the gravitational wave at a source is the sum of contributions from sources on its past light cone.
 
-Let us consider the gravitational radiation 
-%\end{document}
+Suppose the source is slow moving and isolated, and at a distance $r$ such that the approximation $|\bfx - \bfy | \approx r$ is valid. 
+
+\begin{itemize}
+\item derivation of the Green's function
+\item quadrupole moment
+\item binary system
+\item gravitational wave frequency = twice orbital frequency
+\item \url{https://www.icts.res.in/media/uploads/Talk/Document/boyle_icts_lec2.pdf} 
+\item \url{http://www.tat.physik.uni-tuebingen.de/~kokkotas/Teaching/NS.BH.GW_files/GW_Physics.pdf}
+\item \url{http://webs.um.es/bussons/GW_lecture_KG.pdf}
+\item \url{http://www.ego-gw.it/public/events/vesf/presentations2007/hendry.pdf}
+\item \url{http://www.physics.usu.edu/Wheeler/GenRel2013/Notes/GravitationalWaves.pdf}
+\item \url{http://eagle.phys.utk.edu/guidry/astro616/lectures/lecture_ch21.pdf}
+\item \url{http://arxiv.org/pdf/1209.0667.pdf}
+\item \url{http://mathpages.com/rr/s6-08/6-08.htm}
+\item \url{http://arxiv.org/pdf/0903.0338.pdf}
+\item \url{https://www.astro.umd.edu/~miller/teaching/mexico/lecture1.pdf}
+\end{itemize}
+\end{document}
 
