@@ -1,15 +1,81 @@
-%\input{ThesisPreamble}
-%\begin{document}
+\input{ThesisPreamble}
+\begin{document}
 
 \chapter{Model Reduction for Compact Binary Coalescence}
 
 The highly anticipated detection of gravitational waves in 2015 from the coalescence of two stellar mass black holes heralded the beginning of a new era of astronomy. For the foreseeable future, compact binary coalescenses (CBCs) will remain the most detectable sources of gravitational waves. The the detection of these events requires high fidelity waveforms for use in the matched filtering pipeline. However, calculating these waveforms can take weeks to months of supercomputer resources, so adequately surveying the high dimensional parameter space is a computationally infeasible undertaking.
 
-For a gravitational wave $h(t,\mu)$, where $\mu \in \mathcal{P} \subset \bfR^8$ is a vector describing the binary source parameters we seek a representation
+A gravitational waveform is represented in terms of its two polarisations $h_+(t;\lambda)$ and $h_\times(t;\lambda)$ by $h(t;\lambda)=h_+(t;\lambda)+ih_\times(t;\lambda)$, where $\lambda \in \mathcal{P} \subset \mathbb{R}^8$ is a vector describing the binary source parameters (masses, spin magnitudes, spin directions). We denote the space of gravitational waveforms by $X$. An inner product on this space is given by the complex scalar product 
 \begin{equation}
-h(t;\mu) \approx \sum_{i=1}^m A_i (\mu) e_i(t)
+<h(\cdot; \lambda_1), h(\cdot; \lambda_2)> = \int^{t_{max}}_{t_{min}} h^*(t; \lambda_1) h(t;\lambda_2) dt
 \end{equation}
-for some basis $e_i$, and as small an $m$ as possible. 
+with an inherited norm given by $\| h(\cdot;\lambda) \|^2 = <h(\cdot; \lambda), h(\cdot; \lambda)>$. We may write $h(\lambda)$ to denote the full waveform, i.e. $h:\Pcal \rightarrow X$, or alternatively $h(t;\lambda)$, in which case $h(t;\lambda)$ denotes the value at time $t$, i.e. $h: \Rbb \times \Pcal \rightarrow \Cbb$. 
+
+\textbf{Question} What is the space $X$? What space do $h_+$,$h_\times$ reside in?
+
+The space $X$ may have very high dimension, however the space of gravitational waveforms resides on a parametrically induced manifold $\Mcal=\{ h(\lambda) : \lambda \in \Pcal\}$, which may be of comparitively low dimension. Thus, for arbitrary $\lambda$ we seek to represent $h(\lambda)$ as a linear combination of some basis for $\mbox{span}\{\Mcal \}\subset X$, that is 
+\begin{equation}
+h(t;\lambda) \approx \sum_{i=1}^N A_i (\lambda) e_i(t)
+\end{equation}
+for some basis $e_i$, and as small an $N$ as possible. This raises some immediate questions.
+\begin{enumerate}
+\item How do we optimally choose the the best $N$-dimensional subspace
+\item How do we choose a basis for this subspace
+\item How do we best combine this basis to approximate $h(\lambda)$? 
+\end{enumerate}
+
+To answer the first question, we set the benchmark by defining the Kolmogorov spaces, $X^{Kol}_N$ as
+\begin{equation}
+X^{Kol}_N = \mbox{arg }\underset{X_N \subset X}{\mbox{inf}}\left(\underset{\lambda \in \Pcal}{\sup} \underset{h_N \in X_N}{\mbox{ inf}} \| h(\lambda) - h_N \|_X \right)
+\end{equation} 
+where $X_N$ denotes any $N$-dimensional subspace of $N$. The Kolmogorov $N$-width is then 
+\begin{equation}
+\epsilon^{Kol}_N = \underset{\lambda \in \Pcal}{\sup} \underset{h_N \in X^{Kol}_N}{\mbox{ inf}} \| h(\lambda) - h_N \|_X .
+\end{equation} 
+Conceptually, the Kolmogorov spaces are those that minimise the error between $h(\lambda)$ for any $\lambda \in \Pcal$ and the ``closest'' element of that space, and the Kolmogorov $N$-width is the supremum of that error. This is a very strong definition, however actually finding such a space is impractical. 
+
+\section{Empirical Interpolation Method}
+
+We seek to find approximations to elements of $\Mcal$ by developing an operator $\Ical$ to interpolate the waveforms $h(\dot;\lambda)$. The method takes as input a tolerance $\eps$, and optionally a maximal number of iterations $N_{max}$. After $N$ iterations, the output is a set of $N$ basis functions $\{e_i\}_{i=1}^N$ and interpolation points $\{T_i\}_{i=1}^{N}$. Given these, the interpolant $\Ical_N h(\dot;\lambda)$ of $h(\lambda)$ can be expressed as
+\begin{equation}
+\Ical_N h(t;\lambda) = \sum_{i=1}^N  A_i (\lambda) e_i(t).
+\end{equation}
+The interpolant satisfies the $N$ interpolation constraints
+\begin{equation}
+\Ical_N h(T_i;\lambda) = h(T_i;\lambda),
+\end{equation}
+leading to the following matrix equation
+\begin{equation}
+\Vbb \Abf(\lambda)=\hbf(\lambda),
+\end{equation}
+where $(\Vbb)_{ij}=e_j(T_i)$, $(\Abf(\lambda))_i=A_i(\lambda)$, and $(\hbf)_i=h(T_i;\lambda)$. The algorithm proceeds as follows.
+
+\begin{algorithm}
+\caption{The Empirical Interpolation Method (Continuous)}\label{alg:EIMc}
+\textbf{Input:} $N_{max}$, $\eps$
+\begin{algorithmic}[1]
+\State $N=0$, $\eps'=\eps+1$,  $\Ical_0 h(t;\lambda)=0$
+\State $\lambda_1=\mbox{arg}\underset{\lambda \in \Pcal}{\max}\|h(\cdot;\lambda)\|_{L^\infty(\R)}$
+\While{ $N<N_{max}$ and $\eps'>\eps$}
+\State $N \gets N+1$
+\State $r(t)=h(t; \lambda_N)-\Ical_{N-1}h(t;\lambda_N)$
+\State $T_N=\mbox{arg}\underset{t \in \R}{\max} \|r(t) \|$
+\State $e_N(t)=r(t)/r(T_N)$
+\State $[\eps', \lambda_{N+1}]=\mbox{arg}\underset{\lambda \in \Pcal}{\max}\|h(\cdot;\lambda)-\Ical_{N}h(t;\lambda)\|_{L^\infty(\R)}$
+\EndWhile
+\end{algorithmic}
+\textbf{Output:} $\{e_i\}_{i=1}^N$, $\{T_i\}_{i=1}^{N}$
+\end{algorithm}
+
+This produces a sequence of hierarchical spaces $X_1 \subset X_2 \subset \ldots X_N$ where $X_n=\span{e_i}_{i=1}^n$. 
+
+We start with a training set of parameter values $\Xi_{train}=\{\lambda_i\}_{i=1}^M \subset \Pcal$ and associated waveforms $\{h(\lambda_i)\}$. The EIM method proceeds by identifying a set of parameter values $\left\lbrace \Lambda_1, ... \Lambda_N \right\rbrace$ and associated waveforms $ \left\lbrace h_1(t) ... h_N(t) \right\rbrace$ where $h_i(t)=h(t; \Lambda_i)$ to form a basis for the greedy subspace $X_N$. 
+
+
+The spaces constructed are hierarchical, that is, for $n<n'$, $X_n \subset X_{n'}$. 
+
+An ideal greedy algorithm would 
+
 
 Explore elementary effects.
 
@@ -23,7 +89,7 @@ Explore elementary effects.
 %We are interested in reconstructing the parameters $\bfp$ from (possibly noisy) output data $\bfy_d$. This involves finding the solution to an inverse problem. We pose this as a statistical inverse problem, and apply reduced basis methods for efficiency.
 
 \section{Forward model}
-Let $\bfp \in \mathcal{P} \subset \mathbb{R}^N$ be a parameter vector, and $\Omega \in \mathbb{R}^d$ be our function domain. The forward model $\mathcal{M}: \mathcal{P}\times \Omega \rightarrow $
+Let $\lambda \in \mathcal{P} \subset \mathbb{R}^N$ be a parameter vector, and $\Omega \in \mathbb{R}^d$ be our function domain. The forward model $\mathcal{M}: \mathcal{P}\times \Omega \rightarrow $
 
 \section{Statistical Inverse Problems}
 In a deterministic setting, regularisation and optimisation techniques are used to find a single point estimate of the parameter $\bfp$. A statistical formaulation returns a probability density function over parameter space describing the relative likelihood of observation-consistent parameters, called the `posterior distribution', $\pi(\bfp| \bfy_d)$.
@@ -331,4 +397,4 @@ These results show the potential for improving the computational efficiency in s
 %\bibliography{research}
 %\bibliographystyle{abbrv}
 
-%\end{document}                                                                                                      
+\end{document}                                                                                                      

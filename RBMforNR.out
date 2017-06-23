@@ -1,0 +1,11 @@
+\BOOKMARK [0][-]{chapter.1}{Model Reduction for Compact Binary Coalescence}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Empirical Interpolation Method}{chapter.1}% 2
+\BOOKMARK [0][-]{chapter.2}{Reduced basis methods for parameterised PDEs}{}% 3
+\BOOKMARK [1][-]{section.2.1}{Forward model}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.2}{Statistical Inverse Problems}{chapter.2}% 5
+\BOOKMARK [2][-]{subsection.2.2.1}{Reduced basis method}{section.2.2}% 6
+\BOOKMARK [1][-]{section.2.3}{One dimensional wire}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.3.1}{Exact Solution}{section.2.3}% 8
+\BOOKMARK [2][-]{subsection.2.3.2}{Numerical Solution}{section.2.3}% 9
+\BOOKMARK [2][-]{subsection.2.3.3}{Reduced basis construction}{section.2.3}% 10
+\BOOKMARK [1][-]{section.2.4}{Conclusions and further work}{chapter.2}% 11
