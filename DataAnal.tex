@@ -1,26 +1,5 @@
-%\documentclass[12pt]{report}
-%\newtheorem{defn}{Definition}[section]
-%\newtheorem{thm}{Theorem}[section]
-%\newtheorem{lemma}{Lemma}[section]
-%\newenvironment{mydefn}{\begin{defn} \begin{upshape}}{\end{upshape} \end{defn}}
-%\newenvironment{proof}
-%       {\begin{flushleft} \begin{description}
-%              \item \textit{\textbf{Proof:}}}
-%        {\hfill\rule{2.1mm}{2.1mm}
-%              \end{description}\end{flushleft}}
-%%\newenvironment{myexample}{\begin{flushleft}
-%%i would like to make defn in a slightly different font to distinguish it from normal text
-%\usepackage{amssymb, mathrsfs, graphicx}
-%\addtolength{\textwidth}{100pt}
-%\addtolength{\oddsidemargin}{-50pt}
-%\addtolength{\evensidemargin}{-50pt}
-%\linespread{1.2}
-%\def\R{{\mathbb R}}
-%\def\pd{{\partial}}
-%\def\Lie{{\mathcal{L}}}
-%\def\d{{\mbox{d}}}
-%\def\grad {{\nabla}}
-%\begin{document}
+\input{ThesisPreamble}
+\begin{document}
 
 \chapter{Data analysis}           
 \section{Introduction}     
@@ -71,6 +50,7 @@ where $\Fcal$ is the network antenna pattern matrix:
 
 (Antenna patterns often also include a transformation by polarisation angle $\Psi$, but this is equivalent to a rotation of the wave frame and can be included in the definition of $\bfh$).
 
+BX-LBTN-KYW2-9V7B-9K2D
 \subsection{Matched Filtering}
 
 from \cite{PhysRevD.82.044025}
@@ -80,7 +60,7 @@ Searches for GWs from CBC events employ matched filtering as the first step.
 
 discretely sampled time series
 whitened data: $\overrightarrow{s}={s_i}$
-whitened template waveform: $\overrightarrow{h}_\alpha = {h_{\alpha i}$
+whitened template waveform: $\overrightarrow{h}_\alpha = h_{\alpha i}$
 noise: $\overrightarrow{n}={n_i}$ zero-mean $<n_i>=0$, unit-variance Gaussian random process $<n_i,n_j>=\delta_{ij}$
 
 
@@ -91,6 +71,157 @@ output of matched filter is given by the vector inner product
 
 search over phase by using complex-valued templates where $\mathfrak{R}\overrightarrow{h}_\alpha$ contains the cosine like phase and $\mathfrak{I}\overrightarrow{h}_\alpha$ contains the sine-like phase. 
 
+\subsection{Jaranowski et.al}
+
+\subsubsection{Random Variables}
+Def: Probability space $(\Xcal, \Ocal, P)$  
+\begin{itemize}
+\item $\Xcal$ is a sample space, usually an $n$-dimensional Euclidean space $\Rbb^n$ or a discrete set $\Gamma=\{\gamma_1,\gamma_2, \ldots\}$
+\item $\Ocal$ is a $\sigma$-algebra of subsets of $\Xcal$ called observation events, these are the set of values that data can take. 
+\begin{itemize}
+\item if $\Xcal=\Rbb^n$, consider open intervals 
+\begin{equation}
+\label{eq:openInts}
+\{ \bfy = (y_1,\ldots, y_n)\in \Rbb^n : a_1 < y_1 < b_1, \ldots a_n < y_n < b_n \}
+\end{equation}
+where $a_i$ and $b_i$ are real numbers. Then usually $\Ocal$ is the smalles $\sigma$-algebra containing all such intervals. This is known as the \textit{Borel} $\sigma$-algebra and is denoted by $B^n$.
+\item if $\Xcal$ is a discrete set $\Gamma$, the $\sigma$-algebra $\Ocal$ is the set of all subsets of $\Gamma$. This is called the \textit{power set} of $\Gamma$ and is denoted by $2^{\Gamma}$.
+\end{itemize}
+\item $P$ is a probability distribution (measure) on $\Ocal$. This is a function assigning a number $P(A)\geq 0$ to any set $A\in \Ocal$ such that $P(\Xcal)=1$. For probability spaces $(\Rbb^n, B^n, P)$ usually there exists a \textit{probability density function} $p: \Rbb^n \rightarrow [0,\infty) $ such that 
+\begin{equation}
+P(A)=\int_A p(\xbf) \d \xbf
+\end{equation}
+where $\xbf$ are some coordinates on $\Rbb^n$. 
+\end{itemize}
+
+$\sigma$-algebra:
+\begin{enumerate}
+\item $\Xcal \in \Ocal$
+\item if $A \in \Ocal$, then $A^c := \Xcal - A \in \Ocal$
+\item for any countable family $A_k$ of members of $Ocal$, their union is in $\Ocal$
+\end{enumerate}
+Together these imply that the intersection of a finite or countable family of members of $\Ocal$ belong to $\Ocal$.
+
+A \textit{random variable} $X$ is a real-valued function $X:\Xcal \rightarrow \Rbb$. The sets $\{ \xi \in \Xcal : X(\xi) \leq x \} \in \Ocal \forall x \in \Rbb$.
+
+The \textit{cumulative distribution function} of $X$ is 
+\begin{equation}
+\label{eq:cdf}
+P_X(x) := P(X\leq x).
+\end{equation} 
+It is non-decreasing and right-continuous.
+
+A \textit{continuous} random function is one with a continuous cumulative distribution function. If it is differentiable, then the probability density  function is 
+\begin{equation}
+\label{eq:pdf}
+p_X(x)=\frac{\d P_X(x)}{\d x}.
+\end{equation}
+This is always non-negative as the cdf is non-decreasing. It is also normalised 
+\begin{equation}
+\label{eq:pdfNormalised}
+\int_{-\infty}^{\infty} p_X(x) \d x =1
+\end{equation}
+
+The \textit{expectation value} or \textit{mean} of a continuous random variable is 
+\begin{equation}
+\label{eq:expectation}
+E\{X\} := \int {-\infty}^{\infty} x p_X(x) \d x
+\end{equation}
+
+The \textit{variance} of the random variable $X$ is 
+\begin{equation}
+\mbox{Var} \{ X \} \equiv \sigma^2_X := E\{(X-E\{X\})^2\}.
+\end{equation}
+
+The \textit{covariance} between two random variables $X$ and $Y$ defined on the same probability space is 
+\begin{equation}
+\mbox{Cov}\{XY\} := E\{(X-E\{X\})(Y-E\{Y\})\} = E\{XY\}-E\{X\}E\{Y\}.
+\end{equation}
+Random variables for which $E\{XY\}=E\{X\}E\{Y\}$ are called \textit{uncorrelated}. $E\{XY\}=0$ they are called \textit{orthogonal}.
+
+$X,Y$ continuous. $p_{X,Y}$ the \textit{joint} pdf. \textit{independent} if $p_{X,Y}=p_X(x)p_Y(y)$. The \textit{conditional} pdf of $X$ given $Y=y$ is 
+\begin{equation}
+p_{X|Y}(x|Y=y)=\frac{p_{X,Y}(x,y)}{p_Y(y)}.
+\end{equation}
+
+A \textit{complex} random variable $Z=X+iY$ has pdf $p_Z$ defined as the joint pdf of the two real random variables $X$ and $Y$
+\begin{equation}
+p_Z(z):=p_{X,Y}(x,y).
+\end{equation}
+Mean
+\begin{equation}
+E\{Z\} := E\{X\}+ iE\{Y\}
+\end{equation}
+Variance 
+\begin{equation}
+\mbox{Var}\{Z\} := E\{ | Z - E\{Z\} |^2 \} = E\{|Z|^2\}-|E\{Z\}|^2.
+\end{equation}
+
+\subsubsection{Stochastic Processes}
+Let $T\subset \Rbb$. A \textit{stochastic} process $X(t)$ is a family of random variables labelled by the numbers $t\in T$, all defined on the same probability space $(\Xcal, \Ocal, P)$. For each finite subset ${t_1, \ldots, t_n} \subset T$ the random variables $ X(t_1), \ldots, X(t_n)$ have a joint $n$-dimensional cumulative distribution function $F$ defined by
+\begin{equation}
+F_{t_1, \ldots, t_n}(x_1,\ldots,x_n)=P(x(t_1)\leq x_1, \ldots x(t_n)\leq t_n).
+\end{equation}
+When $T$ is a set of discrete points the stochastic process is called a \textit{random sequence}, and if the variable $t$ is time it's called a \textit{time series}. 
+
+The stochastic process is \textit{Gaussian} if the cdf $F_{t_1, \ldots, t_n}$ is Gaussian for any $n$ and any $t_1, \ldots, t_n \in T$. \textit{Stationary} if for all finite dimensional cdfs and all $\tau$
+\begin{equation}
+F_{t_1+\tau, \ldots, t_n+\tau}(x_1,\ldots,x_n)=F_{t_1, \ldots, t_n}(x_1,\ldots,x_n)
+\end{equation}
+
+The \textit{moments} of the probability distribution are 
+\begin{equation}
+\mu_{m_1 \ldots m_n} := E\{X(t_1)^{m_1}\cdots X(t_n)^{m_n} =\int_{-\infty}^{\infty}\cdots \int_{-\infty}^{\infty} x_1^{m_1}\cdots x_n^{m_n} \d F_{t_1, \ldots, t_n}(x_1,\ldots,x_n).
+\end{equation}
+This is an $n$-fold \textit{Stieltjes integral}. The first order moment is called the \textit{mean} value of the stochastic process and is denoted by $m(t) := E\{X(t)\}$, if the process is stationary this is constant. The second order moment is called the \textit{autocorrelation function} and is denoted by $K(t,s) := E\{X(t)X(s)\}$, if the process is stationary it depends only on the time difference $K(t,s)=R(t-s)$.
+
+(unfinished)
+
+\subsubsection{Hypothesis Testing}
+
+\subsubsection{Matched filter}
+\begin{equation}
+x(t)=s(t)+n(t)
+\end{equation}
+\begin{itemize}
+\item $x=$data
+\item $s=$signal, deterministic
+\item $n=$noise, additive, continuous Gaussian stochastic process, zero mean. 
+\end{itemize}
+Consider it to be continuous for theory, obtain results by suitable sampling of continuous expressions.
+
+Observed on interval $[0,T_0]$. Can be shown that log-likelihood is (the Cameron-Martin formula)
+\begin{equation}
+\label{eq:Cameron-Martin}
+\ln \Lambda [x] =  \int_0^{T_0}q(t)x(t)\d t - \frac{1}{2}\int_0^{T_0}q(t)s(t)\d t
+\end{equation}
+where $q$ is the soln to
+\begin{equation}
+s(t) = \int_0^{T_0} K(t,t')q(t')\d t'.
+\end{equation}
+and $K$ is the autocorrelation function of the noise. This means the likelihood ratio test is equivalent to comparing 
+\begin{equation}
+G:=\int_0^{T_0}q(t)x(t)\d t
+\end{equation}
+to a threshold $G_0$. Hypothesis test expectations:
+\begin{equation}
+E_0\{G\}=0,\\
+E_1\{G\} = \int_0^{T_0}q(t)s(t)\d t.
+\end{equation}
+\begin{equation}
+\begin{array}{rcl}
+Var\{G\}&=& \int_0^{T_0}\int_0^{T_0}q(t_1)q(t_2)E\{n(t_1)n(t_2)\}\d t_1  \d t_2 \\
+&=&\int_0^{T_0}q(t_1)q(t_2)K(t_1,t_2)\d t_1  \d t_2\\
+&=&int_0^{T_0}q(t)s(t)\d t = \rho^2
+\end{array}
+\end{equation}
+$\rho$ is the \textit{signal to noise ratio}.
+
+Since data $x$ is Gaussian, and $G$ is linear in $x$, pdf's when signal is absent or present are
+\begin{equation}
+p_0(G)=\frac{1}{\sqrt{2\pi\rho^2}}\exp(-\frac{G^2}{2\rho^2}
+p_1(G)=\frac{1}{\sqrt{2\pi\rho^2}}\exp(-\frac{(G-\rho^2)^2}{2\rho^2}
+\end{equation}
 
 
-%\end{document}
+\end{document}
