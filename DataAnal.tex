@@ -173,11 +173,98 @@ The \textit{moments} of the probability distribution are
 \begin{equation}
 \mu_{m_1 \ldots m_n} := E\{X(t_1)^{m_1}\cdots X(t_n)^{m_n} =\int_{-\infty}^{\infty}\cdots \int_{-\infty}^{\infty} x_1^{m_1}\cdots x_n^{m_n} \d F_{t_1, \ldots, t_n}(x_1,\ldots,x_n).
 \end{equation}
-This is an $n$-fold \textit{Stieltjes integral}. The first order moment is called the \textit{mean} value of the stochastic process and is denoted by $m(t) := E\{X(t)\}$, if the process is stationary this is constant. The second order moment is called the \textit{autocorrelation function} and is denoted by $K(t,s) := E\{X(t)X(s)\}$, if the process is stationary it depends only on the time difference $K(t,s)=R(t-s)$.
 
-(unfinished)
+
+This is an $n$-fold \textit{Stieltjes integral}. When $F$ is differentiable, it can be written in terms of the joint pdf 
+\begin{equation}
+f_{t_1\ldots t_n}(x_1\ldots x_n) = \frac{\pd^n \d F_{t_1, \ldots, t_n}(x_1,\ldots,x_n)}{\pd x_1 \ldots \pd x_n} 
+\end{equation}
+and the above integral can be written 
+\begin{equation}
+\mu_{m_1 \ldots m_n} = \int_{-\infty}^{\infty}\cdots \int_{-\infty}^{\infty}x_1^{m_1}\cdots x_n^{m_n} f_{t_1\ldots t_n}(x_1\ldots x_n) \d x_1 \ldots \d x_n.
+\end{equation}
+
+
+ The first order moment is called the \textit{mean} value of the stochastic process and is denoted by $m(t) := E\{X(t)\} =\mu_1$, if the process is stationary this is constant. The second order moment is called the \textit{autocorrelation function} and is denoted by $K(t,s) := E\{X(t)X(s)\}$, if the process is stationary it depends only on the time difference $K(t,s)=R(t-s)$ for some function $R$ s.t. $R(0)>0$, $R(-\tau)=R(\tau)$ and $|R(\tau)|<R(0)$.
+
+For a complex stationary process, $R(t):=E\{X(t+\tau)X(t)^*\}$, and $R(-\tau)=R(\tau)^*$. Consider a complex stationary stochastic process 
+\begin{equation}
+X(t)=X_0 U(t),
+\end{equation}
+where $X_0$ is a random variable with $E\{X_0\}=0$, and $U:T\rightarrow \Cbb$ with $\int_{-\infty}^{\infty} U(t)dt =0$. Stationarity gives $R(\tau)=E\{X(t+\tau)X(t)^*\}=E\{X_0 U(t+\tau) X_0^*U(t)^*\}=E\{|X_0|^2\}U(t+\tau)U(t)^*$ is independent of $t$. If we take $\tau=0$, this means $|U(t)|^2=r^2$, a constant, thus $U(t)=r\exp (i\phi(t))$. For non-zero $\tau$, $r^2 \exp (i\phi(t+\tau))\exp (-i\phi(t))=r^2 \exp (i(\phi(t+\tau)-\phi(t))$ is independent of $t$, implying $\phi'(t)=\omega$ for some constant $\omega$, and therefore $\phi=\omega t + \theta$. Therefore, $X(t)=X_0 \exp(i\omega t)$, where the $r$ and $\exp(\theta)$ have been ``absorbed'' into the $X_0$. The autocorrelation function $R(\tau)=E\{|X_0|^2\}\exp(i\omega \tau )=b_0 \exp(i\omega \tau )$, where $b_0=E\{|X_0|^2\}=E\{|X_0-E\{X_0\}|^2\}$ is the variance of $X_0$.
+
+A more general complex stochastic process can be written as a superposition 
+\begin{equation}
+X(t)=\sum_{k=1}^{\infty}X_k \exp(i\omega_k t),
+\end{equation}
+where for each complex r.v. $X_k$, $E\{X_k\}=0$ and $E\{X_k X_l^* \}=0$ for $k\neq l$. The autocorrelation function is then 
+\begin{equation}
+R(\tau)=\sum_{k=1}^{\infty} b_k \exp(i\omega_k \tau),
+\end{equation}
+with each variance $b_k < \infty$. Such a stationary process is called a \textit{process with discrete spectrum}, where the set $\{\omega_k\}$ is the \textit{spectrum}.
+
+Any complex stationary stochastic process can be obtained as the limit of a sequence of processes with discrete spectra. 
+
+\paragraph{Cram\`er Representation Theorem} Let $X(t)$, $-\infty < t < \infty$, be a zero-mean stochastically continuous complex stationary process. Then there exists an orthogonal process $Z(\omega)$ such that for all $t$, $X(t)$ may be written in the form,
+\begin{equation}
+X(t)=\int^{\infty}_{-\infty}\exp(i\omega t) \d Z(\omega),
+\end{equation}
+the integral being defined in the mean-square sense. The process $Z(\omega)$ has the following properties:
+\begin{enumerate}
+\item $E\{\d Z(\omega) \} = 0 \forall \omega$
+\item $E\{|\d Z(\omega)|^2 \} = \d F(\omega) \forall \omega$, where $F(\omega)$ is the (non-normalised) integrated spectrum of $X(t)$
+\item for any two distinct frequencies $\omega, \omega'$
+\begin{equation}
+\mbox{Cov}\{\d Z(\omega), \d Z(\omega') \} = E\{ \d Z(\omega) \d Z(\omega')^* \} =0
+\end{equation} 
+\end{enumerate}
+
+\paragraph{Wiener-Khinchin Theorem} A necessary and sufficient condition for $\rho(\tau)$ to be the autocorrelation function of a stochastically continuous stationary process $X(t)$ is that there exists a function $F(\omega)$ having the properties of a cdf on $(-\infty, \infty)$ such that for all $\tau$, $\rho(\tau)$ may be expressed in the form
+\begin{equation}
+\rho(\tau)=\int^{\infty}_{-\infty}\exp(i\omega \tau) \d F(\omega)
+\end{equation}
+
+If $F$ differentiable everywhere, 
+\begin{equation}
+\d F(\omega)=S(\omega) \d \omega
+\end{equation}
+$S$ is called the \textit{two-sided spectral density} of the stationary stochastic process. In this case, the correlation between the Fourier components are 
+\begin{equation}
+E\{\tilde{X}(\omega) \tilde{X}(\omega ' )^* \} = S(\omega) \delta(\omega ' -\omega)
+\end{equation}
+
+In the discrete-time case, a time series $X_k=X_0 U(k)$, $k \in \Zbb$, is stationary iff it is of the form
+\begin{equation}
+X_k = X_0 \exp(i \omega_0 k).
+\end{equation}
+The autocorrelation function is $R(l)=E\{X_k X_{k+l} \}$. The Cram\`er representation and Wiener-Khinchen theorems become 
+\begin{equation}
+\begin{eqnarray}
+x_k=\int_{-\pi}^{\pi} \exp(i\omega k ) \d Z(\omega) \\
+R(l)=\int_{-\pi}^{\pi} \exp(i\omega l ) \d F(\omega) 
+\end{eqnarray}
+\end{equation}
+If $F$ is differentiable with derivative $S$, we can write
+\begin{equation}
+R(l)=\int_{-\pi}^{\pi} \exp(i \omega l) S(\omega) \d \omega,
+\end{equation}
+which can be solved to find 
+\begin{equation}
+S(\omega)=\frac{1}{2\pi}\sum_{l=-\infty}^{\infty} \exp(-i\omega l) R(l).
+\end{equation}
+
 
 \subsubsection{Hypothesis Testing}
+\begin{itemize}
+\item \textit{Null hypothesis} $H_0$: Signal is absent. Data have pdf $p_0(x)$
+\item \textit{Alternative hypothesis} $H_1$: signal is present. Data have pdf $p_1(x)$
+\item \textit{Hypothesis test/ decision rule} $\delta$: partitioun of observation set $\Xcal$ into two subsets $\Rcal$ and $Rcal'=\Xcal-\Rcal$. If the data are in $\Rcal$ we accept the null hypothesis, otherwise we reject it. $\int_{\Rcal} p_i(x) dx+ \int_{\Rcal'} p_i(x) dx=1$ for $i=0,1$.
+\end{itemize}
+Problem: find a test which is optimal.
+
+\paragraph{Bayesian Approach}
+
+Assign \textit{costs} $C_{ij}$, $i,j=0,1$ incurred by choosing hypothesis $H_i$ when $H_j$ is true. 
 
 \subsubsection{Matched filter}
 \begin{equation}
