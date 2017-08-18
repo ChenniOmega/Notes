@@ -71,7 +71,7 @@ output of matched filter is given by the vector inner product
 
 search over phase by using complex-valued templates where $\mathfrak{R}\overrightarrow{h}_\alpha$ contains the cosine like phase and $\mathfrak{I}\overrightarrow{h}_\alpha$ contains the sine-like phase. 
 
-\subsection{Jaranowski et.al}
+\section{Jaranowski et.al}
 
 \subsubsection{Random Variables}
 Def: Probability space $(\Xcal, \Ocal, P)$  
@@ -239,10 +239,10 @@ X_k = X_0 \exp(i \omega_0 k).
 \end{equation}
 The autocorrelation function is $R(l)=E\{X_k X_{k+l} \}$. The Cram\`er representation and Wiener-Khinchen theorems become 
 \begin{equation}
-\begin{eqnarray}
-x_k=\int_{-\pi}^{\pi} \exp(i\omega k ) \d Z(\omega) \\
-R(l)=\int_{-\pi}^{\pi} \exp(i\omega l ) \d F(\omega) 
-\end{eqnarray}
+\begin{array}{rcl}
+x_k & = & \int_{-\pi}^{\pi} \exp(i\omega k ) \d Z(\omega) \\
+R(l) & = & \int_{-\pi}^{\pi} \exp(i\omega l ) \d F(\omega) 
+\end{array}
 \end{equation}
 If $F$ is differentiable with derivative $S$, we can write
 \begin{equation}
@@ -264,8 +264,24 @@ Problem: find a test which is optimal.
 
 \paragraph{Bayesian Approach}
 
-Assign \textit{costs} $C_{ij}$, $i,j=0,1$ incurred by choosing hypothesis $H_i$ when $H_j$ is true. 
+Assign \textit{costs} $C_{ij}$, $i,j=0,1$ incurred by choosing hypothesis $H_i$ when $H_j$ is true. We say these costs are \textit{uniform} if $C_{ij}=0$ when $i=j$ and $C_{ij}=1$ when $i \neq j$. 
 
+\textit{Conditional Risk}$R_j$ of a decision rule $\delta$ is 
+\begin{equation}
+\label{eq:conditionalrisk}
+R_j(\delta)=C_{0j}P_j(\Rcal)+C_{1j}P_1(\Rcal')
+\end{equation}
+where $P_j(\Rcal)=P(X=x\in \Rcal | H_j)= \int_{\Rcal} p_j(x)dx$ is the probability distribution of the data wehen hypothesis $H_j$ is true.
+
+\textit{A priori probabilities/ priors} $\pi_0$, $\pi_1=1-\pi_0$ of hypotheses $H_0$ and $H_1$.
+
+\textit{Bayes' Risk} average cost of rule $\delta$:
+\begin{equation}\label{eq: BayesRisk}\begin{array}{{rcl}
+r(\delta)&=&\pi_0 R_0(\delta) + \pi_1 R_1(\delta)
+&=& \pi_0 C_{00} + \pi_1
+\end{array}
+
+\end{equation}
 \subsubsection{Matched filter}
 \begin{equation}
 x(t)=s(t)+n(t)
