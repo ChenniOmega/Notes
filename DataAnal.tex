@@ -73,27 +73,11 @@ search over phase by using complex-valued templates where $\mathfrak{R}\overrigh
 
 \section{Jaranowski et.al}
 
-\subsubsection{Random Variables}
-Def: Probability space $(\Xcal, \Ocal, P)$  
+\subsection{Random Variables}
+Def: Probability space $(\Xcal, \Ocal, \Pcal)$  
 \begin{itemize}
 \item $\Xcal$ is a sample space, usually an $n$-dimensional Euclidean space $\Rbb^n$ or a discrete set $\Gamma=\{\gamma_1,\gamma_2, \ldots\}$
 \item $\Ocal$ is a $\sigma$-algebra of subsets of $\Xcal$ called observation events, these are the set of values that data can take. 
-\begin{itemize}
-\item if $\Xcal=\Rbb^n$, consider open intervals 
-\begin{equation}
-\label{eq:openInts}
-\{ \bfy = (y_1,\ldots, y_n)\in \Rbb^n : a_1 < y_1 < b_1, \ldots a_n < y_n < b_n \}
-\end{equation}
-where $a_i$ and $b_i$ are real numbers. Then usually $\Ocal$ is the smalles $\sigma$-algebra containing all such intervals. This is known as the \textit{Borel} $\sigma$-algebra and is denoted by $B^n$.
-\item if $\Xcal$ is a discrete set $\Gamma$, the $\sigma$-algebra $\Ocal$ is the set of all subsets of $\Gamma$. This is called the \textit{power set} of $\Gamma$ and is denoted by $2^{\Gamma}$.
-\end{itemize}
-\item $P$ is a probability distribution (measure) on $\Ocal$. This is a function assigning a number $P(A)\geq 0$ to any set $A\in \Ocal$ such that $P(\Xcal)=1$. For probability spaces $(\Rbb^n, B^n, P)$ usually there exists a \textit{probability density function} $p: \Rbb^n \rightarrow [0,\infty) $ such that 
-\begin{equation}
-P(A)=\int_A p(\xbf) \d \xbf
-\end{equation}
-where $\xbf$ are some coordinates on $\Rbb^n$. 
-\end{itemize}
-
 $\sigma$-algebra:
 \begin{enumerate}
 \item $\Xcal \in \Ocal$
@@ -101,8 +85,23 @@ $\sigma$-algebra:
 \item for any countable family $A_k$ of members of $Ocal$, their union is in $\Ocal$
 \end{enumerate}
 Together these imply that the intersection of a finite or countable family of members of $\Ocal$ belong to $\Ocal$.
+\begin{itemize}
+\item if $\Xcal=\Rbb^n$, consider open intervals 
+\begin{equation}
+\label{eq:openInts}
+\{ \bfy = (y_1,\ldots, y_n)\in \Rbb^n : a_1 < y_1 < b_1, \ldots a_n < y_n < b_n \}
+\end{equation}
+where $a_i$ and $b_i$ are real numbers. Then usually $\Ocal$ is the smalles $\sigma$-algebra containing all such intervals. This is known as the \textit{Borel} $\sigma$-algebra and is denoted by $\Bcal^n$. It can also be defined in terms of closed intervals.
+\item if $\Xcal$ is a discrete set $\Gamma$, the $\sigma$-algebra $\Ocal$ is the set of all subsets of $\Gamma$. This is called the \textit{power set} of $\Gamma$ and is denoted by $2^{\Gamma}$.
+\end{itemize}
+\item $\Pcal$ is a probability measure on $\Ocal$. This is a function $\Pcal:\Xcal \rightarrow [0,1]$ such that $\Pcal(\Xcal)=1$. $P(A)=\int_A \d \Pcal(A)$, $A\in \Ocal$ is the probability that $A$ occurs. For probability spaces $(\Rbb^n, \Bcal^n, \Pcal)$ usually there exists a \textit{probability density function} $p: \Rbb^n \rightarrow [0,\infty) $ such that 
+\begin{equation}
+P(A)=\int_A p(\xbf) \d \xbf
+\end{equation}
+where $\xbf$ are some coordinates on $\Rbb^n$. 
+\end{itemize}
 
-A \textit{random variable} $X$ is a real-valued function $X:\Xcal \rightarrow \Rbb$. The sets $\{ \xi \in \Xcal : X(\xi) \leq x \} \in \Ocal \forall x \in \Rbb$.
+A \textit{random variable} $X$ is a real-valued function $X:\Xcal \rightarrow \Rbb$. The sets $\{ \xi \in \Xcal : X(\xi) \leq x \} \in \Ocal \forall x \in \Rbb$. If $f:\Rbb \rightarrow \Rbb$ is a Borel measurable function, then $Y=f \circ X$ is also a random variable. ($f$ Borel measurable means $f^{-1}(A)\in\Bcal \forall A \in \Bcal$)
 
 The \textit{cumulative distribution function} of $X$ is 
 \begin{equation}
@@ -125,13 +124,19 @@ This is always non-negative as the cdf is non-decreasing. It is also normalised
 The \textit{expectation value} or \textit{mean} of a continuous random variable is 
 \begin{equation}
 \label{eq:expectation}
-E\{X\} := \int {-\infty}^{\infty} x p_X(x) \d x
+E\{X\} := \int_{\Xcal} x \d P(x) :=\mu
 \end{equation}
+\begin{enumerate}
+ \item assume X is integrable: $E\{|X|\} < \infty$
+ \item $E\{ X+Y \} = E\{X\} + E\{Y\}$
+ \item $E\{cX\}=cE\{X\}$, $c\in \Rbb$.
+\end{enumerate}
 
 The \textit{variance} of the random variable $X$ is 
 \begin{equation}
-\mbox{Var} \{ X \} \equiv \sigma^2_X := E\{(X-E\{X\})^2\}.
+\mbox{Var} \{ X \} \equiv \sigma^2_X := E\{(X-E\{X\})^2\},
 \end{equation}
+which we will always assume to be finite.
 
 The \textit{covariance} between two random variables $X$ and $Y$ defined on the same probability space is 
 \begin{equation}
@@ -157,7 +162,7 @@ Variance
 \mbox{Var}\{Z\} := E\{ | Z - E\{Z\} |^2 \} = E\{|Z|^2\}-|E\{Z\}|^2.
 \end{equation}
 
-\subsubsection{Stochastic Processes}
+\subsection{Stochastic Processes}
 Let $T\subset \Rbb$. A \textit{stochastic} process $X(t)$ is a family of random variables labelled by the numbers $t\in T$, all defined on the same probability space $(\Xcal, \Ocal, P)$. For each finite subset ${t_1, \ldots, t_n} \subset T$ the random variables $ X(t_1), \ldots, X(t_n)$ have a joint $n$-dimensional cumulative distribution function $F$ defined by
 \begin{equation}
 F_{t_1, \ldots, t_n}(x_1,\ldots,x_n)=P(x(t_1)\leq x_1, \ldots x(t_n)\leq t_n).
@@ -254,15 +259,24 @@ S(\omega)=\frac{1}{2\pi}\sum_{l=-\infty}^{\infty} \exp(-i\omega l) R(l).
 \end{equation}
 
 
-\subsubsection{Hypothesis Testing}
+\subsection{Hypothesis Testing}
 \begin{itemize}
 \item \textit{Null hypothesis} $H_0$: Signal is absent. Data have pdf $p_0(x)$
 \item \textit{Alternative hypothesis} $H_1$: signal is present. Data have pdf $p_1(x)$
-\item \textit{Hypothesis test/ decision rule} $\delta$: partitioun of observation set $\Xcal$ into two subsets $\Rcal$ and $Rcal'=\Xcal-\Rcal$. If the data are in $\Rcal$ we accept the null hypothesis, otherwise we reject it. $\int_{\Rcal} p_i(x) dx+ \int_{\Rcal'} p_i(x) dx=1$ for $i=0,1$.
+\item \textit{Likelihood ratio} $\Lambda(x) := \frac{p_1(x)}{p_0(x)}$
+\item \textit{Hypothesis test/ decision rule} $\delta$: partitioun of observation set $\Xcal$ into two subsets $\Rcal$ and $\Rcal'=\Xcal-\Rcal$. If the data are in $\Rcal$ we accept the null hypothesis, otherwise we reject it. $\int_{\Rcal} p_i(x) dx+ \int_{\Rcal'} p_i(x) dx=1$ for $i=0,1$.
+\item \textit{Type I error:} choosing $H_1$ when $H_0$ is true (false alarm), has probability 
+\begin{equation}
+P_D := \int_{\Rcal} p_1(x) dx
+\end{equation}
+\item \textit{Type II error:}  choosing $H_0$ when $H_1$ is true (false dismissal), has probability 
+\begin{equation}
+P_F := \int_{\Rcal'} p_0(x) dx
+\end{equation}
 \end{itemize}
 Problem: find a test which is optimal.
 
-\paragraph{Bayesian Approach}
+\subsubsection{Bayesian Approach}
 
 Assign \textit{costs} $C_{ij}$, $i,j=0,1$ incurred by choosing hypothesis $H_i$ when $H_j$ is true. We say these costs are \textit{uniform} if $C_{ij}=0$ when $i=j$ and $C_{ij}=1$ when $i \neq j$. 
 
@@ -271,18 +285,87 @@ Assign \textit{costs} $C_{ij}$, $i,j=0,1$ incurred by choosing hypothesis $H_i$ 
 \label{eq:conditionalrisk}
 R_j(\delta)=C_{0j}P_j(\Rcal)+C_{1j}P_1(\Rcal')
 \end{equation}
-where $P_j(\Rcal)=P(X=x\in \Rcal | H_j)= \int_{\Rcal} p_j(x)dx$ is the probability distribution of the data wehen hypothesis $H_j$ is true.
+where $P_j(\Rcal)=P(X=x\in \Rcal | H_j)= \int_{\Rcal} p_j(x)dx$ is the probability distribution of the data when hypothesis $H_j$ is true.
 
 \textit{A priori probabilities/ priors} $\pi_0$, $\pi_1=1-\pi_0$ of hypotheses $H_0$ and $H_1$.
 
 \textit{Bayes' Risk} average cost of rule $\delta$:
-\begin{equation}\label{eq: BayesRisk}\begin{array}{{rcl}
-r(\delta)&=&\pi_0 R_0(\delta) + \pi_1 R_1(\delta)
+\begin{equation}\label{eq: BayesRisk}\begin{array}{rcl}
+r(\delta)&=&\pi_0 R_0(\delta) + \pi_1 R_1(\delta) \\
 &=& \pi_0 C_{00} + \pi_1
 \end{array}
-
 \end{equation}
-\subsubsection{Matched filter}
+
+\text{Bayes' Rule} is a decision rule that minimises the Bayes' Risk
+\begin{equation}
+\label{eq:BayesRule}
+\delta^* = \mbox{argmin} r(\delta). 
+\end{equation}
+We can expand (\ref{eq: BayesRisk}) to find 
+\begin{equation}
+r(\delta)=\pi_0 C_{00} + \pi_1 C_{01} + \int_{\Rcal'} \pi_0(C_{10}-C_{00}) + \pi_1(C_{11}-C_{01}) dx.
+\end{equation}
+It is clear an optimal decision rule is one which assigns $x \in \Rcal'$ when the term inside the integral above is negative. Assuming the costs of errors are greater than the costs of choosing the correct hypothesis, this means the decision rule is 
+\begin{equation}
+\delta^*: x \in \Rcal' \mbox{ iff } \Lambda(x) < \frac{\pi_0}{\pi_1}\frac{C_{10}-C_{00}}{C_{01}-C_{11}}.
+\end{equation}
+That is, the decision rule is equivalent to comparing the likelihood ratio to a threshold $\lambda := \frac{\pi_0}{\pi_1}\frac{C_{10}-C_{00}}{C_{01}-C_{11}}$.
+
+Example:
+\begin{equation}
+\begin{array}{rcl}
+H_0: X &=& N \sim \Ncal(0,\sigma^2) \\
+H_1: X &=& N + \mu \sim \Ncal(\mu,\sigma^2)\\
+\rightarrow \Lambda(x) &=& \exp(\frac{x \mu}{\sigma^2} - \frac{\mu^2}{\sigma^2})
+\end{array}
+\end{equation}
+Cases:
+\begin{enumerate}
+\item equal priors $\pi_0 = \pi_1 =\frac{1}{2}$, uniform costs, $\lambda=1$
+\item High risk, such as false announcement of detection of extra-terrestrial life. $\pi_0 >> \pi_1$, $C_{10}>>C_{01}$. E.g. $\frac{\pi_0}{\pi_1}=10$, $\frac{C_{10}}{C_{01}}=10$, $\rightarrow \lambda = 100$. 
+\item Low risk, such as wartime false warning of air raid. $\pi_1 >> \pi_0$, $C_{01}>>C_{10}$. E.g. $\frac{\pi_0}{\pi_1}=0.1$, $\frac{C_{10}}{C_{01}}=0.1$, $\rightarrow \lambda = 10^{-2}$. 
+\end{enumerate}
+
+\subsubsection{Minimax Approach}
+Sometimes we cannot assign priors, and therefore cannot find the Bayes' solution. In the minimax approach we redefine risk in terms of an unknown prior, $r(\pi_0, \delta)$, a convex and continuous function of $\pi_0$. The \textit{least favourable prior} $\pi_L = \argmax_{\pi_0} r(\pi_0,\delta)$. Then the \textit{minimax rule} is the decision rule $\delta_{\pi_L}$that minimises the risk with respect to $\pi_L$, that is:
+\begin{equation}
+\label{eq:minimaxRule}
+\delta_{\pi_L}=\argmin_{\delta} \max_{0\leq \pi_0 \leq 1} r(\pi_0, \delta)
+\end{equation}
+
+\subsubsection{Neyman-Pearson Approach}
+Sometime there's no obvious way to set costs, either. Define
+\begin{itemize}
+\item \textit{Significance of test} is the probability of of a Type I error/ false alarm $P(x\in R'|H_0)=P_F:=\alpha$
+\item \textit{Power of test}$=1-P(x\in R|H_1)=1-P_D$
+\end{itemize}
+Neyman-Pearson design: maximise power of test (i.e. probability of detection) subject to chosen significance of test $\alpha$ (i.e. subject to constraining false alarm probability). 
+
+Using Lagrange multiplier approach, we are seeking to minimise 
+\begin{equation}
+C(\delta) = (1-P_D)+\lambda (P_F - \alpha).
+\end{equation}
+This can be expanded as follows:
+\begin{equation}
+\begin{array}{rcl}
+C(\delta) &=& \int_{\Rcal} p_1 (x) dx + \lambda \left(\int_{\Rcal'} p_0(x)dx-\alpha \right) \\
+&=& \int_{\Rcal} p_1 (x) dx + \lambda \left(1- \int_{\Rcal}  p_0(x)dx
+ -\alpha \right) \\
+&=& \lambda (1-\alpha)+\int_{\Rcal} p_1 (x) - \lambda p_0(x)dx.
+\end{array}
+\end{equation}
+As in the Bayesian case, minimising $C(\delta)$ becomes choosing $x \in \Rcal$ such that the term inside the integral is negative. That is:
+\begin{equation}
+\delta: x \in \Rcal \mbox{ iff } p_1 (x) - \lambda p_0(x) < 0,
+\end{equation}
+which can be rearranged into another likelihood ratio test:
+\begin{equation}
+\delta: x \in \Rcal \mbox{ iff } \Lambda(x) = \frac{p_1 (x)}{ p_0(x)} < \lambda,
+\end{equation}
+
+Thus all three hypothesis testing methods we have looked at result in comparing the likelihood ratio to a threshold, but each determine the threshold in a different way.
+
+\subsection{Matched filter}
 \begin{equation}
 x(t)=s(t)+n(t)
 \end{equation}
@@ -315,16 +398,21 @@ E_1\{G\} = \int_0^{T_0}q(t)s(t)\d t.
 \begin{array}{rcl}
 Var\{G\}&=& \int_0^{T_0}\int_0^{T_0}q(t_1)q(t_2)E\{n(t_1)n(t_2)\}\d t_1  \d t_2 \\
 &=&\int_0^{T_0}q(t_1)q(t_2)K(t_1,t_2)\d t_1  \d t_2\\
-&=&int_0^{T_0}q(t)s(t)\d t = \rho^2
+&=& \int_0^{T_0}q(t)s(t)\d t = \rho^2
 \end{array}
 \end{equation}
 $\rho$ is the \textit{signal to noise ratio}.
 
 Since data $x$ is Gaussian, and $G$ is linear in $x$, pdf's when signal is absent or present are
 \begin{equation}
-p_0(G)=\frac{1}{\sqrt{2\pi\rho^2}}\exp(-\frac{G^2}{2\rho^2}
-p_1(G)=\frac{1}{\sqrt{2\pi\rho^2}}\exp(-\frac{(G-\rho^2)^2}{2\rho^2}
+\begin{array}{rcl}
+p_0(G)&=&\frac{1}{\sqrt{2\pi\rho^2}}\exp(-\frac{G^2}{2\rho^2}) \\
+p_1(G)&=&\frac{1}{\sqrt{2\pi\rho^2}}\exp(-\frac{(G-\rho^2)^2}{2\rho^2}
+\end{array}
 \end{equation}
+
+
+\subsection{parameter estimation}
 
 
 \end{document}
