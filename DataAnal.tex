@@ -10,12 +10,12 @@ where $X_t=X(t)$, $h_t$ is a sample from a deterministic signal waveform at time
 
 
 \section{Hypothesis Testing}
-Gravitational wave detection can be cast as a hypothesis testing problem. The \textit{null hypothesis}, $H_0$, is that the signal is absent and the data consists entirely of noise having probability distribution $P_0$. The \textit{alternative hypothesis}, $H_1$, is that a signal is present and the data has probability distribution $P_1$. This can be written
+Gravitational wave detection can be cast as a hypothesis testing problem. The \textit{null hypothesis}, $H_0$, is that the signal is absent and the data consists entirely of noise with probability distribution $P_0$. The \textit{alternative hypothesis}, $H_1$, is that a signal is present and the data has probability distribution $P_1$. This can be written
 \begin{equation}
 \label{eq:hyppair}
 \begin{array}{ll}
-H_0: X_t = N_t ~ P_0, &\hspace{12pt} t\in {t_1, \ldots, t_n} \\
-H_1: X_t = h_t + N_t ~ P_1, &\hspace{12pt} t\in {t_1, \ldots, t_n}. 
+H_0: X_t = N_t \sim P_0, &\hspace{12pt} t\in {t_1, \ldots, t_n} \\
+H_1: X_t = h_t + N_t \sim P_1, &\hspace{12pt} t\in {t_1, \ldots, t_n}. 
 \end{array}
 \end{equation}
 A \textit{hypothesis test} or \textit{decision rule} $\delta$ is a partition of the observation set $\Xcal$ into two subsets $\Xcal_0$ and $\Xcal_1=\Xcal_0^c$. If the data  $x \in \Xcal_0$, we accept the null hypothesis $H_0$. If $x \in \Xcal_1$, we claim a detection!
@@ -23,11 +23,16 @@ A \textit{hypothesis test} or \textit{decision rule} $\delta$ is a partition of 
 We now need a way to choose a decision rule $\delta$ that is optimal in some sense. There are several several ways to do this; here the Neyman-Pearson approach is described. The Bayesian and Minimax approaches are also common, and can be found in [poor].
 
 \subsection{Neyman-Pearson Approach}
-There are two types of errors that can occur in testing $H_0$ against $H_1$. The first occurs if we choose $H_1$ when $H_0$ is true and is called a \textit{type I error} or \textit{false alarm}, and the probability of this occuring for a decision rule $\delta$ is called the \textit{false alarm probability}, and denoted $P_F(\delta)$. The second error occurs if we choose $H_0$ when $H_1$ is true and is called a \textit{type II error} or \textit{miss}. We can define a \textit{miss probability}, $P_M(\delta)$, however it is more common to talk in terms of the \textit{detection probability} or \textit{power} of the test $P_D(\delta)=1-P_M(\delta)$. The Neyman-Pearson optimum test maximises the power of the test, subject to a chosen constraint on the false alarm probability:
+There are two types of errors that can occur in testing $H_0$ against $H_1$. A \textit{type I error} or \textit{false alarm} occurs if we choose $H_1$ when $H_0$ is true, and the probability of this occuring for a decision rule $\delta$ is called the \textit{false alarm probability} denoted $P_F(\delta)$. The second error occurs if we choose $H_0$ when $H_1$ is true and is called a \textit{type II error} or \textit{miss}. We can define a \textit{miss probability}, $P_M(\delta)$, however it is more common to talk in terms of the \textit{detection probability} or \textit{power} of the test $P_D(\delta)=1-P_M(\delta)$. The Neyman-Pearson optimum test maximises the power of the test, subject to a chosen constraint on the false alarm probability:
 \begin{equation}
 \delta_{NP}=\argmax_{\delta} P_D(\delta) \mbox{ subject to } P_F(\delta)\leq \alpha.
 \end{equation}
-The bound $\alpha$ is called the \textit{significance level} of the test. We seek to devise a function $\phi: \Xcal \rightarrow [0,1]$ representing the probability of choosing $H_1$ given some data $x\in \Xcal$. The existence and uniqueness of such a test function is given by the Neyman-Pearson Lemma.
+The bound $\alpha$ is called the \textit{significance level} of the test. We seek to devise a function $\phi: \Xcal \rightarrow [0,1]$ representing the probability of choosing $H_1$ given some data $x\in \Xcal$. The detection and false alarm probabilities for a decision rule associated with such a function are as follows:
+\begin{eqnarray}
+P_D(\delta) = E_1[\phi(\Xcal)]  &=& \int_{\Xcal} \phi(x) p_1(x) d\bfx  \label{eq:PDrandomised} \\
+P_F(\delta) = E_0[\phi(\Xcal)]  &=& \int_{\Xcal} \phi(x) p_0(x) d\bfx \label{eq:PFrandomised}
+\end{eqnarray}
+The existence and uniqueness of such a test function is given by the Neyman-Pearson Lemma.
 
 \begin{lemma}\
 Consider the hypothesis pair \ref{eq:hyppair}. Suppose $P_0$ and $P_1$ have densities $p_0$ and $p_1$ respectively and $\alpha>0$. Then
@@ -45,12 +50,13 @@ Consider the hypothesis pair \ref{eq:hyppair}. Suppose $P_0$ and $P_1$ have dens
 \end{equation}
 where $\eta\geq 0$, $0\leq \gamma \leq 1$ and such that $P_F(\delta_{NP})=\alpha$.
 \item \textit{Optimality:} Let $\delta'$ be any decision rule satisfying $P_F(\delta')\leq \alpha$, and that it is associated with some function $\phi'$. Then $P_D(\delta_{NP}) \geq P_D(\delta')$, where $\delta_{NP}$ is as defined by the function \ref{eq:nptest}.
-\item \textit{Uniqueness:} Suppose that $\delta_{NP}''$ is any $\alpha$-level Neyman-Pearson decision rule for $H_0$ versus $H_1$. Then $\delta_{NP}''$ must be of the form \ref{eq:nptest}, except for possibly on a subset of $\Xcal$ having zero probability under $H_0$ and $H_1$.
+\item \textit{Uniqueness:} Suppose that $\delta_{NP}''$ is any $\alpha$-level Neyman-Pearson decision rule for $H_0$ versus $H_1$. Then the function $\phi''(x)$ associated with $\delta_{NP}''$ must be of the form \ref{eq:nptest}, except for possibly on a subset of $\Xcal$ having zero probability under $H_0$ and $H_1$.
 \end{enumerate}
 
 \end{lemma}
 
 \begin{proof}
+
 \begin{enumerate}
 \item Let $\eta$ be the smallest number such that 
 \begin{equation}
@@ -65,12 +71,37 @@ otherwise $\gamma$ can be chosen arbitrarily. Note that for a test of the form \
 P_F(\delta_{NP})=E_0[\phi]=1\times P_0(p_1(X)>\eta p_0(X))+\gamma P_0(p_1(X)=\eta p_0(X)) =\alpha.
 \end{equation}
 \item Note that $\forall x \in \Xcal$
-\[ [\phi(x) - \phi(x)][p_1(x)-p_0(x)]\geq 0 \]
+\[ [\phi(x) - \phi'(x)][p_1(x)-\lambda p_0(x)]\geq 0, \]
+and therefore,
+\begin{equation}
+\int_{\Xcal} [\phi(x) - \phi'(x)][p_1(x)-\lambda p_0(x)] d\xbf \geq 0.
+\end{equation}
+Expanding this and rearranging terms gives 
+\begin{equation}
+\int_{\Xcal}\phi(x) p_1(x) d\xbf - \int_{\Xcal}\phi'(x) p_1(x) d\xbf \geq \lambda \left[ \int_{\Xcal} \phi(x)p_0(x) d\xbf - \int_{\Xcal}\phi'(x)p_0(x) d\xbf \right],
+\end{equation}
+which, using \ref{eq:PDrandomised} and \ref{eq:PFrandomised}, becomes
+\begin{equation}\label{eq:NPL2}
+P_D(\delta_{NP}) - P_D(\delta') \geq \lambda \left[\underbrace{P_F(\delta_{NP})}_{=\alpha} - \underbrace{P_F(\delta')}_{\leq \alpha} \right]\geq 0.
+\end{equation}
+Thus, $P_D(\delta_{NP}) \geq P_D(\delta')$. 
+\item By definition, we must have $P_D(\delta_{NP}'')=P_D(\delta_{NP})$. Therefore, by \ref{eq:NPL2} we have
+\begin{equation}
+0 \geq \lambda \left[ \alpha - P_F(\delta_{NP}'') \right]\geq 0
+\end{equation}
+or, $P_F(\delta_{NP}'')=\alpha$. Reversing the steps in part 2 above, we find
+\begin{equation}
+\int_{\Xcal} [\phi(x) - \phi''(x)][p_1(x)-\lambda p_0(x)] d\xbf = 0.
+\end{equation}
+Since we know the integrand to be non-negative, this implies that it is zero except possibly on a set of zero probability under $H_0$ and $H_1$. Therefore, $\phi(x)$ and $\phi''(x)$ differ only on the set $\{x \in \Xcal | p_1(x)-\lambda p_0(x)=0 \}$, which implies $\phi''$ is also of the form \ref{eq:nptest}, differing only in $\gamma$.
 \end{enumerate}
 \end{proof}
 
-
-
+We define the quantity 
+\begin{equation}
+L(x)=\frac{p_1(x)}{p_0(x)}, \hspace{12pt} x\in\Xcal,
+\end{equation}
+to be the \textit{likelihood ratio}. Then, by rearranging the conditions in \ref{eq:nptest}, we see that a Neyman-Pearson test involves comparing the likelihood ratio for an observed value of $X$ to a threshold $\lambda$. 
 
 \section{Introduction}     
 For a known waveform the most efficient data analysis tool is matched filtering. But often the waveforms of GW are poorly known, limiting the matched filter's applicability. 
