@@ -2,11 +2,11 @@
 \begin{document}
 
 \chapter{Data analysis}           
-Our data model is of a continuous time stochastic process $X(t)$ over an interval $[0,T]$, sampled at $n$ points ${t_1, \ldots, t_n} \subset T$. We assume an additive noise model, that is 
+(This intro sucks, re-write it) Our data model is of a continuous time stochastic process $X(t)$ over an interval $[0,T]$, sampled at $n$ points ${t_1, \ldots, t_n} \subset T$. We assume an additive noise model, that is 
 \begin{equation}
 X_t=h_t+N_t, \hspace{12pt} t\in {t_1, \ldots, t_n}  ,
 \end{equation}
-where $X_t=X(t)$, $h_t$ is a sample from a deterministic signal waveform at time $t$, and $\{N_t: t \in [0,T]\}$ is the detector noise, a zero mean Gaussian random process with covariance matrix $\Sigma_N$. 
+where $X_t=X(t)$, $h_t$ is a sample from a deterministic signal waveform at time $t$, and $\{N_t: t \in [0,T]\}$ is the detector noise, a zero mean Gaussian random process with covariance matrix $\Sigma_N$. The probelem of detecting a deterministic signal in the data is called a "Coherent detection problem"
 
 
 \section{Hypothesis Testing}
@@ -14,15 +14,15 @@ Gravitational wave detection can be cast as a hypothesis testing problem. The \t
 \begin{equation}
 \label{eq:hyppair}
 \begin{array}{ll}
-H_0: X_t = N_t \sim P_0, &\hspace{12pt} t\in {t_1, \ldots, t_n} \\
-H_1: X_t = h_t + N_t \sim P_1, &\hspace{12pt} t\in {t_1, \ldots, t_n}. 
+H_0: X_t = N_t &\hspace{12pt} \bfX \sim \Ncal(0,\Sigma_N),  t\in {t_1, \ldots, t_n} \\
+H_1: X_t = h_t + N_t &\hspace{12pt} \bfX \sim \Ncal(\bfh, \Sigma_N),  t\in {t_1, \ldots, t_n}. 
 \end{array}
 \end{equation}
 A \textit{hypothesis test} or \textit{decision rule} $\delta$ is a partition of the observation set $\Xcal$ into two subsets $\Xcal_0$ and $\Xcal_1=\Xcal_0^c$. If the data  $x \in \Xcal_0$, we accept the null hypothesis $H_0$. If $x \in \Xcal_1$, we claim a detection!
 
 We now need a way to choose a decision rule $\delta$ that is optimal in some sense. There are several several ways to do this; here the Neyman-Pearson approach is described. The Bayesian and Minimax approaches are also common, and can be found in [poor].
 
-\subsection{Neyman-Pearson Approach}
+\subsection{The Neyman-Pearson Approach}
 There are two types of errors that can occur in testing $H_0$ against $H_1$. A \textit{type I error} or \textit{false alarm} occurs if we choose $H_1$ when $H_0$ is true, and the probability of this occuring for a decision rule $\delta$ is called the \textit{false alarm probability} denoted $P_F(\delta)$. The second error occurs if we choose $H_0$ when $H_1$ is true and is called a \textit{type II error} or \textit{miss}. We can define a \textit{miss probability}, $P_M(\delta)$, however it is more common to talk in terms of the \textit{detection probability} or \textit{power} of the test $P_D(\delta)=1-P_M(\delta)$. The Neyman-Pearson optimum test maximises the power of the test, subject to a chosen constraint on the false alarm probability:
 \begin{equation}
 \delta_{NP}=\argmax_{\delta} P_D(\delta) \mbox{ subject to } P_F(\delta)\leq \alpha.
@@ -48,7 +48,7 @@ Consider the hypothesis pair \ref{eq:hyppair}. Suppose $P_0$ and $P_1$ have dens
 \end{array}
 \right.
 \end{equation}
-where $\eta\geq 0$, $0\leq \gamma \leq 1$ and such that $P_F(\delta_{NP})=\alpha$.
+where $\lambda \geq 0$, $0\leq \gamma \leq 1$ and such that $P_F(\delta_{NP})=\alpha$.
 \item \textit{Optimality:} Let $\delta'$ be any decision rule satisfying $P_F(\delta')\leq \alpha$, and that it is associated with some function $\phi'$. Then $P_D(\delta_{NP}) \geq P_D(\delta')$, where $\delta_{NP}$ is as defined by the function \ref{eq:nptest}.
 \item \textit{Uniqueness:} Suppose that $\delta_{NP}''$ is any $\alpha$-level Neyman-Pearson decision rule for $H_0$ versus $H_1$. Then the function $\phi''(x)$ associated with $\delta_{NP}''$ must be of the form \ref{eq:nptest}, except for possibly on a subset of $\Xcal$ having zero probability under $H_0$ and $H_1$.
 \end{enumerate}
@@ -58,17 +58,17 @@ where $\eta\geq 0$, $0\leq \gamma \leq 1$ and such that $P_F(\delta_{NP})=\alpha
 \begin{proof}
 
 \begin{enumerate}
-\item Let $\eta$ be the smallest number such that 
+\item Let $\lambda$ be the smallest number such that 
 \begin{equation}
-P_0(p_1(X)>\eta p_0(X)) \leq \alpha.
+P_0(p_1(X)>\lambda p_0(X)) \leq \alpha.
 \end{equation}
-If $P_0(p_1(X)>\eta p_0(X)) < \alpha$, choose 
+If $P_0(p_1(X)>\lambda p_0(X)) < \alpha$, choose 
 \begin{equation}
-\gamma=\frac{\alpha-P_0(p_1(X)>\eta p_0(X))}{P_0(p_1(X)=\eta p_0(X))},
+\gamma=\frac{\alpha-P_0(p_1(X)>\lambda p_0(X))}{P_0(p_1(X)=\lambda p_0(X))},
 \end{equation}
 otherwise $\gamma$ can be chosen arbitrarily. Note that for a test of the form \ref{eq:nptest}, the false alarm probability is the expectation of the function $\phi$ under $H_0$:
 \begin{equation}
-P_F(\delta_{NP})=E_0[\phi]=1\times P_0(p_1(X)>\eta p_0(X))+\gamma P_0(p_1(X)=\eta p_0(X)) =\alpha.
+P_F(\delta_{NP})=E_0[\phi]=1\times P_0(p_1(X)>\lambda p_0(X))+\gamma P_0(p_1(X)=\lambda p_0(X)) =\alpha.
 \end{equation}
 \item Note that $\forall x \in \Xcal$
 \[ [\phi(x) - \phi'(x)][p_1(x)-\lambda p_0(x)]\geq 0, \]
@@ -102,6 +102,18 @@ We define the quantity
 L(x)=\frac{p_1(x)}{p_0(x)}, \hspace{12pt} x\in\Xcal,
 \end{equation}
 to be the \textit{likelihood ratio}. Then, by rearranging the conditions in \ref{eq:nptest}, we see that a Neyman-Pearson test involves comparing the likelihood ratio for an observed value of $X$ to a threshold $\lambda$. 
+
+\section{Matched Filtering}
+For our hypotheses \ref{eq:hyppair}, the likelihood ratio is given by 
+\begin{equation}
+L(x)= \frac{\frac{1}{(2\pi)^{n/2}|\Sigma_N|^{1/2}}\exp\{\frac{-1}{2}(x-h)^T \Sigma_N^{-1}(x-h)\}}{\frac{1}{(2\pi)^{n/2}|\Sigma_N|^{1/2}}\exp\{\frac{-1}{2}x^T \Sigma_N^{-1}x\}} = \exp\{ h^T \Sigma_N^{-1} (x-h/2)\}.
+\end{equation}
+It is convenient and common to consider the log likelihood
+\begin{equation}
+\log L(x) = h^T \Sigma_N^{-1} (x-h/2).
+\end{equation}
+
+
 
 \section{Introduction}     
 For a known waveform the most efficient data analysis tool is matched filtering. But often the waveforms of GW are poorly known, limiting the matched filter's applicability. 
