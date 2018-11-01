@@ -17,11 +17,78 @@
 \BOOKMARK [1][-]{section.2.11}{Euclidean and Hyperbolic space}{chapter.2}% 17
 \BOOKMARK [0][-]{chapter.3}{General Relativity}{}% 18
 \BOOKMARK [1][-]{section.3.1}{Pseudo-Riemannian Metrics}{chapter.3}% 19
-\BOOKMARK [1][-]{section.3.2}{Relativity in 1+1 dimensions}{chapter.3}% 20
-\BOOKMARK [1][-]{section.3.3}{Minkowski Space}{chapter.3}% 21
-\BOOKMARK [1][-]{section.3.4}{Black Holes}{chapter.3}% 22
-\BOOKMARK [2][-]{subsection.3.4.1}{The Schwarzschild Solution}{section.3.4}% 23
-\BOOKMARK [2][-]{subsection.3.4.2}{The Reissner-Nordstrom Solution}{section.3.4}% 24
-\BOOKMARK [1][-]{section.3.5}{Linearised Gravity}{chapter.3}% 25
-\BOOKMARK [2][-]{subsection.3.5.1}{Gauge Transformations}{section.3.5}% 26
-\BOOKMARK [2][-]{subsection.3.5.2}{Gravitational Plane Wave Solutions }{section.3.5}% 27
+\BOOKMARK [1][-]{section.3.2}{Einstein's Field Equations}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.3}{Relativity in 1+1 dimensions}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.4}{Minkowski Space}{chapter.3}% 22
+\BOOKMARK [1][-]{section.3.5}{Black Holes}{chapter.3}% 23
+\BOOKMARK [2][-]{subsection.3.5.1}{The Schwarzschild Solution}{section.3.5}% 24
+\BOOKMARK [2][-]{subsection.3.5.2}{The Reissner-Nordstrom Solution}{section.3.5}% 25
+\BOOKMARK [1][-]{section.3.6}{Linearised Gravity}{chapter.3}% 26
+\BOOKMARK [2][-]{subsection.3.6.1}{Gauge Transformations}{section.3.6}% 27
+\BOOKMARK [2][-]{subsection.3.6.2}{Gravitational Plane Wave Solutions }{section.3.6}% 28
+\BOOKMARK [0][-]{chapter.4}{Formalism of Numerical Relativity}{}% 29
+\BOOKMARK [1][-]{section.4.1}{Introduction}{chapter.4}% 30
+\BOOKMARK [1][-]{section.4.2}{Splitting Space and Time}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.3}{Projections of the Einstein Field Equations}{chapter.4}% 32
+\BOOKMARK [1][-]{section.4.4}{Choosing Coordinates}{chapter.4}% 33
+\BOOKMARK [1][-]{section.4.5}{Gauge Conditions}{chapter.4}% 34
+\BOOKMARK [2][-]{subsection.4.5.1}{Geodesic slicing}{section.4.5}% 35
+\BOOKMARK [2][-]{subsection.4.5.2}{Maximal slicing}{section.4.5}% 36
+\BOOKMARK [2][-]{subsection.4.5.3}{Bona-Masso}{section.4.5}% 37
+\BOOKMARK [1][-]{section.4.6}{Initial Data}{chapter.4}% 38
+\BOOKMARK [2][-]{subsection.4.6.1}{York-Lichnerowicz conformal decomposition}{section.4.6}% 39
+\BOOKMARK [1][-]{section.4.7}{Aside? Post Newtonian methods}{chapter.4}% 40
+\BOOKMARK [1][-]{section.4.8}{perturbative methods}{chapter.4}% 41
+\BOOKMARK [1][-]{section.4.9}{Dealing with singluarities}{chapter.4}% 42
+\BOOKMARK [0][-]{chapter.5}{State of the Art \(this chapter is a total mess\)}{}% 43
+\BOOKMARK [1][-]{section.5.1}{Extreme Mass Ratios}{chapter.5}% 44
+\BOOKMARK [1][-]{section.5.2}{Longest Waveforms}{chapter.5}% 45
+\BOOKMARK [1][-]{section.5.3}{Highest Spin}{chapter.5}% 46
+\BOOKMARK [1][-]{section.5.4}{Christodoulou Memory}{chapter.5}% 47
+\BOOKMARK [1][-]{section.5.5}{General Relativity Magneto Hydro Dynamics}{chapter.5}% 48
+\BOOKMARK [1][-]{section.5.6}{Cactus}{chapter.5}% 49
+\BOOKMARK [0][-]{chapter.6}{Data analysis}{}% 50
+\BOOKMARK [1][-]{section.6.1}{Hypothesis Testing}{chapter.6}% 51
+\BOOKMARK [2][-]{subsection.6.1.1}{Neyman-Pearson Approach}{section.6.1}% 52
+\BOOKMARK [1][-]{section.6.2}{Introduction}{chapter.6}% 53
+\BOOKMARK [1][-]{section.6.3}{Fourier Transforms}{chapter.6}% 54
+\BOOKMARK [1][-]{section.6.4}{Windowed Fourier Transforms}{chapter.6}% 55
+\BOOKMARK [1][-]{section.6.5}{wavelet transforms}{chapter.6}% 56
+\BOOKMARK [1][-]{section.6.6}{Notes from "method for detection and reconstruction of gravitational wave transients with networks of advanced detectors}{chapter.6}% 57
+\BOOKMARK [2][-]{subsection.6.6.1}{Low latency search}{section.6.6}% 58
+\BOOKMARK [2][-]{subsection.6.6.2}{Archive analysis}{section.6.6}% 59
+\BOOKMARK [2][-]{subsection.6.6.3}{Inverse problem for data from a network of detectors}{section.6.6}% 60
+\BOOKMARK [2][-]{subsection.6.6.4}{Matched Filtering}{section.6.6}% 61
+\BOOKMARK [1][-]{section.6.7}{Jaranowski et.al}{chapter.6}% 62
+\BOOKMARK [0][-]{chapter.7}{Model reduction for Gravitational Wave data analysis}{}% 63
+\BOOKMARK [0][-]{chapter.8}{Reduced Basis Methods for Parameterised Partial Differential Equations}{}% 64
+\BOOKMARK [1][-]{section.8.1}{Problem Formulation}{chapter.8}% 65
+\BOOKMARK [1][-]{section.8.2}{Parameter Domains and Grids}{chapter.8}% 66
+\BOOKMARK [1][-]{section.8.3}{Parametric Scalar and vector fields}{chapter.8}% 67
+\BOOKMARK [1][-]{section.8.4}{Problem statement}{chapter.8}% 68
+\BOOKMARK [2][-]{subsection.8.4.1}{Exact}{section.8.4}% 69
+\BOOKMARK [2][-]{subsection.8.4.2}{``Truth" Approximation}{section.8.4}% 70
+\BOOKMARK [1][-]{section.8.5}{Reduced Basis Approximation}{chapter.8}% 71
+\BOOKMARK [2][-]{subsection.8.5.1}{Lagrangian approach}{section.8.5}% 72
+\BOOKMARK [1][-]{section.8.6}{Reduced basis for binary coalescences}{chapter.8}% 73
+\BOOKMARK [1][-]{section.8.7}{Greedy Algorithm}{chapter.8}% 74
+\BOOKMARK [0][-]{chapter.9}{Model Reduction for Compact Binary Coalescence}{}% 75
+\BOOKMARK [1][-]{section.9.1}{Empirical Interpolation Method}{chapter.9}% 76
+\BOOKMARK [0][-]{chapter.10}{Reduced basis methods for parameterised PDEs}{}% 77
+\BOOKMARK [1][-]{section.10.1}{Forward model}{chapter.10}% 78
+\BOOKMARK [1][-]{section.10.2}{Statistical Inverse Problems}{chapter.10}% 79
+\BOOKMARK [2][-]{subsection.10.2.1}{Reduced basis method}{section.10.2}% 80
+\BOOKMARK [1][-]{section.10.3}{One dimensional wire}{chapter.10}% 81
+\BOOKMARK [2][-]{subsection.10.3.1}{Exact Solution}{section.10.3}% 82
+\BOOKMARK [2][-]{subsection.10.3.2}{Numerical Solution}{section.10.3}% 83
+\BOOKMARK [2][-]{subsection.10.3.3}{Reduced basis construction}{section.10.3}% 84
+\BOOKMARK [1][-]{section.10.4}{Conclusions and further work}{chapter.10}% 85
+\BOOKMARK [0][-]{appendix.A}{Lie Derivative of a covariant 2-tensor}{}% 86
+\BOOKMARK [0][-]{appendix.B}{Functions Spaces Norms}{}% 87
+\BOOKMARK [0][-]{appendix.C}{Functions, Spaces and Norms}{}% 88
+\BOOKMARK [1][-]{section.C.1}{H\366lder Continuity}{appendix.C}% 89
+\BOOKMARK [1][-]{section.C.2}{Lipschitz Continuity}{appendix.C}% 90
+\BOOKMARK [1][-]{section.C.3}{Lebesgue Spaces}{appendix.C}% 91
+\BOOKMARK [1][-]{section.C.4}{Sobolev Spaces}{appendix.C}% 92
+\BOOKMARK [0][-]{appendix.D}{PDEs}{}% 93
+\BOOKMARK [1][-]{section.D.1}{Cauchy Problems}{appendix.D}% 94

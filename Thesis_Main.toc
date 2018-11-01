@@ -2,27 +2,105 @@
 \contentsline {chapter}{\numberline {2}Differential Geometry}{2}{chapter.2}
 \contentsline {section}{\numberline {2.1}Topological Spaces}{2}{section.2.1}
 \contentsline {section}{\numberline {2.2}Manifolds}{4}{section.2.2}
-\contentsline {section}{\numberline {2.3}Calculus on Manifolds}{6}{section.2.3}
+\contentsline {section}{\numberline {2.3}Calculus on Manifolds}{5}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}The Tangent Space}{6}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}The Cotangent Space}{8}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Tensors}{9}{subsection.2.3.3}
-\contentsline {subsection}{\numberline {2.3.4}Riemannian Manifolds}{12}{subsection.2.3.4}
-\contentsline {section}{\numberline {2.4}Mappings between Manifolds}{13}{section.2.4}
-\contentsline {section}{\numberline {2.5}Isometries}{14}{section.2.5}
-\contentsline {section}{\numberline {2.6}The Lie Derivative}{15}{section.2.6}
-\contentsline {section}{\numberline {2.7}The Covariant Derivative}{20}{section.2.7}
-\contentsline {section}{\numberline {2.8}Derivation of the Levi-Civita Connection}{24}{section.2.8}
-\contentsline {section}{\numberline {2.9}Parallel Transport, geodesics and the Riemann curvature tensor}{26}{section.2.9}
-\contentsline {section}{\numberline {2.10}Geodesics}{29}{section.2.10}
-\contentsline {section}{\numberline {2.11}Euclidean and Hyperbolic space}{30}{section.2.11}
-\contentsline {chapter}{\numberline {3}General Relativity}{31}{chapter.3}
-\contentsline {section}{\numberline {3.1}Pseudo-Riemannian Metrics}{32}{section.3.1}
-\contentsline {section}{\numberline {3.2}Relativity in 1+1 dimensions}{33}{section.3.2}
-\contentsline {section}{\numberline {3.3}Minkowski Space}{34}{section.3.3}
-\contentsline {section}{\numberline {3.4}Black Holes}{35}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}The Schwarzschild Solution}{35}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}The Reissner-Nordstrom Solution}{35}{subsection.3.4.2}
-\contentsline {section}{\numberline {3.5}Linearised Gravity}{35}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Gauge Transformations}{36}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Gravitational Plane Wave Solutions }{38}{subsection.3.5.2}
-\contentsline {subsubsection}{Generation of Gravitational Waves}{40}{section*.2}
+\contentsline {subsection}{\numberline {2.3.2}The Cotangent Space}{7}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Tensors}{8}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Riemannian Manifolds}{11}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Mappings between Manifolds}{12}{section.2.4}
+\contentsline {section}{\numberline {2.5}Isometries}{13}{section.2.5}
+\contentsline {section}{\numberline {2.6}The Lie Derivative}{14}{section.2.6}
+\contentsline {section}{\numberline {2.7}The Covariant Derivative}{18}{section.2.7}
+\contentsline {section}{\numberline {2.8}Derivation of the Levi-Civita Connection}{22}{section.2.8}
+\contentsline {section}{\numberline {2.9}Parallel Transport, geodesics and the Riemann curvature tensor}{23}{section.2.9}
+\contentsline {section}{\numberline {2.10}Geodesics}{26}{section.2.10}
+\contentsline {section}{\numberline {2.11}Euclidean and Hyperbolic space}{27}{section.2.11}
+\contentsline {chapter}{\numberline {3}General Relativity}{28}{chapter.3}
+\contentsline {section}{\numberline {3.1}Pseudo-Riemannian Metrics}{28}{section.3.1}
+\contentsline {section}{\numberline {3.2}Einstein's Field Equations}{29}{section.3.2}
+\contentsline {section}{\numberline {3.3}Relativity in 1+1 dimensions}{30}{section.3.3}
+\contentsline {section}{\numberline {3.4}Minkowski Space}{30}{section.3.4}
+\contentsline {section}{\numberline {3.5}Black Holes}{31}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}The Schwarzschild Solution}{31}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}The Reissner-Nordstrom Solution}{31}{subsection.3.5.2}
+\contentsline {section}{\numberline {3.6}Linearised Gravity}{31}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Gauge Transformations}{32}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Gravitational Plane Wave Solutions }{33}{subsection.3.6.2}
+\contentsline {subsubsection}{Generation of Gravitational Waves}{35}{section*.2}
+\contentsline {chapter}{\numberline {4}Formalism of Numerical Relativity}{38}{chapter.4}
+\contentsline {section}{\numberline {4.1}Introduction}{38}{section.4.1}
+\contentsline {section}{\numberline {4.2}Splitting Space and Time}{38}{section.4.2}
+\contentsline {section}{\numberline {4.3}Projections of the Einstein Field Equations}{41}{section.4.3}
+\contentsline {section}{\numberline {4.4}Choosing Coordinates}{43}{section.4.4}
+\contentsline {section}{\numberline {4.5}Gauge Conditions}{46}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Geodesic slicing}{46}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Maximal slicing}{46}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}Bona-Masso}{47}{subsection.4.5.3}
+\contentsline {section}{\numberline {4.6}Initial Data}{47}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}York-Lichnerowicz conformal decomposition}{47}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}Aside? Post Newtonian methods}{47}{section.4.7}
+\contentsline {section}{\numberline {4.8}perturbative methods}{48}{section.4.8}
+\contentsline {section}{\numberline {4.9}Dealing with singluarities}{48}{section.4.9}
+\contentsline {chapter}{\numberline {5}State of the Art (this chapter is a total mess)}{49}{chapter.5}
+\contentsline {section}{\numberline {5.1}Extreme Mass Ratios}{49}{section.5.1}
+\contentsline {section}{\numberline {5.2}Longest Waveforms}{50}{section.5.2}
+\contentsline {section}{\numberline {5.3}Highest Spin}{50}{section.5.3}
+\contentsline {section}{\numberline {5.4}Christodoulou Memory}{50}{section.5.4}
+\contentsline {section}{\numberline {5.5}General Relativity Magneto Hydro Dynamics}{51}{section.5.5}
+\contentsline {section}{\numberline {5.6}Cactus}{52}{section.5.6}
+\contentsline {chapter}{\numberline {6}Data analysis}{53}{chapter.6}
+\contentsline {section}{\numberline {6.1}Hypothesis Testing}{53}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Neyman-Pearson Approach}{54}{subsection.6.1.1}
+\contentsline {section}{\numberline {6.2}Introduction}{56}{section.6.2}
+\contentsline {section}{\numberline {6.3}Fourier Transforms}{56}{section.6.3}
+\contentsline {section}{\numberline {6.4}Windowed Fourier Transforms}{56}{section.6.4}
+\contentsline {section}{\numberline {6.5}wavelet transforms}{57}{section.6.5}
+\contentsline {section}{\numberline {6.6}Notes from "method for detection and reconstruction of gravitational wave transients with networks of advanced detectors}{57}{section.6.6}
+\contentsline {subsection}{\numberline {6.6.1}Low latency search}{57}{subsection.6.6.1}
+\contentsline {subsection}{\numberline {6.6.2}Archive analysis}{57}{subsection.6.6.2}
+\contentsline {subsection}{\numberline {6.6.3}Inverse problem for data from a network of detectors}{57}{subsection.6.6.3}
+\contentsline {subsection}{\numberline {6.6.4}Matched Filtering}{58}{subsection.6.6.4}
+\contentsline {section}{\numberline {6.7}Jaranowski et.al}{58}{section.6.7}
+\contentsline {subsubsection}{Random Variables}{58}{section*.3}
+\contentsline {subsubsection}{Stochastic Processes}{61}{section*.4}
+\contentsline {paragraph}{Cram\`er Representation Theorem}{62}{section*.5}
+\contentsline {paragraph}{Wiener-Khinchin Theorem}{63}{section*.6}
+\contentsline {subsubsection}{Hypothesis Testing}{63}{section*.7}
+\contentsline {paragraph}{Bayesian Approach}{63}{section*.8}
+\contentsline {subsubsection}{Matched filter}{64}{section*.9}
+\contentsline {chapter}{\numberline {7}Model reduction for Gravitational Wave data analysis}{66}{chapter.7}
+\contentsline {chapter}{\numberline {8}Reduced Basis Methods for Parameterised Partial Differential Equations}{67}{chapter.8}
+\contentsline {section}{\numberline {8.1}Problem Formulation}{67}{section.8.1}
+\contentsline {section}{\numberline {8.2}Parameter Domains and Grids}{69}{section.8.2}
+\contentsline {section}{\numberline {8.3}Parametric Scalar and vector fields}{70}{section.8.3}
+\contentsline {section}{\numberline {8.4}Problem statement}{70}{section.8.4}
+\contentsline {subsection}{\numberline {8.4.1}Exact}{70}{subsection.8.4.1}
+\contentsline {subsubsection}{Parametric weak form}{71}{section*.10}
+\contentsline {subsection}{\numberline {8.4.2}``Truth" Approximation}{71}{subsection.8.4.2}
+\contentsline {section}{\numberline {8.5}Reduced Basis Approximation}{73}{section.8.5}
+\contentsline {subsection}{\numberline {8.5.1}Lagrangian approach}{73}{subsection.8.5.1}
+\contentsline {section}{\numberline {8.6}Reduced basis for binary coalescences}{74}{section.8.6}
+\contentsline {section}{\numberline {8.7}Greedy Algorithm}{75}{section.8.7}
+\contentsline {chapter}{\numberline {9}Model Reduction for Compact Binary Coalescence}{76}{chapter.9}
+\contentsline {section}{\numberline {9.1}Empirical Interpolation Method}{77}{section.9.1}
+\contentsline {chapter}{\numberline {10}Reduced basis methods for parameterised PDEs}{79}{chapter.10}
+\contentsline {section}{\numberline {10.1}Forward model}{79}{section.10.1}
+\contentsline {section}{\numberline {10.2}Statistical Inverse Problems}{79}{section.10.2}
+\contentsline {subsection}{\numberline {10.2.1}Reduced basis method}{80}{subsection.10.2.1}
+\contentsline {section}{\numberline {10.3}One dimensional wire}{81}{section.10.3}
+\contentsline {subsection}{\numberline {10.3.1}Exact Solution}{81}{subsection.10.3.1}
+\contentsline {subsection}{\numberline {10.3.2}Numerical Solution}{82}{subsection.10.3.2}
+\contentsline {subsubsection}{Initial condition}{82}{section*.11}
+\contentsline {subsubsection}{Evolution}{83}{section*.12}
+\contentsline {subsection}{\numberline {10.3.3}Reduced basis construction}{83}{subsection.10.3.3}
+\contentsline {subsubsection}{Inverse Experiment}{84}{section*.13}
+\contentsline {section}{\numberline {10.4}Conclusions and further work}{85}{section.10.4}
+\contentsline {chapter}{\numberline {A}Lie Derivative of a covariant 2-tensor}{86}{appendix.A}
+\contentsline {chapter}{\numberline {B}Functions Spaces Norms}{87}{appendix.B}
+\contentsline {chapter}{\numberline {C}Functions, Spaces and Norms}{88}{appendix.C}
+\contentsline {section}{\numberline {C.1}H\"older Continuity}{89}{section.C.1}
+\contentsline {section}{\numberline {C.2}Lipschitz Continuity}{89}{section.C.2}
+\contentsline {section}{\numberline {C.3}Lebesgue Spaces}{89}{section.C.3}
+\contentsline {section}{\numberline {C.4}Sobolev Spaces}{90}{section.C.4}
+\contentsline {chapter}{\numberline {D}PDEs}{92}{appendix.D}
+\contentsline {section}{\numberline {D.1}Cauchy Problems}{94}{section.D.1}

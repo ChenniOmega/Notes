@@ -1,28 +1,11 @@
-\input{ThesisPreamble}
+%\input{ThesisPreamble}
 
-\begin{document}
+%\begin{document}
 
 \chapter{General Relativity}
 
-Einstein's theory of General Relativity, published in two papers in 1915 and 1916, revolutionised physics. It replaced Newton's theory of gravitation with a theory roughly based on Riemannian manifolds, where the classical idea of a gravitational force acting at a distance was replaced by the concept of curvature of space-time. We say roughly because now the ``metric'' is no longer positive definite (see {\S}\ref{sec:Pseudo} and {\S}\ref{sec:Minkowski}). In general relativity, space-time is viewed as a 4-dimensional manifold, three dimensions corresponding to space and one to time. We will adopt the common practice of denoting local coordinates by $x^\mu$, $\mu=0,1,2,3$, with $\mu=0$ corresponding to the time dimension, and $\mu=1,2,3$ the spatial dimensions. Sometimes it is desirable to consider the spatial dimensions separately to the temporal dimension. In these situations, the spatial dimensions are given Latin indices, $x^i$, to indicate running from 1 to 3. \\
+Einstein's theory of General Relativity, published in two papers in 1915 and 1916, revolutionised physics. It replaced Newton's theory of gravitation with a theory roughly based on Riemannian manifolds, where the classical idea of a gravitational force acting at a distance was replaced by the concept of curvature of space-time. We say roughly because now the metric is no longer positive definite (see {\S}\ref{sec:Pseudo} and {\S}\ref{sec:Minkowski} below). In general relativity, space-time is viewed as a 4-dimensional manifold, three dimensions corresponding to space and one to time. We will adopt the common practice of denoting local coordinates by $x^\mu$, $\mu=0,1,2,3$, with $\mu=0$ corresponding to the time dimension, and $\mu=1,2,3$ the spatial dimensions. Sometimes it is desirable to consider the spatial dimensions separately to the temporal dimension. In these situations, the spatial dimensions are given Latin indices, $x^i$, to indicate running from 1 to 3. \\
 
-The metric on space time is governed by the \textit{Einstein Equation},
-\begin{equation}
-R_{\mu \nu}-\frac{1}{2}Rg_{\mu \nu} = 8\pi G T_{\mu \nu}, 
-\label{eq:Einstein} 
-\end{equation} 
-where $R_{\mu \nu}$ is the Ricci tensor, $R$ the scalar curvature, $G$ is \textit{Newton's constant of gravitation} ($G=6.67\times10^{-11} m^{3}kg^{-1}s^{-2}$), and $T_{\mu \nu}$ is the \textit{stress-energy tensor}, a symmetric 2-tensor which describes the density, momentum and stress at each point in space-time. The left hand side of this equation represents the geometry of space-time, and is defined as the \textit{Einstein Tensor} $G_{\mu \nu} \equiv R_{\mu \nu}-\frac{1}{2}Rg_{\mu \nu}$, and the right hand side represents the distribution of mass-energy. 
-
-The stress-energy tensor describes the energy density, momentum density and momentum flux of matter $(i,j=1,2,3)$
-\begin{eqnarray*}
-T^{00} =& \mbox{energy density}\\
-T^{0i} =& \mbox{momentum density}\\
-T^{ij} =& \mbox{flux of $i$ momentum in direction $j$}
-\end{eqnarray*}
-In general relativity all fields except gravity are considered as a type of matter. For example, an electromagnetic field has an associated stress-energy tensor that acts as the source of gravity.
-
-The equation (\ref{eq:Einstein}) is actually a set of 10 coupled, non-linear, partial differential equations. There is no systematic way to solve such a system of equations, and as such very few analytic solutions exist. 
- 
 \section{Pseudo-Riemannian Metrics}\label{sec:Pseudo}
 A \textit{pseudo-Riemannian metric} on a manifold $M$ is a symmetric (0,2)-tensor field $g$ that is \textit{nondegenerate} at every point $p\in M$. Nondegenerate means that if $X\in T_pM$,
 \[ g(X,Y)=0\; \forall\; Y\in T_p M\; \Leftrightarrow\; X=0. \]
@@ -30,7 +13,7 @@ Compare this with the definition of the Riemannian manifold in {\S}\ref{sec:Riem
 
 As an alternative notation, physicists define the \textit{line element} 
 \[ ds^2=g_{\mu \nu} dx^\mu dx^\nu, \]
-and this is used interchangably with the metric.This defines an invariant ``distance" between two close events with coordinates $x^\mu$ and $x^\mu + dx^\mu$. The fact that this distance is invariant means that it is absolute in a physical sense, all observers will find the same value for this quantity regardless of their respective motions and the coordinates they are using to measure it. This is known as the \emph{principle of equivalence} or \emph{coordinate invariance}.  Because of the negative eigenvalue in the metric, the distance $ds^2$ is not positive definite. From the metric one can distinguish events related to each other in three different ways:
+which is used interchangably with the metric. This defines an invariant ``distance'' between two close events with coordinates $x^\mu$ and $x^\mu + dx^\mu$. The fact that this distance is invariant means that it is absolute in a physical sense, all observers will find the same value for this quantity regardless of their respective motions and the coordinates they are using to measure it. This is known as the \emph{principle of equivalence} or \emph{coordinate invariance}.  Because of the negative eigenvalue in the metric, the distance $ds^2$ is not positive definite. From the metric one can distinguish events related to each other in three different ways:
 \begin{eqnarray*}
 ds^2 & > & 0  \mbox{   Spacelike separation} \\
 ds^2 & < & 0  \mbox{   Timelike separation} \\
@@ -39,21 +22,36 @@ ds^2 & = & 0  \mbox{   Null separation}
 
 Many of the properties of Riemannian manifolds carry over to pseudo-Riemannian manifolds. In particular, the fundamental lemma of Riemannian geometry (Theorem \ref{FundLemma}) holds for pseudo-Riemannian geometry. Therefore, we still have the Levi-Civita connection and the Riemannian Curvature. \\
 
+\section{Einstein's Field Equations}
+
+The metric on space time is governed by the \textit{Einstein Field Equations},
+\begin{equation}
+R_{\mu \nu}-\frac{1}{2}Rg_{\mu \nu} = 8\pi G T_{\mu \nu}. 
+\label{eq:Einstein} 
+\end{equation} 
+The left hand side of this equation represents the geometry of space-time, and is defined as the \textit{Einstein Tensor} $G_{\mu \nu} \equiv R_{\mu \nu}-\frac{1}{2}Rg_{\mu \nu}$, where $R_{\mu \nu}$ is the Ricci tensor and $R$ the scalar curvature. The right hand side represents the distribution of mass-energy through \textit{stress-energy tensor} $T_{\mu \nu}$, a symmetric 2-tensor which describes the density, momentum and stress at each point in space-time and \textit{Newton's constant of gravitation} ($G=6.67\times10^{-11} m^{3}kg^{-1}s^{-2}$). \\
+
+%The stress-energy tensor describes the energy density, momentum density and momentum flux of matter $(i,j=1,2,3)$
+%\begin{eqnarray*}
+%T^{00} =& \mbox{energy density}\\
+%T^{0i} =& \mbox{momentum density}\\
+%T^{ij} =& \mbox{flux of $i$ momentum in direction $j$}
+%\end{eqnarray*}
+%In general relativity all fields except gravity are considered as a type of matter. For example, an electromagnetic field has an associated stress-energy tensor that acts as the source of gravity.
+
+The equation (\ref{eq:Einstein}) is actually a set of 10 coupled, non-linear, partial differential equations. There is no systematic way to solve such a system of equations, and as such very few analytic solutions exist. 
+ 
+
+
 %\section{Geodesics}
 % It is usual to parameterise a geodesic in 4D space by the so-called "proper time" $d\tau^2:= - ds^2$, corresponding to the time experienced by the object itself. The geodesic equation has the general form 
 % \[ \frac{d^2x^\alpha}{d\tau^2}+\Gamma^\alpha_{\beta \gamma}\frac{dx^\beta}{d\tau}\frac{dx^\gamma}{d\tau}=0 \]
  
-It can be verified (by considering Riemann normal coordinates at an arbitrary point) that the Riemann Tensor has the following property:
-\begin{equation}
- R_{\alpha \beta \mu \nu ; \lambda} + R_{\alpha \beta \lambda\mu ; \nu} + R_{\alpha \beta \nu \lambda ; \mu} = 0 
- \label{eq:Bianchi}
-\end{equation}
- 
-These relations are known as the \emph{Bianchi identities} and are very important. One consequence is that the covariant divergence of the Einstein tensor vanishes 
-\[ G^{\mu \nu}_{; \nu} =0 \]
-Which, using the field equations, implies
-\[ T^{\mu \nu}_{; \nu} =0 \]
-This tells us that the loss of energy and momentum in a region of space is explained by the flux of energy and momentum out of that region. 
+% One consequence of the Bianchi identities is that the covariant divergence of the Einstein tensor vanishes 
+%\[ G^{\mu \nu}_{; \nu} =0 \]
+%Which, using the field equations, implies
+%\[ T^{\mu \nu}_{; \nu} =0 \]
+%This tells us that the loss of energy and momentum in a region of space is explained by the flux of energy and momentum out of that region. 
 
 \section{Relativity in 1+1 dimensions}
 As a simple example we consider relativity in $1$ spatial and $1$ time dimension, with a spacetime metric $g_{ij}$ with $i,j$ taking the values $0$ or $1$. Without loss of generality we can assume that the metric tensor is diagonal, and thus the inverse metric components are $g^{00}=1/g_{00}$ and $g^{11}=1/g_{11}$. The Christoffel symbols in this case are
@@ -332,6 +330,7 @@ Suppose the source is slow moving and isolated, and at a distance $r$ such that 
 \item \url{http://mathpages.com/rr/s6-08/6-08.htm}
 \item \url{http://arxiv.org/pdf/0903.0338.pdf}
 \item \url{https://www.astro.umd.edu/~miller/teaching/mexico/lecture1.pdf}
+\item Post Newtonian expansion- chirp mass and innermost stable circular orbit
 \end{itemize}
-\end{document}
+%\end{document}
 
