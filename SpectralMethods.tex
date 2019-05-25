@@ -1,0 +1,163 @@
+\chapter{Spectral Methods}
+
+When students are first introduced to computational techniques for solving differential equations, this is often the finite difference method. The finite difference method is relatively easy to understand, and follows nicely from first calculus principles and the Taylor theorem which students are familiar with from first year. The finite difference method uses information from neighbouring gridpoints to approximate a solution using polynomial interpolant. This is sufficient for slowly varying functions, however if the function displays significant spatial or temporal variation, finite difference method requires fine grids which can quickly become computationally intensive.
+
+There are a number of ways to combat this type of problem. Spectral methods are one such way. They are global methods, meaning they use information from the entire domain for the computation at each timestep.
+
+Consider the following general partial differential equation problem in strong form: 
+
+Find $u(x,t)\in V$ such that
+\begin{equation} Lu(x,t)=s(x,t) \end{equation}
+
+where $x\in \Omega \subset \mathbb{R}^d$, $t\in [0,\infty)$, $u(x,t) \in V\{\Omega \times [0,\infty)$ where $V$ is a Hilbert space with dual $V'$. $L:V \rightarrow V'$ is a second order differential operator, and $s\in V'$. 
+
+A spectral method assumes that the solution $u$ to the partial differential equation can be written 
+
+\begin{equation} u(x,t) = \sum_{k=0}^\infty \hat{u}_k(t) \psi_k(x) \end{equation}
+
+where the $\psi_k(x)$ form a complete set of globally smooth basis functions. 
+
+We assume the basis functions $\psi_k: \Omega \rightarrow \mathbb{R}$ are orthogonal in $L^2_w$, that is
+\begin{equation} (\psi_j, \psi_k) := \gamma_k \delta_{jk} \end{equation}
+under the inner product 
+
+\begin{equation} (f,g)_w = \int_{\Omega}f(x)g(x)w(x)dx \end{equation}
+
+where $w \in L^1(\Omega)$ is a weight function. Then, in the projection above 
+
+\begin{equation} \hat{u}_k(t)= \frac{1}{\gamma_k}(u,\psi_k)_w. \end{equation}
+
+Typically the basis functions are solutions to the Sturm-Liouiville problems, as this class of polynomials have well-understood and convenient convergence properties.
+
+The Sturm-Liouiville operator is given by 
+\begin{equation}\label{eq:Sturm-Liouiville}
+L\psi(x)=\frac{d}{dx}(p(x)\frac{d\psi(x)}{dx}_+q(x)\psi(x)=\lambda w(x) \psi(x)
+\end{equation}
+with boundary conditions 
+\begin{equation}
+\begin{array}[rcll]
+\al_-\psi(-1)+\beta_-\psi'(-1) & = & 0, & \mbox{ } \al_-^2+\beta_-^2\neq 0, \\
+\al_+\psi(1)+\beta_+\psi'(1) & = & 0, & \mbox{ } \al_+^2+\beta_+^2\neq 0.
+\end{equation}
+
+\section{Chebyshev polynomials}
+
+For problems that do not display periodicity, polynomial bases are a good choice for basis functions. 
+
+THEOREM Weierstrass approximation theorem
+Let f be a continuous function on $[-1,1]$ and let $\epsilon >0$. Then there exists a polynomial $p$ such that 
+\begin{equation}
+\label{eq:Weierstrass}
+\|f-p \| < \epsilon
+\end{equation}
+
+
+
+The Chebyshev polynomials are a commonly used family of polynomials defined as 
+\begin{equation}\label{eq:ChebyDef} T_n(x)=\cos (n \arccos x)\end{equation}
+for $x \in [-1,1]$. It is clear from inspection that the first two polynomials are 
+$$ T_0(x)=1 $$
+$$ T_1(x)=x. $$
+From these we can find the other Chebyshev polynomials through the relationship
+\begin{equation}\label{eq:ChebyRec} T_{n+1}(x) = 2x T_n(x) -T_{n-1}(x). \end{equation}
+
+For $n> 0$, the $n$-th Chebyshev polynomial has exactly $n$ zeros in the interval $[-1,1]$ at the points $X_k=\cos\frac{\pi (k+1/2)}{n}$ for $k=0,...n-1$, and has boundary values $T_n(\pm 1)=(-1)^n$. It takes its extrema values of $\pm 1$ at $X_k=\cos(\frac{\pi k}{n})$, $k=0,...n$. The extrema points go by a variety of names, we will call them Chebyshev Gauss-Lobatto points because they correspond to the points used for Gauss-Lobatto quadrature. 
+
+The first five Chebyshev polynomials are shown in Figure \ref{fig:Cheb5}
+\begin{figure}[h]
+\caption{Plots of the first five Chebyshev polynomials.}
+\label{fig:Cheb5}
+\centering
+\includegraphics{/Figures/Cheb5.png}
+\end{figure}
+
+The Chebyshev polynomials form an orthogonal $L^2_w[-1,1]$-complete basis under the weight 
+\begin{equation}\label{eq:ChebyWeight} w=\frac{1}{\sqrt{1-x^2}},\end{equation}
+i.e
+\begin{equation}\label{eq:ChebyOrth} (T_j,T_k)=\int_{-1}^1 T_j(x)T_k(x)w(x)dx=\gamma_k \delta_{kj}\end{equation}
+where $\gamma_k = \frac{\pi}{2-\delta_{k0}}$
+
+Thus any function $u(x)\in L^2_w[-1,1]$ can be written
+\begin{equation}\label{eq:ChebyExpansion} u(x)=\sum_{k=0}^{\infty} \hat{u}_k T_k(x) \end{equation}
+where
+\begin{equation}\label{eq:ChebyCoeffs} \hat{u}_k = \frac{1}{\gamma_k}(u,T_k). \end{equation}
+
+THEOREM Chebyshev series (from Trefethen)
+If $f$ is Lipschitz continuous on $[-1, 1]$ 
+
+We will use the truncated expansion 
+\begin{equation}\label{eq:ChebyExpansionTrunc} u(x)\approx u^{(N)}(x)=\sum_{k=0}^{N} \hat{u}_k T_k(x). \end{equation}
+If $u$ is Lipschitz continuous it has an absolutely and uniformly convergent Chebyshev series. (See Trefethen Approximation Theory SIAM)
+
+\subsection{Calculating the coefficients- Chebyshev Gauss-Lobatto quadrature}
+
+To find the coefficients $\hat{u}_k$ we must perform an integration
+\begin{equation} \hat{u}_k = \frac{1}{\gamma_k}(u,T_k)=\int_{-1}^1 u(x)T_k(x)w(x)dx. \end{equation}
+
+Numerically, this is achieved via Gauss-Lobatto quadrature, in which the collocation points are at the extrema $X_j=-\cos (\frac{\pi j}{N})$, $j=0...N$ (the negative is so they are in increasing order), resulting in the expression
+\begin{equation}\label{eq:ChebyCoeffsQuad} \hat{u}_k = \frac{2}{N c_k}\sum_{j=0}^N \frac{1}{c_j} u(X_j) T_k(X_j),\end{equation}
+where
+\begin{equation} c_k=\begin{array}{ll}
+             2 & k=0,N \\
+             1 & k=1,...N-1 
+            \end{array} 
+\end{equation}
+
+(expand)
+The reconstruction is exact at the Gauss-Lobatto points and is given by
+\begin{equation}\label{eq:ChebyRecon} u_k \equiv u(X_k)=u^{(N)}(X_k)=\sum_{i=0}^N \hat{u}_i T_i(X_k) \end{equation}
+
+Trefethen Barycentric interpolation formula Theorem 5.1
+https://people.maths.ox.ac.uk/trefethen/ATAP/ATAPfirst6chapters.pdf
+
+\subsection{Why Chebyshev polynomials?}
+Let ${(x_i,y_i)}_{i=0}^{n}$ be a set of points in $\Rbb^2$. Then there exist a unique polynomial $p$ of degree $n$ that interpolates these points i.e. $p(x_i)=y_i$. Polynomial interpolants through equally spaced points have terribad properties. The distribution of the Chebyshev Gauss-Lobatto points is clustered near the ends of the interval $[-1,1]$, and polynomial interpolants through these points behave much better. This is because each point has the same average distance from the others something something potential theory.
+
+There is a one-to-one mapping between function values at the Chebyshev points and the Chebyshev expansion coefficients. This can be calculated in $O(n \log n)$ operations using the FFT somehow. Very fast good.
+
+\subsection{Derivatives of Cheybshev polynomials}
+
+The derivatives of the Chebyshev polynomials satisfy the relations 
+\begin{equation} 
+\begin{array}[ll]
+T'_n(x)&=2n(T_{n-1}(x)+T_{n-3}(x) + T_{n-5}(x)...T_1(x)) \mbox{   $n$ even} \\
+T'_n(x)&=2n(T_{n-1}(x)+T_{n-3}(x) + T_{n-5}(x)...T_2(x))+nT_0 \mbox{   $n$ odd} 
+\end{array}
+\end{equation}
+
+We can express this as
+\begin{equation} T_j'(x) = \sum_{k=0}^N D_{jk} T_k(x) \end{equation}
+where
+\begin{equation} D_{jk}=
+\left[ \begin{array}{ccccc}
+0 & \cdots & \cdots &\cdots & 0  \\
+1 & 0 & \cdots & \cdots & 0 \\
+0 & 4 & 0 & \cdots & 0 \\
+3 & 0 & 6 & \cdots & 0  \\
+\vdots & & & \ddots & \vdots \end{array} \right]
+\end{equation}
+
+This means the derivative of our function $u$ can be written
+\begin{equation}  u'(x)=\sum_{j=0}^{N}\sum_{k=0}^N \hat{u}_j D_{jk} T_k(x)=\sum_{k=0}^N \tilde{u}_k T_k(x) \end{equation}
+where $\tilde{u}_k=\sum_{j=0}^{N}\hat{u}_j D_{jk}$.
+
+
+\section{Pseudo-spectral methods}
+The type of spectral method is determined by how the satisfaction of the expansion is defined.
+\begin{itemize}
+\item Galerkin methods require the residual to be orthogonal to the space spanned by the basis functions i.e. 
+$$ (R_h, \psi_k) = 0  \forall k \in \{0, ..., N\} $$
+where the basis functions satisfy the boundary conditions of the problem.
+\item Tau methods are similar, except the basis functions do not need to satisfy the boundary conditions.
+\item Pseudo-spectral, also known as collocation methods, require the residual to vanish at a finite set of collocation points ${x_i}$
+$$ (R_h, \delta(x-x_i))= 0 $$
+\end{itemize}
+
+\subsection{Chebyshev collocation}
+
+We require the residual 
+\begin{equation} R_N= Lu_N(x,t)-s_N(x,t), \end{equation}
+to vanish at a set of collocation points. Because, we are considering boundary value problems, we use the Gauss-Lobatto points $X_j=-\cos (\frac{\pi j}{N})$ again. This gives a set of $N+1$ equations for the $N+1$ unknown coefficients. However, we have not incorporated the boundary conditions.
+
+\subsubsection{Penalty method for Boundary conditions}
+

@@ -1,0 +1,252 @@
+\chapter{Hyperbolic PDEs and the wave equation}
+\begin{itemize}
+\item the wave equation
+\item boundary conditions- in particular non-reflective boundary conditions
+\item properties of the wave equation in up to 3 dimensions
+\item exact solutions in one and 3 dimensions
+\item hyperbolic equations can lead to shocks
+\item weak formulation
+\item representation
+\item systems of equations
+\end{itemize} 
+
+Partial differential equations govern a wide variety of systems. In fact, any continuous system that depends on multiple independent variables is describable by partial differential equations. This includes systems in aerodynamics, electromagnetics and astrophysics.  
+
+Following the notation in [Evans], a mixed partial derivative of a function $u$ can be written in \textit{multi-index notation}. Let $d \in \Nbb$, and $\alpha = (\al_1,\ldots,\al_d)$ be a $d$-tuple of non-negative integers called a \textit{multi-index}. The \textit{order} of $\al$ is given by $| \al | \equiv \sum_{i=1}^{d} \al_i$. Then for a function $u \in C^{|\al|}(\Omega)$, where $\Omega$ is an open subset of $\Rbb^d$, the mixed partial derivative of $u$ is given by 
+\begin{equation}
+D^{\al} u = \pd^{\al_1}_{x_1}\cdots\pd^{\al_n}_{x_n} u. 
+\end{equation}
+
+The set of all partial derivatives of order $k$ is denoted by 
+\begin{equation}
+D^k u = \{ D^{\al} u : | \al | = k \}
+\end{equation}
+In particular, when $k=1$, we drop the superscript and regard the elements of $Du$ as arranged in a vector
+\begin{equation}
+Du := (\pd_{x_1} u, \ldots, \pd_{x_1} u) = \nabla u,
+\end{equation}
+and when $k=2$, we arrange the elements into the Hessian matrix
+\begin{equation}
+D^2 u = \left[ \begin{array}{lcr}
+								\pd_{x_1 x_1} & \ldots & \pd_{x_1 x_d} \\
+															& \ddots & 		\\
+								\pd_{x_d x_1} & \ldots & \pd_{x_d x_d} 
+								\end{array} \right].
+\end{equation}
+
+With this notation, we can define a \textit{partial differential equation (PDE)}  as follows.
+
+\begin{defn}
+A \textit{$k^{\mbox{th}}$ order partial differential equation} is an expression of the form
+\begin{equation}
+F(D^k u(x), D^{k-1} u(x), \ldots, Du(x), x) =0 
+\label{eq:PDEdefn}
+\end{equation}
+where
+\[ F:\Rbb^{d^k} \times \Rbb^{d^{k-1}}\times \cdots \times \Rbb^n \times \Rbb \times U \rightarrow \Rbb \]
+is given and 
+\[ u :\Omega \rightarrow \Rbb \]
+is the unknown.
+\end{defn}
+
+In this thesis, we are particularly interested in second order PDE.
+
+A PDE problem consists of a given $F$, along with boundary and initial conditions- the input data. A \textit{classical solution} satisfies \ref{eq:PDEdefn} and admits continuous partial derivatives of order $k$ at all points $x\in\Omega$. It is not always possible nor necessary to find such solutions, in some cases the differentiability requirements can be relaxed and we can define \textit{weak solutions} (see section \ref{sec:WeakSolutions}). 
+
+\section{Classifying PDE}
+There is no general theory that allows us to analyse all forms of PDE. Rather, we must classify them according to inherent properties, and develop methods based on those classes.
+
+\begin{defn}
+A PDE is called
+\begin{enumerate}
+\item  \textbf{linear} if it can be written in the form 
+\begin{equation}
+\sum_{|\al|\leq k} a_{\al}(x) D^{\al}u=f(x),
+\label{eq:defLinearPDE}
+\end{equation}
+for functions $a_{\al}(x)$ and $f$. If $f(x)\equiv 0$, the PDE is called \textbf{homogeneous}.
+ 
+\item \textbf{semilinear} if it has the form
+\begin{equation}
+\sum_{|\al|= k} a_{\al}(x) D^{\al}u + a_0(D^{k-1}u, \ldots, Du,u,x)=0,
+\label{eq:defSemilinearPDE}
+\end{equation}
+
+\item \textbf{quasilinear} if it has the form
+\begin{equation}
+\sum_{|\al|= k} a_{\al}(D^{k-1}u, \ldots, Du,u,x) D^{\al}u + a_0(D^{k-1}u, \ldots, Du,u,x)=0,
+\label{eq:defQuasilinearPDE}
+\end{equation}
+
+\item \textbf{fully non-linear} if it depends nonlinearly upon the highest order derivatives.
+\end{enumerate}
+\end{defn}
+
+A linear PDE allows for the superposition of solutions, making linear problems easier to analyse. A second order linear PDE can be written in the form
+\begin{equation}
+\sum_{i,j=1}^d A_{ij} \frac{\pd^2 u}{\pd x_i \pd x_j} + \sum_{i=1}^d B_i \frac{\pd u}{\pd x_i} + Cu = D.
+\label{eq:lin2pde}
+\end{equation}
+
+We can further classify the linear PDE using the eigenvalues of the symmetric $d \times d$  matrix $A=[A_{ij}]$. If all eigenvalues of $A$ are non-zero and have the same sign at a point $x\in\Omega$, the PDE is called \textit{elliptic}. The prototypical elliptic equation is the Poisson equation
+\begin{equation}
+\Delta u = f,
+\label{eq:Poisson}
+\end{equation}
+where 
+\begin{equation}
+\Delta u = \nabla^2 u = \tr(D^2 u).
+\end{equation}
+Is the Laplacian of $u$. The Poisson equation models, for example, the potential field resulting from a charge or mass distribution described by $f$. When $f=0$, this is called the Laplace equation. 
+
+A general elliptic differential operator is commonly denoted by $L$, so that the elliptic PDE has the form
+\[ Lu=f. \] 
+
+Typically, elliptic equations are time-independent, and model steady state systems. Time-dependent equations are called \textit{evolution} equations, and come in two classical varieties: \textit{parabolic} and \textit{hyperbolic}. Because the time variable behaves differently to the spatial variables, it is often convenient to separate it out. 
+
+A PDE is called \textit{parabolic} at $x\in\Omega$ if exactly one eigenvalue of $A$ is zero, and the others are all of the same sign.  If $L$ is an elliptic differential operator, the operator form of a parabolic equation is 
+\begin{equation}
+\pd_t u- Lu = f.
+\label{eq:parabolic}
+\end{equation}
+Parabolic equations are used to model conduction and diffusion. The prototypical parabolic equation is the heat equation:
+\begin{equation}
+\label{eq:heat}
+\pd_t u - c \Delta u =0.
+\end{equation}
+
+A \textit{hyperbolic} partial differential equation is one in which $A$ has $d-1$  eigenvalues the same sign at $x\in\Omega$, and the remaining eigenvalue is of the opposite sign. The general form is 
+\begin{equation}
+\pd_{tt} u -Lu=f,
+\label{eq:hyperbolic}
+\end{equation}
+where as before, $L$ denotes an elliptic differential operator. Hyperbolic PDEs are used to model oscillatory systems, and the prototypical example is d'Alembert's wave equation
+\begin{equation}
+\pd_tt u - c^2 \Delta u=0.
+\label{eq:dalembert}
+\end{equation}
+
+A PDE is called elliptic, parabolic or hyperbolic in an open set $\Omega$ if it is elliptic, parabolic or hyperbolic at all $x\in \Omega$. In practice, an equation may have different classifications at different points in the domain, or may change over time. It is also common for non-linear equations to be referred to as elliptic, parabolic or hyperbolic depending on their linear approximations.
+
+\subsection{Boundary and initial conditions}
+For problems on a bounded domain, additional information regarding the solution on the boundary $\pd \Omega$ is supplied with the PDE. Some common types of boundary conditions are:
+\begin{enumerate}
+	\item \textit{Dirichlet} boundary conditions, in which the function values $u(x)$ are fixed %for $x\in \pd \Omega$
+	\[ u(x) = g(x) \mbox{  for } x\in \pd \Omega. \]
+	\item \textit{Neumann} boundary conditions, in which the normal derivatives of $u$ are specified
+	\[ \pd_{\nu} u (x)= (\nabla u. \nu)= g(x) \mbox{  for } x\in \pd \Omega, \]
+	where $\nu$ is the outward normal to $\pd \Omega$.
+	\item \textit{Robin} boundary conditions, where a linear combination of function values and normal derivatives are used 
+	\[ au(x) + b \pd_{\nu}u (x)= g(x) \mbox{  for } x\in \pd \Omega,\]
+	where $a$ and $b$ are non-zero constants.
+	\item \textit{Cauchy} boundary conditions, which specify both the function and normal derivative on the boundary
+	\[ \begin{array}{rcl}
+	u(x) &=& g(x) \\
+	\pd_{\nu}u (x) &=& h(x) 
+	\end{array} \mbox{  for } x\in \pd \Omega. \]
+	\item \textit{Mixed} boundary conditions, where different conditions are imposed on different parts of the boundary, for example
+	\[ u(x)=g(x) \mbox{  for } x\in \Gamma_1 \mbox{, } \pd_{\nu}u (x) = h(x) \mbox{  for } x\in \Gamma_2, \]
+	where $\pd \Omega = \Gamma_1 \bigcup \Gamma_2$.
+\end{enumerate}
+
+For time-dependent PDE, \textit{initial} (or \textit{final}) conditions are set, which are simply boundary conditions for the time dimension. For second order time-dependent PDE, Cauchy initial conditions are typical.
+
+%We are interested in time-dependent problems, where the unknown function is $u(x,t):\overline{U} \times [0,\infty) \rightarrow \Rbb$.  In particular the first part of this thesis will focus on the wave equation. The wave equation models displacement in an elastic string, membrane or solid. In this thesis we will focus on the 1D (string) and 3D (solid) cases.
+
+\section{The 1D advection equation}
+Before considering second order hyperbolic PDEs, we will start with the simplest PDE, the constant coefficient \textit{advection equation}
+\begin{equation}
+\label{eq:advection}
+u_t+ a u_x = 0,
+\end{equation}
+where $a$ is constant. For a Cauchy problem with differentiable initial condition $u(x,0)=u_0(x)$, it is easy to verify the solution is given by $u(x,t)=u_0(x-at)$. 
+
+
+
+\section{The 1D wave equation}
+The 1D homogeneous wave equation is 
+\begin{equation}\label{eq:1Dwave}
+\partial_{tt} u-c^2 \partial_{xx} u = 0,
+\end{equation}
+where $c\in \Rbb$ is the constant wave speed, and $u$ is subject to initial conditions
+\begin{eqnarray}%{lcl}
+u(x,0) & = & g(x) \\
+u_t(x,0) & = & h(x). 
+\end{eqnarray}
+
+
+This admits an analytic solution
+%
+%. We first note that the equation \ref{eq:1Dwave} can be factored
+%\begin{equation}
+%(\pd_t + c \pd_x)(\pd_t - c \pd_x)u =0.
+%\end{equation}
+%It is easy to verify this has solutions of the form
+%\begin{equation}
+%u(x,t)=F(x-ct)+G(x+ct),
+%\label{eq:1Dwavesoln}
+%\end{equation}
+%where $F,G:\Rbb \rightarrow \Rbb$. 
+%In fact, the solution is 
+given by the D'Alembert formula
+\begin{equation}
+u(x,t)=\frac{1}{2}(g(x+t)+g(x-t))+\frac{1}{2}\int_{x-t}^{x+t} h(\tau) d\tau.
+\label{eq:dAlembert}
+\end{equation}
+
+The non-homogeneous version is
+\begin{equation}
+u_{tt}-c^2 u_{xx} = s(x,t).
+\end{equation}
+
+
+\section{The 3D wave equation}
+
+In 3D, this is 
+\begin{equation}
+\Box u = s(\tau,r,\theta,\phi)
+\end{equation}
+
+where
+\begin{equation}
+\Box u= \frac{\partial^2 u}{\partial t^2} - \frac{\partial^2 u}{\partial r^2}- \frac{2}{r}\frac{\partial u}{\partial r} - \frac{1}{r^2}\left( \frac{\partial^2 u}{\partial \theta ^ 2}+\frac{1}{\tan \theta} \right)
+\end{equation}
+%IN POLAR COORDINATES. Discuss when polar or euclidean coordinates are each useful. Write 3d wave eq in both formulations. Cylindrical? Poloidal? $\exists$ others.
+
+\section{Strong solutions}
+
+
+\section{Weak solutions}\label{sec:WeakSolutions}
+Sometimes the solution cannot be found. In these cases, rather than expecting the equation \ref{eq:wave} to be satisfied exactly, the problem is reformulated so that it is satisfied with respect to certain test functions. This is done by defining a bilinear form inherited from the inner product from your function space (Hilbert space). 
+
+Instead of $Lu=s$, 
+\begin{equation}
+\int_{U} (Lu)v dx = \int_{U} sv dx
+\end{equation}
+
+Bilinear form. 
+
+Wave solutions with jumps. Sometimes weak solutions are also strong 
+
+\section{Well-posed problems}
+
+In 1902, Jacques Hadamard defined what it meant for a PDE problem to be \textit{well-posed}:
+\begin{enumerate}
+\item a solution exists,
+\item the solution is unique, and
+\item the solution depends continually on the data.
+\end{enumerate}
+If any of these conditions do not hold, the problem is said to be \textit{ill-posed}.
+
+Condition 3 is known as the \textit{stability} condition, and means that small perturbations in the input data should only cause small changes in the solution. This concept is made precise by the condition number. 
+
+ (hyperbolic Initial value problem is locally well set at noncharacteristic surfaces, finite speed of propagation. singularities and/or oscillations in Cauchy data propagate along characteristic curves.). Well posed Cauchy problems with finite speeds.
+
+Rouch "`Problems with origins in general relativity are of increasing interest in the mathematical community
+and it is the hope of hyperbolicians, that the wealth of geometric applications of elliptic equations
+in Riemannian geometry will one day be paralled by Lorenzian cousins of hyperbolic type."'
+
+
+\section{Systems of equations}
+%A \textit{system} of PDE is a set of several PDE for several unknown functions. If the system has fewer equations than unknowns, it is called \textit{underdetermined}, whereas if it has more equations than unknowns, it is \textit{overdetermined}.
+
